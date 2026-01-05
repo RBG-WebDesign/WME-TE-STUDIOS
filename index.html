@@ -1,896 +1,849 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Menu, X, ArrowRight, Minus, Plus, Check, ChevronDown, 
-  Shield, TrendingUp, Users, Activity, Globe, Layers, Database, 
-  Cpu, Network, Lock, Terminal
-} from 'lucide-react';
-
-/* WME | TALENT EARTH STUDIOS
-  Hybrid V9: "Cinematic Brief"
-  Blending Executive Structure with Cinematic Premium Aesthetics
-*/
-
-// --- CONFIG & CONSTANTS ---
-
-const CHAPTERS = [
-  { id: 0, label: 'Thesis' },
-  { id: 1, label: 'Gap' },
-  { id: 2, label: 'Context' },
-  { id: 3, label: 'Model' },
-  { id: 4, label: 'Standards' },
-  { id: 5, label: 'Economics' },
-  { id: 6, label: 'Cases' },
-  { id: 7, label: 'Fit' },
-  { id: 8, label: 'Coverage' },
-  { id: 9, label: 'Rollout' },
-  { id: 10, label: 'Start' },
-];
-
-const ACCENT_COLOR = '#D4AF37'; // Cinematic Gold
-const WME_RED = '#FA1200'; // WME Brand Red
-
-// --- UTILS ---
-
-const loadScript = (src) => {
-  return new Promise((resolve, reject) => {
-    if (document.querySelector(`script[src="${src}"]`)) return resolve();
-    const script = document.createElement('script');
-    script.src = src;
-    script.onload = resolve;
-    script.onerror = reject;
-    document.head.appendChild(script);
-  });
-};
-
-// --- GLOBAL STYLES & FONTS ---
-// Injected directly in App render to ensure availability
-
-// --- COMPONENTS ---
-
-const Navigation = ({ activeChapter, isDarkSection, onNav, onDownload, isGeneratingPdf }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [isOpen]);
-
-  // Dynamic styling based on section brightness
-  const textColor = isDarkSection ? 'text-white' : 'text-black';
-  const borderColor = isDarkSection ? 'border-white/20' : 'border-black/20';
-  const indicatorActive = isDarkSection ? 'text-amber-400 border-b border-amber-400' : 'text-black border-b border-black';
-  const indicatorInactive = isDarkSection ? 'text-white/30' : 'text-black/30';
-  const hoverColor = isDarkSection ? 'hover:text-amber-200' : 'hover:text-gray-600';
-
-  return (
-    <>
-      <nav 
-        data-pdf-hide 
-        className={`fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 py-6 md:px-12 transition-all duration-700 ${textColor} ${activeChapter > 0 ? 'bg-opacity-90 backdrop-blur-sm' : ''}`}
-      >
-        <div className="flex flex-col z-50 cursor-pointer group" onClick={() => onNav(0)}>
-          <span className="text-xl md:text-2xl leading-none font-serif-display tracking-tight group-hover:opacity-80 transition-opacity">
-            WME<span className="align-top text-sm font-bold" style={{ color: WME_RED }}>+</span>
-          </span>
-          <span className={`text-[9px] uppercase font-tech tracking-[0.2em] mt-1 opacity-60 group-hover:opacity-100 transition-opacity`}>
-            Talent Earth Studios
-          </span>
-        </div>
-
-        {/* Desktop Nav */}
-        <div className="hidden xl:flex space-x-8 text-[10px] font-medium font-tech uppercase items-center tracking-widest">
-          <span className="opacity-40 mr-4 border-r border-current pr-6">
-            REF: {CHAPTERS.find(c => c.id === activeChapter)?.label.toUpperCase()}
-          </span>
-          {CHAPTERS.slice(1, 10).map((c) => (
-            <button
-              key={c.id}
-              onClick={() => onNav(c.id)}
-              className={`transition-all duration-300 ${activeChapter === c.id ? `opacity-100 text-amber-500` : 'opacity-40'} ${hoverColor}`}
-            >
-              {c.label}
-            </button>
-          ))}
-          <button
-            onClick={onDownload}
-            disabled={isGeneratingPdf}
-            className={`border border-current px-4 py-1.5 rounded-sm opacity-80 hover:opacity-100 hover:bg-white/10 transition-all flex items-center gap-2 ml-6`}
-          >
-            {isGeneratingPdf ? 'Exporting...' : 'Save PDF'}
-          </button>
-        </div>
-
-        <button className="xl:hidden z-50 p-2" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-
-        {/* Mobile Menu Overlay */}
-        {isOpen && (
-          <div className="absolute inset-0 h-screen bg-[#0a0a0a] text-white flex flex-col items-center justify-center space-y-6 z-40 animate-in fade-in duration-300">
-            {CHAPTERS.map((c) => (
-              <button
-                key={c.id}
-                onClick={() => { onNav(c.id); setIsOpen(false); }}
-                className="text-3xl font-serif-display hover:text-amber-500 transition-colors"
-              >
-                {c.label}
-              </button>
-            ))}
-            <button
-              onClick={() => { onDownload(); setIsOpen(false); }}
-               className="text-xs font-tech uppercase tracking-widest border border-white/20 px-8 py-4 mt-8 hover:bg-white/5"
-            >
-              Download Brief
-            </button>
-          </div>
-        )}
-      </nav>
-
-      {/* Vertical Progress */}
-      <div 
-        data-pdf-hide
-        className="fixed right-6 md:right-10 top-1/2 -translate-y-1/2 flex flex-col space-y-4 z-40 hidden md:flex"
-      >
-        {CHAPTERS.map((c) => (
-          <button 
-            key={c.id}
-            onClick={() => onNav(c.id)}
-            className={`text-[9px] font-tech transition-all duration-500 text-right hover:opacity-100 ${activeChapter === c.id ? `${indicatorActive} opacity-100 scale-110` : `${indicatorInactive} opacity-40`}`}
-          >
-            0{c.id}
-          </button>
-        ))}
-      </div>
-    </>
-  );
-};
-
-// --- CHAPTER 0: THESIS (Cinematic Dark) ---
-const ChapterThesis = ({ onNav, active }) => {
-  return (
-    <section data-chapter="0" className="h-screen w-full relative bg-[#050505] text-white flex flex-col justify-center px-6 md:px-12 snap-start overflow-hidden">
-      {/* Cinematic Backgrounds */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-amber-600/10 rounded-full blur-[120px] opacity-60 mix-blend-screen animate-pulse-slow"></div>
-        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[100px] opacity-40"></div>
-      </div>
-
-      <div className="relative z-10 max-w-7xl w-full mx-auto">
-        <div className={`transition-all duration-1000 ease-out ${active ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="flex items-center gap-3 mb-8">
-            <div className="h-px w-12 bg-amber-500"></div>
-            <span className="font-tech text-xs text-amber-500 tracking-[0.3em] uppercase">Executive Brief</span>
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif-display font-medium leading-[1.05] mb-12 max-w-6xl text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/60">
-            We represent crews, shops, and technical teams.
-          </h1>
-          
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-16 border-l border-white/10 pl-8">
-            <p className="text-lg md:text-xl font-light text-white/60 max-w-lg leading-relaxed">
-              We extend representation into execution so the deal does not break in delivery.
-            </p>
-            
-            <button 
-              onClick={() => onNav(1)}
-              className="group flex items-center gap-4 text-xs font-tech uppercase tracking-widest text-white/80 hover:text-amber-400 transition-colors"
-            >
-              <div className="w-12 h-12 border border-white/10 rounded-full flex items-center justify-center group-hover:bg-white/5 group-hover:border-amber-500/50 transition-all">
-                <ChevronDown size={16} />
-              </div>
-              <span>Begin Brief</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// --- CHAPTER 1: GAP (Clean Light) ---
-const ChapterGap = ({ active }) => {
-  return (
-    <section data-chapter="1" className="h-screen w-full relative bg-white text-black flex flex-col justify-center px-6 md:px-12 snap-start">
-      <div className={`max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center transition-all duration-1000 delay-200 ${active ? 'opacity-100' : 'opacity-0'}`}>
-        <div>
-          <span className="block text-[10px] font-tech tracking-[0.2em] uppercase mb-8 text-gray-400">The Market Gap</span>
-          <h2 className="text-4xl md:text-6xl font-serif-display font-medium leading-[1.1] mb-8">
-            Above the line<br />
-            already works this way.<br />
-            <span className="text-gray-300">Below the line<br />doesn't.</span>
-          </h2>
-          <p className="text-lg font-light text-gray-600 max-w-md leading-relaxed">
-            Vendor lists do not protect schedule, scope, or accountability when a build goes sideways.
-          </p>
-        </div>
-
-        <div className="bg-gray-50 p-10 md:p-16 h-full max-h-[600px] flex flex-col justify-center relative border border-gray-100">
-          <div className="space-y-16">
-            <div className="opacity-40 grayscale">
-              <h4 className="text-sm font-bold uppercase tracking-widest mb-3">Above the Line</h4>
-              <div className="h-0.5 w-full bg-black mb-2"></div>
-              <p className="text-xs font-tech text-gray-600">Represented • Advised • Structured</p>
-            </div>
-            
-            <div className="relative">
-              <span className="absolute -top-8 left-0 text-[9px] font-bold uppercase font-tech tracking-widest text-amber-600">Structural Failure Point</span>
-              <h4 className="text-sm font-bold uppercase tracking-widest mb-3 text-black">Below the Line</h4>
-              <div className="flex space-x-1 mb-2">
-                {[1,2,3,4,5].map(i => <div key={i} className="h-0.5 w-1/5 bg-red-500/80"></div>)}
-              </div>
-              <p className="text-xs font-tech text-red-600/80">Transactional • Unprotected • Fragmented</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// --- CHAPTER 2: CONTEXT (Cinematic Dark) ---
-const ChapterContext = ({ active }) => {
-  return (
-    <section data-chapter="2" className="h-screen w-full relative bg-[#080808] text-white flex flex-col justify-center px-6 md:px-12 snap-start overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-gray-800/20 via-black to-black opacity-50"></div>
-      
-      <div className={`max-w-7xl w-full mx-auto relative z-10 transition-all duration-1000 ${active ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <span className="block text-[10px] font-tech tracking-[0.2em] uppercase mb-8 text-amber-500/60">The Context</span>
-        <h2 className="text-4xl md:text-6xl font-serif-display font-medium leading-none mb-16">
-          Projects are too complex<br />
-          for a vendor list.
-        </h2>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          <div className="lg:col-span-5">
-             <p className="text-xl md:text-2xl text-white font-light leading-relaxed mb-8">
-               A touring rig, a fabrication shop, an integrator, and a production lead, all coordinated under one accountable plan.
-             </p>
-             <p className="text-sm font-tech text-gray-500 max-w-xs leading-relaxed border-l border-amber-500/30 pl-4">
-               Live experiences and permanent installs require custom units, not general contractors.
-             </p>
-          </div>
-          
-          <div className="lg:col-span-7 space-y-4">
-            {[
-              { label: "Large Scale Touring", desc: "Automated rigs, video surfaces.", icon: Globe },
-              { label: "Fabrication", desc: "Temporary architectural builds.", icon: Layers },
-              { label: "Systems Integration", desc: "Fusing physical build with code.", icon: Cpu }
-            ].map((m, idx) => (
-              <div key={idx} className="group glass-panel p-6 md:p-8 flex items-center gap-6 hover:bg-white/5 transition-all duration-500 border border-white/5 rounded-lg">
-                <div className="p-3 bg-white/5 rounded-full text-amber-500/80 group-hover:text-amber-400 group-hover:scale-110 transition-all">
-                  <m.icon size={24} strokeWidth={1} />
-                </div>
-                <div>
-                  <h4 className="text-xl md:text-2xl font-serif-display text-white mb-1">{m.label}</h4>
-                  <p className="text-xs font-tech text-gray-500 uppercase tracking-wider">{m.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// --- CHAPTER 3: MODEL (Clean Light) ---
-const ChapterModel = ({ active }) => {
-  const [activeStep, setActiveStep] = useState(0);
-  const steps = [
-    { title: "SCOPE", desc: "Budget alignment, insurance, and contracting before staffing." },
-    { title: "ASSEMBLE", desc: "Vetted teams based on technical fit and availability." },
-    { title: "MANAGE", desc: "Operational oversight, change control, and milestone tracking." },
-    { title: "DELIVER", desc: "Closeout, warranties, and post-mortem." }
-  ];
-
-  return (
-    <section data-chapter="3" className="h-screen w-full relative bg-[#F8F8F8] text-black flex flex-col justify-center px-6 md:px-12 snap-start">
-      <div className={`max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 transition-opacity duration-1000 ${active ? 'opacity-100' : 'opacity-0'}`}>
-        <div>
-          <span className="block text-[10px] font-tech tracking-[0.2em] uppercase mb-8 text-gray-400">The Model</span>
-          <h2 className="text-5xl md:text-7xl font-serif-display font-medium leading-[0.9] mb-12">
-            Access is limited.<br />
-            Delivery is managed.
-          </h2>
-          <div className="p-8 bg-white border border-gray-200 shadow-sm mb-12">
-             <p className="text-[10px] font-bold font-tech uppercase text-amber-600 mb-3 tracking-widest">Mandate</p>
-             <p className="text-sm text-gray-600 leading-relaxed">
-               We do not staff one-off freelance gigs.<br/>
-               Engagements typically run 6–18 weeks.
-             </p>
-          </div>
-          
-          <div className="border-l-2 border-black pl-6">
-            <p className="text-[10px] font-bold text-black uppercase tracking-widest mb-2">Role Definition</p>
-            <p className="text-sm text-gray-500 max-w-sm leading-relaxed">
-              WME originates and protects the relationship. Talent Earth operates delivery and staffing. Liability sits with the operator.
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-col justify-center">
-          {steps.map((step, idx) => (
-            <div 
-              key={idx} 
-              className="border-b border-gray-300 py-8 cursor-pointer group"
-              onClick={() => setActiveStep(idx)}
-            >
-              <div className="flex justify-between items-center mb-3">
-                <span className="text-xs font-tech text-gray-400">0{idx + 1}</span>
-                {activeStep === idx ? <Minus size={16} className="text-amber-600"/> : <Plus size={16} className="text-gray-300"/>}
-              </div>
-              <h3 className={`text-3xl md:text-4xl font-serif-display transition-colors ${activeStep === idx ? 'text-black' : 'text-gray-300 group-hover:text-gray-400'}`}>
-                {step.title}
-              </h3>
-              <div className={`overflow-hidden transition-all duration-500 ${activeStep === idx ? 'max-h-24 opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
-                <p className="text-sm text-gray-600 font-light leading-relaxed max-w-md">
-                  {step.desc}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// --- CHAPTER 4: STANDARDS (Clean Light) ---
-const ChapterStandards = ({ active }) => {
-  return (
-    <section data-chapter="4" className="h-screen w-full relative bg-white text-black flex flex-col justify-center px-6 md:px-12 snap-start">
-      <div className={`max-w-7xl w-full mx-auto transition-opacity duration-1000 ${active ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Col 1 */}
-          <div>
-            <span className="block text-[10px] font-tech tracking-[0.2em] uppercase mb-8 text-gray-400">Operating Standards</span>
-            <h2 className="text-4xl font-serif-display font-medium leading-tight mb-8">
-              Risk management<br />
-              built in.
-            </h2>
-            <ul className="space-y-8">
-              {[
-                { label: "Scope Lock", desc: "Requirements frozen before staffing begins." },
-                { label: "Single Owner", desc: "One accountable lead for every unit." },
-                { label: "Change Control", desc: "Formal impact assessment for scope creep." },
-              ].map((item, idx) => (
-                <li key={idx} className="border-l border-amber-500 pl-6">
-                  <h4 className="text-[10px] font-bold uppercase font-tech tracking-widest mb-1 text-gray-900">{item.label}</h4>
-                  <p className="text-sm text-gray-500 font-light">{item.desc}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 2 */}
-          <div className="bg-gray-50 p-8 flex flex-col justify-center border border-gray-100 rounded-lg">
-             <div className="flex items-center gap-3 mb-8 text-amber-600">
-               <Shield size={20} />
-               <span className="text-[10px] font-bold font-tech uppercase tracking-widest text-black">Compliance Baseline</span>
-             </div>
-             <ul className="space-y-5">
-                {[
-                  { k: "Insurance", v: "$5M Aggregate" },
-                  { k: "Safety", v: "OSHA/ANSI Governance" },
-                  { k: "Unions", v: "Jurisdiction Managed" },
-                  { k: "IP Rights", v: "Work-for-hire" },
-                  { k: "Security", v: "NDAs & Data Protection" }
-                ].map((row, i) => (
-                  <li key={i} className="flex justify-between border-b border-gray-200 pb-3 text-sm">
-                    <span className="font-medium text-gray-800">{row.k}</span>
-                    <span className="text-gray-500 font-tech text-xs">{row.v}</span>
-                  </li>
-                ))}
-             </ul>
-          </div>
-
-          {/* Col 3 */}
-          <div className="bg-[#111] text-white p-8 flex flex-col justify-center rounded-lg shadow-xl">
-            <span className="block text-[10px] font-bold font-tech uppercase tracking-widest mb-8 text-gray-400">Client Receives</span>
-            <div className="grid grid-cols-1 gap-4">
-              {[
-                "Scope Memo",
-                "Staffing Plan",
-                "Delivery Schedule",
-                "Risk Register",
-                "Closeout Package"
-              ].map((item, idx) => (
-                <div key={idx} className="bg-white/5 p-4 rounded border border-white/10 flex items-center justify-between hover:bg-white/10 transition-colors">
-                  <span className="text-sm font-medium text-white/90">{item}</span>
-                  <Check size={14} className="text-emerald-500" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// --- CHAPTER 5: ECONOMICS (Cinematic Dark) ---
-const ChapterEconomics = ({ active }) => {
-  return (
-    <section data-chapter="5" className="h-screen w-full relative bg-[#050505] text-white flex flex-col justify-center px-6 md:px-12 snap-start overflow-hidden">
-      <div className={`max-w-6xl w-full mx-auto relative z-10 transition-all duration-1000 ${active ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <span className="block text-[10px] font-tech tracking-[0.2em] uppercase mb-8 text-amber-500/60">Commercial Model</span>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-           <div>
-             <h2 className="text-4xl md:text-5xl font-serif-display font-medium leading-tight mb-8">
-               Transparent,<br />
-               Managed Structure.
-             </h2>
-             <p className="text-lg text-gray-400 mb-12 max-w-md font-light leading-relaxed">
-               We operate on a Cost Plus Fixed Fee (CPFF) model, ensuring clear visibility into labor costs and operational margin.
-             </p>
-
-             <div className="space-y-8">
-                <div className="flex flex-col border-l-2 border-white/10 pl-6">
-                  <span className="text-[10px] uppercase font-tech tracking-widest text-gray-500 mb-2">Structure</span>
-                  <span className="text-xl font-medium text-white">Direct Costs + Management Fee</span>
-                </div>
-                <div className="flex flex-col border-l-2 border-amber-500 pl-6">
-                  <span className="text-[10px] uppercase font-tech tracking-widest text-gray-500 mb-2">Management Fee</span>
-                  <span className="text-3xl font-serif-display text-amber-500">15%</span>
-                  <span className="text-xs text-gray-500 mt-2 font-light">Applied to labor and assets</span>
-                </div>
-             </div>
-           </div>
-
-           <div className="glass-panel p-8 md:p-10 rounded-xl border border-white/10 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-32 bg-amber-500/5 rounded-full blur-[80px]"></div>
-              
-              <div className="flex items-center gap-3 mb-8 border-b border-white/5 pb-6 relative z-10">
-                 <TrendingUp size={18} className="text-amber-500"/>
-                 <span className="text-[10px] font-bold uppercase font-tech tracking-widest text-white/60">Engagement Example</span>
-              </div>
-              
-              <div className="space-y-6 mb-8 relative z-10">
-                 {[
-                   {l: "Duration", v: "12 Weeks"},
-                   {l: "Team Size", v: "18 Specialists"},
-                   {l: "Scope", v: "Fabrication & Install"}
-                 ].map((r, i) => (
-                   <div key={i} className="flex justify-between text-sm">
-                     <span className="text-gray-500">{r.l}</span>
-                     <span className="font-tech text-white">{r.v}</span>
-                   </div>
-                 ))}
-              </div>
-
-              <div className="bg-black/40 p-6 rounded border border-white/5 space-y-3 relative z-10">
-                 <div className="flex justify-between text-xs text-gray-500">
-                   <span>Labor & Materials</span>
-                   <span className="font-tech text-white/80">$850,000</span>
-                 </div>
-                 <div className="flex justify-between text-xs text-gray-500">
-                   <span>Insurance & Logistics</span>
-                   <span className="font-tech text-white/80">$120,000</span>
-                 </div>
-                 <div className="flex justify-between text-sm font-bold text-amber-500 pt-4 border-t border-white/10 mt-2">
-                   <span>Total Engagement</span>
-                   <span className="font-tech">~$1.1M</span>
-                 </div>
-              </div>
-           </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// --- CHAPTER 6: CASES (Clean Light) ---
-const ChapterCases = ({ active }) => {
-  const cases = [
-    {
-      title: "Arena Tour",
-      stats: "14 Weeks • 40 Staff",
-      desc: "Delivered automated rigging systems and video surfaces for a Tier-1 global run. Managed union payroll across 12 jurisdictions."
-    },
-    {
-      title: "Flagship Retail",
-      stats: "8 Weeks • Interactive",
-      desc: "Fabricated and installed a permanent LED volume with custom generative content. Full IP rights assigned to client upon closeout."
-    },
-    {
-      title: "Broadcast Event",
-      stats: "72 Hours • 45 Staff",
-      desc: "Rapid deployment of a full technical production unit for a live global broadcast. Integrated seamlessly with existing ATL creative."
-    }
-  ];
-
-  return (
-    <section data-chapter="6" className="h-screen w-full relative bg-white text-black flex flex-col justify-center px-6 md:px-12 snap-start">
-      <div className={`max-w-7xl w-full mx-auto transition-all duration-1000 ${active ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-        <span className="block text-[10px] font-tech tracking-[0.2em] uppercase mb-16 text-gray-400">Proof of Capability</span>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {cases.map((c, i) => (
-            <div key={i} className="border-t border-black pt-8 group hover:bg-gray-50 transition-colors p-6 -mx-6 cursor-default">
-              <span className="text-[10px] font-tech text-gray-400 mb-4 block">0{i+1}</span>
-              <h3 className="text-3xl font-serif-display font-medium mb-3">{c.title}</h3>
-              <p className="text-[10px] uppercase font-tech font-bold mb-6 text-amber-600 tracking-wider">
-                {c.stats}
-              </p>
-              <p className="text-sm text-gray-600 leading-relaxed font-light">
-                {c.desc}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// --- CHAPTER 7: FIT (Cinematic Dark) ---
-const ChapterFit = ({ active }) => {
-  return (
-    <section data-chapter="7" className="h-screen w-full relative bg-[#0a0a0a] text-white flex flex-col justify-center px-6 md:px-12 snap-start overflow-hidden">
-      <div className={`max-w-6xl w-full mx-auto relative z-10 transition-all duration-1000 ${active ? 'opacity-100' : 'opacity-0'}`}>
-        <span className="block text-[10px] font-tech tracking-[0.2em] uppercase mb-8 text-amber-500/60">Why this works at WME</span>
-        <div className="flex flex-col md:flex-row justify-between items-end border-b border-white/10 pb-12 mb-16">
-          <h2 className="text-5xl md:text-7xl font-serif-display font-medium leading-none">
-            Complete the<br />Talent Stack.
-          </h2>
-          <p className="text-sm font-tech text-gray-500 max-w-xs text-right mt-6 md:mt-0">
-            Protects the principal’s brand by making delivery predictable.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-24">
-           <div>
-             <h4 className="text-[10px] font-bold uppercase font-tech tracking-widest text-gray-500 mb-8">
-               Model Comparison
-             </h4>
-             <div className="grid grid-cols-2 gap-12">
-               <div>
-                 <span className="block text-[10px] uppercase font-tech text-gray-600 mb-4 border-b border-gray-800 pb-2">Agency</span>
-                 <ul className="space-y-4 text-lg font-light text-gray-400">
-                   <li>Originates deal</li>
-                   <li>Creative vision</li>
-                   <li>Advocacy</li>
-                 </ul>
-               </div>
-               <div>
-                 <span className="block text-[10px] uppercase font-tech text-amber-500 mb-4 border-b border-amber-500/50 pb-2">WME+</span>
-                 <ul className="space-y-4 text-lg font-medium text-white">
-                   <li>Delivers build</li>
-                   <li>Technical execution</li>
-                   <li>Standards</li>
-                 </ul>
-               </div>
-             </div>
-           </div>
-           
-           <div className="glass-panel p-12 flex items-center justify-center border border-white/10 relative overflow-hidden rounded-xl">
-              <div className="relative z-10 w-full max-w-xs space-y-2">
-                 <div className="p-4 border border-white/10 text-center text-[10px] font-bold uppercase font-tech text-gray-500 bg-transparent rounded">
-                   Deal
-                 </div>
-                 <div className="p-4 border border-white text-center text-[10px] font-bold uppercase font-tech text-black bg-white rounded shadow-[0_0_30px_rgba(255,255,255,0.3)]">
-                   Team
-                 </div>
-                 <div className="p-4 border border-white/20 text-center text-[10px] font-bold uppercase font-tech text-white bg-white/5 rounded backdrop-blur-md">
-                   Delivery
-                 </div>
-              </div>
-           </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// --- CHAPTER 8: COVERAGE (Clean Light) ---
-const ChapterCoverage = ({ active }) => {
-  const categories = [
-    { title: "Fabrication", sub: "Sets, props" },
-    { title: "Systems & Interactive", sub: "XR, Realtime, Robotics" },
-    { title: "Production", sub: "Management" },
-    { title: "Touring", sub: "Rigging, automation" },
-    { title: "Experiential", sub: "Activations" },
-    { title: "Video & Lighting", sub: "Show Control" },
-    { title: "Installation", sub: "Museum, retail" },
-    { title: "Engineering", sub: "Structural" }
-  ];
-
-  return (
-    <section data-chapter="8" className="h-screen w-full relative bg-white text-black flex flex-col justify-center px-6 md:px-12 snap-start overflow-hidden">
-      <div className={`max-w-7xl w-full mx-auto transition-all duration-1000 ${active ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-        <span className="block text-[10px] font-tech tracking-[0.2em] uppercase mb-8 text-gray-400">Coverage</span>
-        <h2 className="text-5xl font-serif-display font-medium mb-16">
-          What we cover.
-        </h2>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
-          {categories.map((cat, idx) => (
-            <div key={idx} className="aspect-[4/3] bg-gray-50 p-6 flex flex-col justify-between hover:bg-black hover:text-white transition-all duration-500 group cursor-default">
-              <span className="text-[10px] font-tech opacity-40">0{idx + 1}</span>
-              <div>
-                <h3 className="text-lg font-medium tracking-tight mb-2 font-serif-display">{cat.title}</h3>
-                <p className="text-[9px] uppercase font-tech tracking-widest opacity-60 group-hover:text-amber-500">{cat.sub}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// --- CHAPTER 9: ROLLOUT (Clean Light) ---
-const ChapterRollout = ({ active }) => {
-  const [activePhase, setActivePhase] = useState(null);
-  const phases = [
-    { title: "Phase 1: Pilot", detail: "3 projects. 1 market. Capped budget band. Defined KPIs." },
-    { title: "Phase 2: Roster", detail: "Formal intake. Insurance alignment. Master agreements." },
-    { title: "Phase 3: Scale", detail: "Priority markets. Category expansion." }
-  ];
-
-  return (
-    <section data-chapter="9" className="h-screen w-full relative bg-[#F4F4F4] text-black flex flex-col justify-center px-6 md:px-12 snap-start">
-      <div className={`max-w-5xl w-full mx-auto transition-opacity duration-1000 ${active ? 'opacity-100' : 'opacity-0'}`}>
-        <span className="block text-[10px] font-tech tracking-[0.2em] uppercase mb-8 text-gray-400">Next Steps</span>
-        <h2 className="text-6xl md:text-8xl font-serif-display font-medium mb-20">
-          Rollout.
-        </h2>
-
-        <div className="space-y-6">
-          {phases.map((phase, idx) => (
-            <div 
-              key={idx}
-              onClick={() => setActivePhase(idx)}
-              className={`p-10 border transition-all duration-500 cursor-pointer ${activePhase === idx ? 'bg-black text-white shadow-2xl border-black transform scale-105' : 'bg-white border-gray-200 hover:border-black'}`}
-            >
-              <div className="flex justify-between items-center">
-                <h3 className="text-2xl font-serif-display font-medium tracking-tight">{phase.title}</h3>
-                {activePhase === idx && <Check size={20} className="text-amber-500"/>}
-              </div>
-              <div className={`overflow-hidden transition-all duration-500 ${activePhase === idx ? 'max-h-20 mt-4 opacity-100' : 'max-h-0 opacity-0'}`}>
-                <p className="text-sm font-light opacity-80">{phase.detail}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Pilot KPIs */}
-        <div className="mt-16 grid grid-cols-3 gap-8 opacity-40">
-          {[
-            { l: "On-Time Rate", v: "98%" },
-            { l: "Change Order Rate", v: "<5%" },
-            { l: "Budget Variance", v: "<3%" }
-          ].map((k, i) => (
-            <div key={i} className="text-xs">
-              <span className="block font-bold uppercase font-tech tracking-widest mb-1">{k.l}</span>
-              <span className="font-serif-display text-xl">{k.v}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// --- CHAPTER 10: CONTACT (Cinematic Dark) ---
-const ChapterContact = ({ onDownload, isGeneratingPdf, active }) => (
-  <section data-chapter="10" className="h-screen w-full relative bg-black text-white flex flex-col justify-center px-6 md:px-12 snap-start">
-     <div className="absolute inset-0 z-0">
-        <div className="absolute top-[20%] left-[50%] -translate-x-1/2 w-[800px] h-[800px] bg-amber-600/5 rounded-full blur-[100px]"></div>
-      </div>
-
-    <div className={`max-w-4xl w-full mx-auto text-center relative z-10 transition-all duration-1000 ${active ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-      <span className="block text-3xl font-serif-display mb-12 opacity-50">
-        WME<span className="text-sm font-bold align-top" style={{ color: WME_RED }}>+</span>
-      </span>
-      
-      <h2 className="text-6xl md:text-8xl lg:text-9xl font-serif-display font-medium leading-none mb-16 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40">
-        Start.
-      </h2>
-      
-      <div className="flex flex-col md:flex-row justify-center gap-6">
-        <button className="px-10 py-5 bg-white text-black font-tech text-xs font-bold uppercase tracking-widest hover:bg-amber-500 hover:text-white transition-all duration-300">
-          Internal Walkthrough
-        </button>
-        <button 
-          onClick={onDownload}
-          disabled={isGeneratingPdf}
-          className="px-10 py-5 border border-white/20 text-white font-tech text-xs font-bold uppercase tracking-widest hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
-        >
-          {isGeneratingPdf ? 'Generating...' : 'Download Brief'}
-        </button>
-      </div>
-
-      <div className="absolute bottom-12 left-0 right-0 text-center">
-        <p className="text-[9px] text-white/30 uppercase font-tech tracking-[0.3em]">
-          Pilot selection meeting available.
-        </p>
-      </div>
-    </div>
-  </section>
-);
-
-// --- MAIN APP ---
-const App = () => {
-  const containerRef = useRef(null);
-  const [activeChapter, setActiveChapter] = useState(0);
-  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
-
-  // Dark sections for nav styling
-  const isDarkSection = [0, 2, 5, 7, 10].includes(activeChapter);
-
-  useEffect(() => {
-    loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
-    loadScript('https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
-  }, []);
-
-  // Keyboard Navigation
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-        const next = Math.min(activeChapter + 1, CHAPTERS.length - 1);
-        scrollToChapter(next);
-      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-        const prev = Math.max(activeChapter - 1, 0);
-        scrollToChapter(prev);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeChapter]);
-
-  const scrollToChapter = (id) => {
-    const container = containerRef.current;
-    const el = container?.querySelector(`[data-chapter="${id}"]`);
-    if (!container || !el) return;
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
-  // PDF Export Logic (Maintained from previous code)
-  const downloadDeckPdf = async () => {
-    if (!window.html2canvas || !window.jspdf) {
-      alert("PDF libraries are initializing. Please try again in a moment.");
-      return;
-    }
-
-    const container = containerRef.current;
-    if (!container) return;
-
-    setIsGeneratingPdf(true);
-    await new Promise(r => setTimeout(r, 100));
-
-    try {
-      const { jsPDF } = window.jspdf;
-      const W = 1920;
-      const H = 1080;
-      const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [W, H] });
-      const ids = CHAPTERS.filter(c => c.id !== 10).map(c => c.id);
-
-      for (let i = 0; i < ids.length; i++) {
-        const el = container.querySelector(`[data-chapter="${ids[i]}"]`);
-        if (!el) continue;
-
-        const canvas = await window.html2canvas(el, {
-          scale: 1, // Adjusted scale for better performance on large blur elements
-          useCORS: true,
-          backgroundColor: [0, 2, 5, 7, 10].includes(ids[i]) ? '#050505' : '#FFFFFF',
-          width: W,
-          height: H,
-          windowWidth: W,
-          windowHeight: H,
-          onclone: (clonedDoc) => {
-             clonedDoc.querySelectorAll('[data-pdf-hide]').forEach(el => el.style.display = 'none');
-             const section = clonedDoc.querySelector(`[data-chapter="${ids[i]}"]`);
-             if (section) {
-                section.style.width = '1920px';
-                section.style.height = '1080px';
-                section.style.overflow = 'hidden';
-                section.style.padding = '0';
-                section.style.display = 'flex'; 
-             }
-             // Disable animations for capture
-             const style = clonedDoc.createElement('style');
-             style.innerHTML = '* { transition: none !important; animation: none !important; opacity: 1 !important; transform: none !important; }';
-             clonedDoc.head.appendChild(style);
-          }
-        });
-
-        const img = canvas.toDataURL('image/jpeg', 0.9);
-        if (i > 0) pdf.addPage([W, H], 'landscape');
-        pdf.addImage(img, 'JPEG', 0, 0, W, H);
-      }
-
-      pdf.save('WME_TalentEarth_Brief.pdf');
-    } catch (e) {
-      console.error("PDF Generation failed", e);
-      alert("Could not generate PDF. Please try again.");
-    } finally {
-      setIsGeneratingPdf(false);
-    }
-  };
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-    const sections = Array.from(container.querySelectorAll('[data-chapter]'));
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WME | Talent Earth Studios - Executive Brief</title>
     
-    const obs = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter(e => e.isIntersecting)
-          .sort((a, b) => (b.intersectionRatio - a.intersectionRatio))[0];
-        
-        if (visible) {
-          setActiveChapter(Number(visible.target.getAttribute('data-chapter')));
-        }
-      },
-      { 
-        root: container, 
-        threshold: 0.5, 
-        rootMargin: "-10% 0px -10% 0px"
-      }
-    );
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-    sections.forEach(s => obs.observe(s));
-    return () => obs.disconnect();
-  }, []);
+    <!-- PDF Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-  return (
-    <div 
-      ref={containerRef}
-      className="h-screen w-full overflow-y-scroll snap-y snap-mandatory antialiased selection:bg-amber-500/30 selection:text-white no-scrollbar scroll-smooth"
-    >
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
-        
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* Custom Font Definitions */
         :root {
-          --font-sans: 'Manrope', sans-serif;
-          --font-serif: 'Playfair Display', serif;
-          --font-tech: 'Space Mono', monospace;
+            --font-sans: 'Manrope', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+            --font-tech: 'Space Mono', monospace;
+            --wme-red: #FA1200;
+            --accent-gold: #D4AF37;
         }
+
         body { font-family: var(--font-sans); }
         .font-serif-display { font-family: var(--font-serif); }
         .font-tech { font-family: var(--font-tech); }
-        
+
+        /* Utilities */
         .glass-panel {
-          background: rgba(255, 255, 255, 0.03);
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        
+
+        .glass-panel-light {
+             background: rgba(255, 255, 255, 0.6);
+             backdrop-filter: blur(10px);
+             border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Scrollbar Hiding */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
+
+        /* Animation Utilities */
         @keyframes pulse-slow {
-          0%, 100% { opacity: 0.4; }
-          50% { opacity: 0.6; }
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.6; }
         }
         .animate-pulse-slow {
-          animation: pulse-slow 6s ease-in-out infinite;
+            animation: pulse-slow 6s ease-in-out infinite;
         }
-      `}</style>
 
-      <Navigation 
-        activeChapter={activeChapter} 
-        isDarkSection={isDarkSection} 
-        onNav={scrollToChapter}
-        onDownload={downloadDeckPdf}
-        isGeneratingPdf={isGeneratingPdf}
-      />
-      
-      <ChapterThesis onNav={scrollToChapter} active={activeChapter === 0} />
-      <ChapterGap active={activeChapter === 1} />
-      <ChapterContext active={activeChapter === 2} />
-      <ChapterModel active={activeChapter === 3} />
-      <ChapterStandards active={activeChapter === 4} />
-      <ChapterEconomics active={activeChapter === 5} />
-      <ChapterCases active={activeChapter === 6} />
-      <ChapterFit active={activeChapter === 7} />
-      <ChapterCoverage active={activeChapter === 8} />
-      <ChapterRollout active={activeChapter === 9} />
-      <ChapterContact onDownload={downloadDeckPdf} isGeneratingPdf={isGeneratingPdf} active={activeChapter === 10} />
+        /* Reveal Animation State Classes */
+        .reveal-content {
+            opacity: 0;
+            transform: translateY(2rem);
+            transition: all 1s ease-out;
+        }
+        
+        .section-active .reveal-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Nav Transition */
+        #navbar, #vertical-nav button {
+            transition: color 0.5s ease, border-color 0.5s ease, background-color 0.5s ease;
+        }
+    </style>
+</head>
+<body class="overflow-hidden bg-black selection:bg-amber-500/30 selection:text-white">
+
+    <!-- Navigation -->
+    <nav id="navbar" data-pdf-hide class="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 py-6 md:px-12 text-white transition-all duration-700">
+        <div class="flex flex-col z-50 cursor-pointer group" onclick="scrollToChapter(0)">
+            <span class="text-xl md:text-2xl leading-none font-serif-display tracking-tight group-hover:opacity-80 transition-opacity">
+                WME<span class="align-top text-sm font-bold text-[#FA1200]">+</span>
+            </span>
+            <span class="text-[9px] uppercase font-tech tracking-[0.2em] mt-1 opacity-60 group-hover:opacity-100 transition-opacity">
+                Talent Earth Studios
+            </span>
+        </div>
+
+        <!-- Desktop Nav Items -->
+        <div class="hidden xl:flex space-x-8 text-[10px] font-medium font-tech uppercase items-center tracking-widest" id="desktop-nav-items">
+            <!-- Populated by JS -->
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="xl:hidden z-50 p-2" onclick="toggleMobileMenu()">
+            <i data-lucide="menu" id="menu-icon"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 h-screen bg-[#0a0a0a] text-white flex flex-col items-center justify-center space-y-6 z-40 hidden opacity-0 transition-opacity duration-300">
+        <!-- Populated by JS -->
     </div>
-  );
-};
 
-export default App;
+    <!-- Vertical Progress -->
+    <div id="vertical-nav" data-pdf-hide class="fixed right-6 md:right-10 top-1/2 -translate-y-1/2 flex flex-col space-y-4 z-40 hidden md:flex">
+        <!-- Populated by JS -->
+    </div>
+
+    <!-- Main Scroll Container -->
+    <main id="scroller" class="h-screen w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth no-scrollbar">
+
+        <!-- CHAPTER 0: THESIS -->
+        <section id="chapter-0" data-chapter="0" class="h-screen w-full relative bg-[#050505] text-white flex flex-col justify-center px-6 md:px-12 snap-start overflow-hidden">
+            <div class="absolute inset-0 z-0 pointer-events-none">
+                <div class="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-amber-600/10 rounded-full blur-[120px] opacity-60 mix-blend-screen animate-pulse-slow"></div>
+                <div class="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[100px] opacity-40"></div>
+            </div>
+            <div class="relative z-10 max-w-7xl w-full mx-auto reveal-content">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="h-px w-12 bg-amber-500"></div>
+                    <span class="font-tech text-xs text-amber-500 tracking-[0.3em] uppercase">Executive Brief</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif-display font-medium leading-[1.05] mb-12 max-w-6xl text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/60">
+                    We represent crews, shops, and technical teams.
+                </h1>
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-16 border-l border-white/10 pl-8">
+                    <p class="text-lg md:text-xl font-light text-white/60 max-w-lg leading-relaxed">
+                        We extend representation into execution so the deal does not break in delivery.
+                    </p>
+                    <button onclick="scrollToChapter(1)" class="group flex items-center gap-4 text-xs font-tech uppercase tracking-widest text-white/80 hover:text-amber-400 transition-colors">
+                        <div class="w-12 h-12 border border-white/10 rounded-full flex items-center justify-center group-hover:bg-white/5 group-hover:border-amber-500/50 transition-all">
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </div>
+                        <span>Begin Brief</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHAPTER 1: GAP -->
+        <section id="chapter-1" data-chapter="1" class="h-screen w-full relative bg-white text-black flex flex-col justify-center px-6 md:px-12 snap-start">
+            <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center reveal-content">
+                <div>
+                    <span class="block text-[10px] font-tech tracking-[0.2em] uppercase mb-8 text-gray-400">The Market Gap</span>
+                    <h2 class="text-4xl md:text-6xl font-serif-display font-medium leading-[1.1] mb-8">
+                        Above the line<br />
+                        already works this way.<br />
+                        <span class="text-gray-300">Below the line<br />doesn't.</span>
+                    </h2>
+                    <p class="text-lg font-light text-gray-600 max-w-md leading-relaxed">
+                        Vendor lists do not protect schedule, scope, or accountability when a build goes sideways.
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-10 md:p-16 h-full max-h-[600px] flex flex-col justify-center relative border border-gray-100">
+                    <div class="space-y-16">
+                        <div class="opacity-40 grayscale">
+                            <h4 class="text-sm font-bold uppercase tracking-widest mb-3">Above the Line</h4>
+                            <div class="h-0.5 w-full bg-black mb-2"></div>
+                            <p class="text-xs font-tech text-gray-600">Represented • Advised • Structured</p>
+                        </div>
+                        <div class="relative">
+                            <span class="absolute -top-8 left-0 text-[9px] font-bold uppercase font-tech tracking-widest text-amber-600">Structural Failure Point</span>
+                            <h4 class="text-sm font-bold uppercase tracking-widest mb-3 text-black">Below the Line</h4>
+                            <div class="flex space-x-1 mb-2">
+                                <div class="h-0.5 w-1/5 bg-red-500/80"></div>
+                                <div class="h-0.5 w-1/5 bg-red-500/80"></div>
+                                <div class="h-0.5 w-1/5 bg-red-500/80"></div>
+                                <div class="h-0.5 w-1/5 bg-red-500/80"></div>
+                                <div class="h-0.5 w-1/5 bg-red-500/80"></div>
+                            </div>
+                            <p class="text-xs font-tech text-red-600/80">Transactional • Unprotected • Fragmented</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHAPTER 2: CONTEXT -->
+        <section id="chapter-2" data-chapter="2" class="h-screen w-full relative bg-[#080808] text-white flex flex-col justify-center px-6 md:px-12 snap-start overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-gray-800/20 via-black to-black opacity-50 pointer-events-none"></div>
+            <div class="max-w-7xl w-full mx-auto relative z-10 reveal-content">
+                <span class="block text-[10px] font-tech tracking-[0.2em] uppercase mb-8 text-amber-500/60">The Context</span>
+                <h2 class="text-4xl md:text-6xl font-serif-display font-medium leading-none mb-16">
+                    Projects are too complex<br />
+                    for a vendor list.
+                </h2>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    <div class="lg:col-span-5">
+                        <p class="text-xl md:text-2xl text-white font-light leading-relaxed mb-8">
+                            A touring rig, a fabrication shop, an integrator, and a production lead, all coordinated under one accountable plan.
+                        </p>
+                        <p class="text-sm font-tech text-gray-500 max-w-xs leading-relaxed border-l border-amber-500/30 pl-4">
+                            Live experiences and permanent installs require custom units, not general contractors.
+                        </p>
+                    </div>
+                    <div class="lg:col-span-7 space-y-4">
+                        <div class="group glass-panel p-6 md:p-8 flex items-center gap-6 hover:bg-white/5 transition-all duration-500 border border-white/5 rounded-lg">
+                            <div class="p-3 bg-white/5 rounded-full text-amber-500/80 group-hover:text-amber-400 group-hover:scale-110 transition-all">
+                                <i data-lucide="globe" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl md:text-2xl font-serif-display text-white mb-1">Large Scale Touring</h4>
+                                <p class="text-xs font-tech text-gray-500 uppercase tracking-wider">Automated rigs, video surfaces.</p>
+                            </div>
+                        </div>
+                        <div class="group glass-panel p-6 md:p-8 flex items-center gap-6 hover:bg-white/5 transition-all duration-500 border border-white/5 rounded-lg">
+                            <div class="p-3 bg-white/5 rounded-full text-amber-500/80 group-hover:text-amber-400 group-hover:scale-110 transition-all">
+                                <i data-lucide="layers" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl md:text-2xl font-serif-display text-white mb-1">Fabrication</h4>
+                                <p class="text-xs font-tech text-gray-500 uppercase tracking-wider">Temporary architectural builds.</p>
+                            </div>
+                        </div>
+                        <div class="group glass-panel p-6 md:p-8 flex items-center gap-6 hover:bg-white/5 transition-all duration-500 border border-white/5 rounded-lg">
+                            <div class="p-3 bg-white/5 rounded-full text-amber-500/80 group-hover:text-amber-400 group-hover:scale-110 transition-all">
+                                <i data-lucide="cpu" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl md:text-2xl font-serif-display text-white mb-1">Systems Integration</h4>
+                                <p class="text-xs font-tech text-gray-500 uppercase tracking-wider">Fusing physical build with code.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHAPTER 3: MODEL -->
+        <section id="chapter-3" data-chapter="3" class="h-screen w-full relative bg-[#F8F8F8] text-black flex flex-col justify-center px-6 md:px-12 snap-start">
+            <div class="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 reveal-content">
+                <div>
+                    <span class="block text-[10px] font-tech tracking-[0.2em] uppercase mb-8 text-gray-400">The Model</span>
+                    <h2 class="text-5xl md:text-7xl font-serif-display font-medium leading-[0.9] mb-12">
+                        Access is limited.<br />
+                        Delivery is managed.
+                    </h2>
+                    <div class="p-8 bg-white border border-gray-200 shadow-sm mb-12">
+                        <p class="text-[10px] font-bold font-tech uppercase text-amber-600 mb-3 tracking-widest">Mandate</p>
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            We do not staff one-off freelance gigs.<br/>
+                            Engagements typically run 6–18 weeks.
+                        </p>
+                    </div>
+                    <div class="border-l-2 border-black pl-6">
+                        <p class="text-[10px] font-bold text-black uppercase tracking-widest mb-2">Role Definition</p>
+                        <p class="text-sm text-gray-500 max-w-sm leading-relaxed">
+                            WME originates and protects the relationship. Talent Earth operates delivery and staffing. Liability sits with the operator.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-col justify-center" id="model-steps-container">
+                    <!-- Populated by JS for interaction -->
+                </div>
+            </div>
+        </section>
+
+        <!-- CHAPTER 4: STANDARDS -->
+        <section id="chapter-4" data-chapter="4" class="h-screen w-full relative bg-white text-black flex flex-col justify-center px-6 md:px-12 snap-start">
+            <div class="max-w-7xl w-full mx-auto reveal-content">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                    <div>
+                        <span class="block text-[10px] font-tech tracking-[0.2em] uppercase mb-8 text-gray-400">Operating Standards</span>
+                        <h2 class="text-4xl font-serif-display font-medium leading-tight mb-8">
+                            Risk management<br />
+                            built in.
+                        </h2>
+                        <ul class="space-y-8">
+                            <li class="border-l border-amber-500 pl-6">
+                                <h4 class="text-[10px] font-bold uppercase font-tech tracking-widest mb-1 text-gray-900">Scope Lock</h4>
+                                <p class="text-sm text-gray-500 font-light">Requirements frozen before staffing begins.</p>
+                            </li>
+                            <li class="border-l border-amber-500 pl-6">
+                                <h4 class="text-[10px] font-bold uppercase font-tech tracking-widest mb-1 text-gray-900">Single Owner</h4>
+                                <p class="text-sm text-gray-500 font-light">One accountable lead for every unit.</p>
+                            </li>
+                            <li class="border-l border-amber-500 pl-6">
+                                <h4 class="text-[10px] font-bold uppercase font-tech tracking-widest mb-1 text-gray-900">Change Control</h4>
+                                <p class="text-sm text-gray-500 font-light">Formal impact assessment for scope creep.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-8 flex flex-col justify-center border border-gray-100 rounded-lg">
+                        <div class="flex items-center gap-3 mb-8 text-amber-600">
+                            <i data-lucide="shield" class="w-5 h-5"></i>
+                            <span class="text-[10px] font-bold font-tech uppercase tracking-widest text-black">Compliance Baseline</span>
+                        </div>
+                        <ul class="space-y-5">
+                            <li class="flex justify-between border-b border-gray-200 pb-3 text-sm"><span class="font-medium text-gray-800">Insurance</span><span class="text-gray-500 font-tech text-xs">$5M Aggregate</span></li>
+                            <li class="flex justify-between border-b border-gray-200 pb-3 text-sm"><span class="font-medium text-gray-800">Safety</span><span class="text-gray-500 font-tech text-xs">OSHA/ANSI Gov</span></li>
+                            <li class="flex justify-between border-b border-gray-200 pb-3 text-sm"><span class="font-medium text-gray-800">Unions</span><span class="text-gray-500 font-tech text-xs">Jurisdiction Mgd</span></li>
+                            <li class="flex justify-between border-b border-gray-200 pb-3 text-sm"><span class="font-medium text-gray-800">IP Rights</span><span class="text-gray-500 font-tech text-xs">Work-for-hire</span></li>
+                            <li class="flex justify-between border-b border-gray-200 pb-3 text-sm"><span class="font-medium text-gray-800">Security</span><span class="text-gray-500 font-tech text-xs">NDA & Data</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-[#111] text-white p-8 flex flex-col justify-center rounded-lg shadow-xl">
+                        <span class="block text-[10px] font-bold font-tech uppercase tracking-widest mb-8 text-gray-400">Client Receives</span>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div class="bg-white/5 p-4 rounded border border-white/10 flex items-center justify-between hover:bg-white/10 transition-colors">
+                                <span class="text-sm font-medium text-white/90">Scope Memo</span>
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i>
+                            </div>
+                            <div class="bg-white/5 p-4 rounded border border-white/10 flex items-center justify-between hover:bg-white/10 transition-colors">
+                                <span class="text-sm font-medium text-white/90">Staffing Plan</span>
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i>
+                            </div>
+                            <div class="bg-white/5 p-4 rounded border border-white/10 flex items-center justify-between hover:bg-white/10 transition-colors">
+                                <span class="text-sm font-medium text-white/90">Delivery Schedule</span>
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i>
+                            </div>
+                            <div class="bg-white/5 p-4 rounded border border-white/10 flex items-center justify-between hover:bg-white/10 transition-colors">
+                                <span class="text-sm font-medium text-white/90">Risk Register</span>
+                                <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHAPTER 5: ECONOMICS -->
+        <section id="chapter-5" data-chapter="5" class="h-screen w-full relative bg-[#050505] text-white flex flex-col justify-center px-6 md:px-12 snap-start overflow-hidden">
+            <div class="max-w-6xl w-full mx-auto relative z-10 reveal-content">
+                <span class="block text-[10px] font-tech tracking-[0.2em] uppercase mb-8 text-amber-500/60">Commercial Model</span>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <h2 class="text-4xl md:text-5xl font-serif-display font-medium leading-tight mb-8">
+                            Transparent,<br />
+                            Managed Structure.
+                        </h2>
+                        <p class="text-lg text-gray-400 mb-12 max-w-md font-light leading-relaxed">
+                            We operate on a Cost Plus Fixed Fee (CPFF) model, ensuring clear visibility into labor costs and operational margin.
+                        </p>
+                        <div class="space-y-8">
+                            <div class="flex flex-col border-l-2 border-white/10 pl-6">
+                                <span class="text-[10px] uppercase font-tech tracking-widest text-gray-500 mb-2">Structure</span>
+                                <span class="text-xl font-medium text-white">Direct Costs + Management Fee</span>
+                            </div>
+                            <div class="flex flex-col border-l-2 border-amber-500 pl-6">
+                                <span class="text-[10px] uppercase font-tech tracking-widest text-gray-500 mb-2">Management Fee</span>
+                                <span class="text-3xl font-serif-display text-amber-500">15%</span>
+                                <span class="text-xs text-gray-500 mt-2 font-light">Applied to labor and assets</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-panel p-8 md:p-10 rounded-xl border border-white/10 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-32 bg-amber-500/5 rounded-full blur-[80px]"></div>
+                        <div class="flex items-center gap-3 mb-8 border-b border-white/5 pb-6 relative z-10">
+                            <i data-lucide="trending-up" class="w-5 h-5 text-amber-500"></i>
+                            <span class="text-[10px] font-bold uppercase font-tech tracking-widest text-white/60">Engagement Example</span>
+                        </div>
+                        <div class="space-y-6 mb-8 relative z-10">
+                            <div class="flex justify-between text-sm"><span class="text-gray-500">Duration</span><span class="font-tech text-white">12 Weeks</span></div>
+                            <div class="flex justify-between text-sm"><span class="text-gray-500">Team Size</span><span class="font-tech text-white">18 Specialists</span></div>
+                            <div class="flex justify-between text-sm"><span class="text-gray-500">Scope</span><span class="font-tech text-white">Fabrication & Install</span></div>
+                        </div>
+                        <div class="bg-black/40 p-6 rounded border border-white/5 space-y-3 relative z-10">
+                            <div class="flex justify-between text-xs text-gray-500"><span>Labor & Materials</span><span class="font-tech text-white/80">$850,000</span></div>
+                            <div class="flex justify-between text-xs text-gray-500"><span>Insurance & Logistics</span><span class="font-tech text-white/80">$120,000</span></div>
+                            <div class="flex justify-between text-sm font-bold text-amber-500 pt-4 border-t border-white/10 mt-2"><span>Total Engagement</span><span class="font-tech">~$1.1M</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHAPTER 6: CASES -->
+        <section id="chapter-6" data-chapter="6" class="h-screen w-full relative bg-white text-black flex flex-col justify-center px-6 md:px-12 snap-start">
+            <div class="max-w-7xl w-full mx-auto reveal-content">
+                <span class="block text-[10px] font-tech tracking-[0.2em] uppercase mb-16 text-gray-400">Proof of Capability</span>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="border-t border-black pt-8 group hover:bg-gray-50 transition-colors p-6 -mx-6 cursor-default">
+                        <span class="text-[10px] font-tech text-gray-400 mb-4 block">01</span>
+                        <h3 class="text-3xl font-serif-display font-medium mb-3">Arena Tour</h3>
+                        <p class="text-[10px] uppercase font-tech font-bold mb-6 text-amber-600 tracking-wider">14 Weeks • 40 Staff</p>
+                        <p class="text-sm text-gray-600 leading-relaxed font-light">Delivered automated rigging systems and video surfaces for a Tier-1 global run. Managed union payroll across 12 jurisdictions.</p>
+                    </div>
+                    <div class="border-t border-black pt-8 group hover:bg-gray-50 transition-colors p-6 -mx-6 cursor-default">
+                        <span class="text-[10px] font-tech text-gray-400 mb-4 block">02</span>
+                        <h3 class="text-3xl font-serif-display font-medium mb-3">Flagship Retail</h3>
+                        <p class="text-[10px] uppercase font-tech font-bold mb-6 text-amber-600 tracking-wider">8 Weeks • Interactive</p>
+                        <p class="text-sm text-gray-600 leading-relaxed font-light">Fabricated and installed a permanent LED volume with custom generative content. Full IP rights assigned to client upon closeout.</p>
+                    </div>
+                    <div class="border-t border-black pt-8 group hover:bg-gray-50 transition-colors p-6 -mx-6 cursor-default">
+                        <span class="text-[10px] font-tech text-gray-400 mb-4 block">03</span>
+                        <h3 class="text-3xl font-serif-display font-medium mb-3">Broadcast Event</h3>
+                        <p class="text-[10px] uppercase font-tech font-bold mb-6 text-amber-600 tracking-wider">72 Hours • 45 Staff</p>
+                        <p class="text-sm text-gray-600 leading-relaxed font-light">Rapid deployment of a full technical production unit for a live global broadcast. Integrated seamlessly with existing ATL creative.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHAPTER 7: FIT -->
+        <section id="chapter-7" data-chapter="7" class="h-screen w-full relative bg-[#0a0a0a] text-white flex flex-col justify-center px-6 md:px-12 snap-start overflow-hidden">
+            <div class="max-w-6xl w-full mx-auto relative z-10 reveal-content">
+                <span class="block text-[10px] font-tech tracking-[0.2em] uppercase mb-8 text-amber-500/60">Why this works at WME</span>
+                <div class="flex flex-col md:flex-row justify-between items-end border-b border-white/10 pb-12 mb-16">
+                    <h2 class="text-5xl md:text-7xl font-serif-display font-medium leading-none">
+                        Complete the<br />Talent Stack.
+                    </h2>
+                    <p class="text-sm font-tech text-gray-500 max-w-xs text-right mt-6 md:mt-0">
+                        Protects the principal’s brand by making delivery predictable.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-24">
+                    <div>
+                        <h4 class="text-[10px] font-bold uppercase font-tech tracking-widest text-gray-500 mb-8">Model Comparison</h4>
+                        <div class="grid grid-cols-2 gap-12">
+                            <div>
+                                <span class="block text-[10px] uppercase font-tech text-gray-600 mb-4 border-b border-gray-800 pb-2">Agency</span>
+                                <ul class="space-y-4 text-lg font-light text-gray-400">
+                                    <li>Originates deal</li>
+                                    <li>Creative vision</li>
+                                    <li>Advocacy</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <span class="block text-[10px] uppercase font-tech text-amber-500 mb-4 border-b border-amber-500/50 pb-2">WME+</span>
+                                <ul class="space-y-4 text-lg font-medium text-white">
+                                    <li>Delivers build</li>
+                                    <li>Technical execution</li>
+                                    <li>Standards</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-panel p-12 flex items-center justify-center border border-white/10 relative overflow-hidden rounded-xl">
+                        <div class="relative z-10 w-full max-w-xs space-y-2">
+                            <div class="p-4 border border-white/10 text-center text-[10px] font-bold uppercase font-tech text-gray-500 bg-transparent rounded">Deal</div>
+                            <div class="p-4 border border-white text-center text-[10px] font-bold uppercase font-tech text-black bg-white rounded shadow-[0_0_30px_rgba(255,255,255,0.3)]">Team</div>
+                            <div class="p-4 border border-white/20 text-center text-[10px] font-bold uppercase font-tech text-white bg-white/5 rounded backdrop-blur-md">Delivery</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHAPTER 8: COVERAGE -->
+        <section id="chapter-8" data-chapter="8" class="h-screen w-full relative bg-white text-black flex flex-col justify-center px-6 md:px-12 snap-start overflow-hidden">
+            <div class="max-w-7xl w-full mx-auto reveal-content">
+                <span class="block text-[10px] font-tech tracking-[0.2em] uppercase mb-8 text-gray-400">Coverage</span>
+                <h2 class="text-5xl font-serif-display font-medium mb-16">What we cover.</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-1">
+                    <div class="aspect-[4/3] bg-gray-50 p-6 flex flex-col justify-between hover:bg-black hover:text-white transition-all duration-500 group cursor-default">
+                        <span class="text-[10px] font-tech opacity-40">01</span>
+                        <div><h3 class="text-lg font-medium tracking-tight mb-2 font-serif-display">Fabrication</h3><p class="text-[9px] uppercase font-tech tracking-widest opacity-60 group-hover:text-amber-500">Sets, props</p></div>
+                    </div>
+                    <div class="aspect-[4/3] bg-gray-50 p-6 flex flex-col justify-between hover:bg-black hover:text-white transition-all duration-500 group cursor-default">
+                        <span class="text-[10px] font-tech opacity-40">02</span>
+                        <div><h3 class="text-lg font-medium tracking-tight mb-2 font-serif-display">Systems</h3><p class="text-[9px] uppercase font-tech tracking-widest opacity-60 group-hover:text-amber-500">XR, Realtime</p></div>
+                    </div>
+                    <div class="aspect-[4/3] bg-gray-50 p-6 flex flex-col justify-between hover:bg-black hover:text-white transition-all duration-500 group cursor-default">
+                        <span class="text-[10px] font-tech opacity-40">03</span>
+                        <div><h3 class="text-lg font-medium tracking-tight mb-2 font-serif-display">Production</h3><p class="text-[9px] uppercase font-tech tracking-widest opacity-60 group-hover:text-amber-500">Management</p></div>
+                    </div>
+                    <div class="aspect-[4/3] bg-gray-50 p-6 flex flex-col justify-between hover:bg-black hover:text-white transition-all duration-500 group cursor-default">
+                        <span class="text-[10px] font-tech opacity-40">04</span>
+                        <div><h3 class="text-lg font-medium tracking-tight mb-2 font-serif-display">Touring</h3><p class="text-[9px] uppercase font-tech tracking-widest opacity-60 group-hover:text-amber-500">Rigging</p></div>
+                    </div>
+                    <div class="aspect-[4/3] bg-gray-50 p-6 flex flex-col justify-between hover:bg-black hover:text-white transition-all duration-500 group cursor-default">
+                        <span class="text-[10px] font-tech opacity-40">05</span>
+                        <div><h3 class="text-lg font-medium tracking-tight mb-2 font-serif-display">Experiential</h3><p class="text-[9px] uppercase font-tech tracking-widest opacity-60 group-hover:text-amber-500">Activations</p></div>
+                    </div>
+                    <div class="aspect-[4/3] bg-gray-50 p-6 flex flex-col justify-between hover:bg-black hover:text-white transition-all duration-500 group cursor-default">
+                        <span class="text-[10px] font-tech opacity-40">06</span>
+                        <div><h3 class="text-lg font-medium tracking-tight mb-2 font-serif-display">Video & Lighting</h3><p class="text-[9px] uppercase font-tech tracking-widest opacity-60 group-hover:text-amber-500">Show Control</p></div>
+                    </div>
+                    <div class="aspect-[4/3] bg-gray-50 p-6 flex flex-col justify-between hover:bg-black hover:text-white transition-all duration-500 group cursor-default">
+                        <span class="text-[10px] font-tech opacity-40">07</span>
+                        <div><h3 class="text-lg font-medium tracking-tight mb-2 font-serif-display">Installation</h3><p class="text-[9px] uppercase font-tech tracking-widest opacity-60 group-hover:text-amber-500">Museum, retail</p></div>
+                    </div>
+                    <div class="aspect-[4/3] bg-gray-50 p-6 flex flex-col justify-between hover:bg-black hover:text-white transition-all duration-500 group cursor-default">
+                        <span class="text-[10px] font-tech opacity-40">08</span>
+                        <div><h3 class="text-lg font-medium tracking-tight mb-2 font-serif-display">Engineering</h3><p class="text-[9px] uppercase font-tech tracking-widest opacity-60 group-hover:text-amber-500">Structural</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHAPTER 9: ROLLOUT -->
+        <section id="chapter-9" data-chapter="9" class="h-screen w-full relative bg-[#F4F4F4] text-black flex flex-col justify-center px-6 md:px-12 snap-start">
+            <div class="max-w-5xl w-full mx-auto reveal-content">
+                <span class="block text-[10px] font-tech tracking-[0.2em] uppercase mb-8 text-gray-400">Next Steps</span>
+                <h2 class="text-6xl md:text-8xl font-serif-display font-medium mb-20">Rollout.</h2>
+                <div class="space-y-6" id="rollout-container">
+                    <!-- Populated by JS -->
+                </div>
+                <div class="mt-16 grid grid-cols-3 gap-8 opacity-40">
+                    <div class="text-xs"><span class="block font-bold uppercase font-tech tracking-widest mb-1">On-Time Rate</span><span class="font-serif-display text-xl">98%</span></div>
+                    <div class="text-xs"><span class="block font-bold uppercase font-tech tracking-widest mb-1">Change Order Rate</span><span class="font-serif-display text-xl">&lt;5%</span></div>
+                    <div class="text-xs"><span class="block font-bold uppercase font-tech tracking-widest mb-1">Budget Variance</span><span class="font-serif-display text-xl">&lt;3%</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHAPTER 10: CONTACT -->
+        <section id="chapter-10" data-chapter="10" class="h-screen w-full relative bg-black text-white flex flex-col justify-center px-6 md:px-12 snap-start">
+            <div class="absolute inset-0 z-0 pointer-events-none">
+                <div class="absolute top-[20%] left-[50%] -translate-x-1/2 w-[800px] h-[800px] bg-amber-600/5 rounded-full blur-[100px]"></div>
+            </div>
+            <div class="max-w-4xl w-full mx-auto text-center relative z-10 reveal-content">
+                <span class="block text-3xl font-serif-display mb-12 opacity-50">WME<span class="text-sm font-bold align-top text-[#FA1200]">+</span></span>
+                <h2 class="text-6xl md:text-8xl lg:text-9xl font-serif-display font-medium leading-none mb-16 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40">Start.</h2>
+                <div class="flex flex-col md:flex-row justify-center gap-6">
+                    <button class="px-10 py-5 bg-white text-black font-tech text-xs font-bold uppercase tracking-widest hover:bg-amber-500 hover:text-white transition-all duration-300">Internal Walkthrough</button>
+                    <button onclick="downloadPdf()" id="pdf-btn-end" class="px-10 py-5 border border-white/20 text-white font-tech text-xs font-bold uppercase tracking-widest hover:bg-white/10 transition-all duration-300 backdrop-blur-sm">Download Brief</button>
+                </div>
+                <div class="absolute bottom-12 left-0 right-0 text-center">
+                    <p class="text-[9px] text-white/30 uppercase font-tech tracking-[0.3em]">Pilot selection meeting available.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // --- DATA & CONFIG ---
+        const chapters = [
+            { id: 0, label: 'Thesis' },
+            { id: 1, label: 'Gap' },
+            { id: 2, label: 'Context' },
+            { id: 3, label: 'Model' },
+            { id: 4, label: 'Standards' },
+            { id: 5, label: 'Economics' },
+            { id: 6, label: 'Cases' },
+            { id: 7, label: 'Fit' },
+            { id: 8, label: 'Coverage' },
+            { id: 9, label: 'Rollout' },
+            { id: 10, label: 'Start' },
+        ];
+        const darkChapters = [0, 2, 5, 7, 10];
+        let activeChapter = 0;
+        let isGeneratingPdf = false;
+
+        // --- MODEL STEPS DATA ---
+        const modelSteps = [
+            { title: "SCOPE", desc: "Budget alignment, insurance, and contracting before staffing." },
+            { title: "ASSEMBLE", desc: "Vetted teams based on technical fit and availability." },
+            { title: "MANAGE", desc: "Operational oversight, change control, and milestone tracking." },
+            { title: "DELIVER", desc: "Closeout, warranties, and post-mortem." }
+        ];
+
+        // --- ROLLOUT PHASES DATA ---
+        const rolloutPhases = [
+            { title: "Phase 1: Pilot", detail: "3 projects. 1 market. Capped budget band. Defined KPIs." },
+            { title: "Phase 2: Roster", detail: "Formal intake. Insurance alignment. Master agreements." },
+            { title: "Phase 3: Scale", detail: "Priority markets. Category expansion." }
+        ];
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            renderNav();
+            renderVerticalNav();
+            renderModelSteps();
+            renderRolloutPhases();
+            initScrollSpy();
+            initKeyboardNav();
+        });
+
+        // --- RENDERING FUNCTIONS ---
+
+        function renderNav() {
+            const container = document.getElementById('desktop-nav-items');
+            const mobileContainer = document.getElementById('mobile-menu');
+            
+            // Desktop
+            let desktopHtml = `<span class="opacity-40 mr-4 border-r border-current pr-6" id="nav-ref">REF: THESIS</span>`;
+            chapters.slice(1, 10).forEach(c => {
+                desktopHtml += `<button onclick="scrollToChapter(${c.id})" class="nav-item opacity-40 hover:opacity-100 transition-all duration-300" data-id="${c.id}">${c.label}</button>`;
+            });
+            desktopHtml += `<button onclick="downloadPdf()" id="pdf-btn-top" class="border border-current px-4 py-1.5 rounded-sm opacity-80 hover:opacity-100 hover:bg-white/10 transition-all flex items-center gap-2 ml-6">Save PDF</button>`;
+            container.innerHTML = desktopHtml;
+
+            // Mobile
+            let mobileHtml = '';
+            chapters.forEach(c => {
+                mobileHtml += `<button onclick="scrollToChapter(${c.id}); toggleMobileMenu()" class="text-3xl font-serif-display hover:text-amber-500 transition-colors">${c.label}</button>`;
+            });
+            mobileHtml += `<button onclick="downloadPdf(); toggleMobileMenu()" class="text-xs font-tech uppercase tracking-widest border border-white/20 px-8 py-4 mt-8 hover:bg-white/5">Download Brief</button>`;
+            mobileContainer.innerHTML = mobileHtml;
+        }
+
+        function renderVerticalNav() {
+            const container = document.getElementById('vertical-nav');
+            container.innerHTML = chapters.map(c => `
+                <button onclick="scrollToChapter(${c.id})" 
+                        class="text-[9px] font-tech transition-all duration-500 text-right hover:opacity-100 opacity-40 v-nav-item" 
+                        data-id="${c.id}">
+                    0${c.id}
+                </button>
+            `).join('');
+        }
+
+        function renderModelSteps() {
+            const container = document.getElementById('model-steps-container');
+            container.innerHTML = modelSteps.map((step, idx) => `
+                <div class="border-b border-gray-300 py-8 cursor-pointer group model-step" onclick="toggleModelStep(${idx})">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs font-tech text-gray-400">0${idx + 1}</span>
+                        <i data-lucide="${idx === 0 ? 'minus' : 'plus'}" class="w-4 h-4 model-icon transition-colors text-gray-300" id="model-icon-${idx}"></i>
+                    </div>
+                    <h3 class="text-3xl md:text-4xl font-serif-display transition-colors text-gray-300 group-hover:text-gray-400 model-title" id="model-title-${idx}">${step.title}</h3>
+                    <div class="overflow-hidden transition-all duration-500 max-h-0 opacity-0 mt-0 model-desc" id="model-desc-${idx}">
+                        <p class="text-sm text-gray-600 font-light leading-relaxed max-w-md pt-4">${step.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+            // Initialize first step open
+            toggleModelStep(0);
+            lucide.createIcons();
+        }
+
+        function renderRolloutPhases() {
+            const container = document.getElementById('rollout-container');
+            container.innerHTML = rolloutPhases.map((phase, idx) => `
+                <div onclick="toggleRolloutPhase(${idx})" id="rollout-${idx}" class="p-10 border transition-all duration-500 cursor-pointer bg-white border-gray-200 hover:border-black">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-serif-display font-medium tracking-tight">${phase.title}</h3>
+                        <i data-lucide="check" class="w-5 h-5 text-amber-500 opacity-0 transition-opacity" id="rollout-check-${idx}"></i>
+                    </div>
+                    <div class="overflow-hidden transition-all duration-500 max-h-0 opacity-0 mt-0" id="rollout-detail-${idx}">
+                        <p class="text-sm font-light opacity-80 pt-4">${phase.detail}</p>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // --- INTERACTION LOGIC ---
+
+        function toggleModelStep(idx) {
+            modelSteps.forEach((_, i) => {
+                const title = document.getElementById(`model-title-${i}`);
+                const desc = document.getElementById(`model-desc-${i}`);
+                const icon = document.getElementById(`model-icon-${i}`);
+                
+                if (i === idx) {
+                    title.classList.remove('text-gray-300');
+                    title.classList.add('text-black');
+                    desc.style.maxHeight = '100px';
+                    desc.classList.remove('opacity-0');
+                    // Reset icon handled by re-render or explicit class manipulation, simplistic here
+                } else {
+                    title.classList.add('text-gray-300');
+                    title.classList.remove('text-black');
+                    desc.style.maxHeight = '0';
+                    desc.classList.add('opacity-0');
+                }
+            });
+        }
+
+        function toggleRolloutPhase(idx) {
+            rolloutPhases.forEach((_, i) => {
+                const card = document.getElementById(`rollout-${i}`);
+                const detail = document.getElementById(`rollout-detail-${i}`);
+                const check = document.getElementById(`rollout-check-${i}`);
+
+                if (i === idx) {
+                    card.classList.remove('bg-white', 'border-gray-200');
+                    card.classList.add('bg-black', 'text-white', 'shadow-2xl', 'scale-105', 'border-black');
+                    detail.style.maxHeight = '100px';
+                    detail.classList.remove('opacity-0');
+                    check.classList.remove('opacity-0');
+                } else {
+                    card.classList.add('bg-white', 'border-gray-200');
+                    card.classList.remove('bg-black', 'text-white', 'shadow-2xl', 'scale-105', 'border-black');
+                    detail.style.maxHeight = '0';
+                    detail.classList.add('opacity-0');
+                    check.classList.add('opacity-0');
+                }
+            });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                // slight delay to allow display block to apply before opacity transition
+                setTimeout(() => menu.classList.remove('opacity-0'), 10);
+                document.body.style.overflow = 'hidden';
+            } else {
+                menu.classList.add('opacity-0');
+                setTimeout(() => menu.classList.add('hidden'), 300);
+                document.body.style.overflow = '';
+            }
+        }
+
+        function scrollToChapter(id) {
+            const el = document.getElementById(`chapter-${id}`);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- SCROLL SPY & UI UPDATES ---
+
+        function initScrollSpy() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = parseInt(entry.target.dataset.chapter);
+                        updateUI(id);
+                        // Trigger reveal animations
+                        entry.target.classList.add('section-active');
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            document.querySelectorAll('section').forEach(s => observer.observe(s));
+        }
+
+        function updateUI(id) {
+            activeChapter = id;
+            const isDark = darkChapters.includes(id);
+            const navbar = document.getElementById('navbar');
+            const vNavItems = document.querySelectorAll('.v-nav-item');
+            
+            // Navbar Theme
+            if (isDark) {
+                navbar.classList.remove('text-black');
+                navbar.classList.add('text-white');
+                navbar.style.backgroundColor = id > 0 ? 'rgba(0,0,0,0.8)' : 'transparent';
+                navbar.style.backdropFilter = id > 0 ? 'blur(8px)' : 'none';
+            } else {
+                navbar.classList.remove('text-white');
+                navbar.classList.add('text-black');
+                navbar.style.backgroundColor = 'rgba(255,255,255,0.8)';
+                navbar.style.backdropFilter = 'blur(8px)';
+            }
+
+            // Update Desktop Nav Text
+            const refEl = document.getElementById('nav-ref');
+            if(refEl) refEl.innerText = `REF: ${chapters[id].label}`;
+
+            // Update Desktop Active State
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                const btnId = parseInt(btn.dataset.id);
+                if (btnId === id) {
+                    btn.classList.remove('opacity-40');
+                    btn.classList.add('opacity-100', 'text-amber-500');
+                } else {
+                    btn.classList.add('opacity-40');
+                    btn.classList.remove('opacity-100', 'text-amber-500');
+                }
+            });
+
+            // Update Vertical Nav
+            vNavItems.forEach(btn => {
+                const btnId = parseInt(btn.dataset.id);
+                if (btnId === id) {
+                    btn.classList.remove('opacity-40');
+                    btn.classList.add('opacity-100', 'scale-125');
+                    btn.style.color = isDark ? '#fbbf24' : '#000'; // Amber-400 or Black
+                    btn.style.borderBottom = `1px solid ${isDark ? '#fbbf24' : '#000'}`;
+                } else {
+                    btn.classList.add('opacity-40');
+                    btn.classList.remove('opacity-100', 'scale-125');
+                    btn.style.color = isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.3)';
+                    btn.style.borderBottom = 'none';
+                }
+            });
+        }
+
+        function initKeyboardNav() {
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                    const next = Math.min(activeChapter + 1, chapters.length - 1);
+                    scrollToChapter(next);
+                } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                    const prev = Math.max(activeChapter - 1, 0);
+                    scrollToChapter(prev);
+                }
+            });
+        }
+
+        // --- PDF GENERATION ---
+
+        async function downloadPdf() {
+            if (isGeneratingPdf) return;
+            isGeneratingPdf = true;
+            
+            const btns = [document.getElementById('pdf-btn-top'), document.getElementById('pdf-btn-end')];
+            btns.forEach(b => { if(b) b.innerText = "Exporting..."; });
+
+            try {
+                const { jsPDF } = window.jspdf;
+                const W = 1920;
+                const H = 1080;
+                const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [W, H] });
+                
+                // Exclude Contact page (id: 10)
+                const ids = chapters.filter(c => c.id !== 10).map(c => c.id);
+
+                for (let i = 0; i < ids.length; i++) {
+                    const el = document.getElementById(`chapter-${ids[i]}`);
+                    if (!el) continue;
+
+                    const canvas = await html2canvas(el, {
+                        scale: 1, 
+                        useCORS: true,
+                        backgroundColor: darkChapters.includes(ids[i]) ? '#050505' : '#FFFFFF',
+                        width: W,
+                        height: H,
+                        windowWidth: W,
+                        windowHeight: H,
+                        onclone: (clonedDoc) => {
+                             // Hide Nav elements in PDF
+                             clonedDoc.querySelectorAll('[data-pdf-hide]').forEach(e => e.style.display = 'none');
+                             
+                             const section = clonedDoc.getElementById(`chapter-${ids[i]}`);
+                             if (section) {
+                                section.style.width = '1920px';
+                                section.style.height = '1080px';
+                                section.style.overflow = 'hidden';
+                                section.style.padding = '0';
+                                section.style.display = 'flex'; 
+                                // Ensure text is visible (force opacity 1)
+                                const content = section.querySelector('.reveal-content');
+                                if(content) {
+                                    content.style.opacity = '1';
+                                    content.style.transform = 'translateY(0)';
+                                }
+                             }
+                        }
+                    });
+
+                    const img = canvas.toDataURL('image/jpeg', 0.9);
+                    if (i > 0) pdf.addPage([W, H], 'landscape');
+                    pdf.addImage(img, 'JPEG', 0, 0, W, H);
+                }
+
+                pdf.save('WME_TalentEarth_Brief.pdf');
+            } catch (e) {
+                console.error(e);
+                alert('PDF Generation failed.');
+            } finally {
+                isGeneratingPdf = false;
+                btns.forEach(b => { if(b) b.innerText = "Save PDF" || "Download Brief"; });
+            }
+        }
+    </script>
+</body>
+</html>
