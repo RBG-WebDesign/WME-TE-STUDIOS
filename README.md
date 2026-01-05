@@ -1,2 +1,73 @@
-WME+ | Executive BriefPowered by Talent Earth StudiosThis repository contains the source code for the WME+ Interactive Executive Brief, a single-page React application designed to position the WME+ partnership as an institutional execution layer for below-the-line talent.Unlike a standard marketing website, this application functions as a digital dossier—an authoritative, scroll-driven narrative that explains the business model, operating standards, and commercial structure to executive stakeholders.1. Core ObjectivesInstitutional Authority: Establishes WME+ not as a "gig marketplace," but as a managed representation layer.Operational Clarity: defining the specific role split: WME originates the deal, Talent Earth operates the delivery.Risk Management: explicitly addressing compliance, insurance, and scope control (the "Standards" chapter).Sales Enablement: Includes a functional PDF export feature that generates a clean, landscape-format pitch deck for internal circulation.2. Design System: "WME Institutional"The design system is rigorously stripped back to convey trust and legacy. It avoids "startup" tropes (gradients, bouncing buttons, friendly illustrations) in favor of a "Swiss Grotesk" editorial aesthetic.TypographyFont Family: Inter (Google Fonts), configured to mimic Neue Haas Grotesk.Headlines (.wme-tight): Semi-bold weight with tight tracking (-0.03em).Labels (.wme-track): All-caps, small size, wide tracking (0.12em).Numerics (.tabular-nums): Monospace alignment for financial and data points to ensure professional readability.Color PalettePrimary: Black (#000000) and White (#FFFFFF).Text: Gray-500 for labels, Gray-400 for supporting text.Accent: Muted Gold (#C5A059) used sparingly for active states and critical emphasis.Brand: WME Red (#FA1200) used exclusively for the "+" symbol in the logotype.3. Chapter StructureThe application is organized into 11 scroll-snapped chapters, forming a coherent linear narrative:Thesis: The core proposition ("We represent crews, shops, and technical teams").Gap: The problem statement (Vendor lists vs. Representation).Shift: The market context (Complexity requires teams, not individuals).Model: The engagement loop (Scope -> Assemble -> Manage -> Deliver).Standards: The risk management layer (Scope lock, QA gates, Compliance).Economics: The commercial model (Cost Plus Fixed Fee / CPFF).Cases: Proof of capability (Touring, Retail, Broadcast examples).Fit: Strategic alignment with WME's existing agency model.Coverage: The disciplines covered (Fabrication, Systems, Production, etc.).Rollout: The phased launch plan (Pilot -> Roster -> Scale).Contact: The call to action (Internal Walkthrough).4. Technical ImplementationStackFramework: React (Single File Component structure).Styling: Tailwind CSS + Custom CSS variables for typography tokens.Icons: lucide-react.PDF Generation: html2canvas and jspdf (loaded via CDN).Key FeaturesPDF Export EngineThe downloadDeckPdf function allows users to download the brief as a physical document.Landscape Enforcement: Forces the capture context to 1920x1080 regardless of the user's viewport size.Clean Capture: Uses data-pdf-hide attributes to strip navigation and UI controls from the generated PDF.Exclusion Logic: Automatically excludes the final "Contact" slide from the PDF to keep the document focused on strategy.Navigation LogicScroll Snapping: Uses snap-proximity for a controlled but not coercive scroll experience.Intersection Observer: Tracks the active chapter in the viewport to update the "Now Viewing" label and progress indicator.Keyboard Support: Supports ArrowUp, ArrowDown, ArrowLeft, and ArrowRight for presentation-style navigation.5. UsageThis is a self-contained React component (TalentEarthStudios.jsx).Drop-in: Place the file into your React project's src folder.Dependencies: Ensure Tailwind CSS is configured. Install lucide-react.External Scripts: The component automatically injects the required Google Fonts and PDF libraries from CDNs upon mounting. No npm install is strictly required for the PDF functionality, though lucide-react is needed for icons.npm install lucide-react
-6. Content Governance (Do's & Don'ts)DO use specific numbers (e.g., "6–18 weeks", "15% fee").DO use operational language ("Scope Lock", "Risk Register").DO NOT use startup slogans ("Disrupting the industry", "Reimagining talent").DO NOT use "open marketplace" language ("Sign up", "Browse talent", "Post a job").
+# WME+ Interactive Executive Brief
+
+This repo contains a single page React app used to present the WME+ partnership as an execution and delivery layer for below the line work.
+
+It is not a marketing site. It is meant to function like a structured brief or internal deck that can be scrolled, presented, or exported as a PDF.
+
+---
+
+## What this is
+
+- A scroll driven React experience
+- Structured like an executive narrative, not a landing page
+- Designed to explain the operating model, standards, and economics
+- Can be exported as a clean landscape PDF for internal use
+
+---
+
+## Structure
+
+The app is broken into sequential chapters that tell one linear story:
+
+- Thesis
+- Gap
+- Shift
+- Model
+- Standards
+- Economics
+- Cases
+- Fit
+- Coverage
+- Rollout
+- Contact
+
+Each chapter fills the viewport and snaps on scroll.
+
+---
+
+## Tech Stack
+
+- React
+- Tailwind CSS
+- lucide-react for icons
+- html2canvas and jspdf for PDF export
+
+Everything lives in a single component file.
+
+---
+
+## Key Features
+
+### PDF Export
+
+- Captures each chapter as a slide
+- Forces a 1920x1080 landscape layout
+- Hides navigation and UI elements during capture
+- Excludes the final Contact section from the PDF
+
+### Navigation
+
+- Scroll snap for controlled navigation
+- IntersectionObserver to track the active chapter
+- Keyboard support using arrow keys
+
+---
+
+## Usage
+
+- Drop the component into a React project
+- Make sure Tailwind is configured
+- Install icons
+
+```bash
+npm install lucide-react
