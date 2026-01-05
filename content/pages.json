@@ -1,0 +1,81 @@
+{
+  "home": {
+    "badgeText": "Q4 Infrastructure Update",
+    "headline1": "Industrial",
+    "headlineEmphasis": "Hydrogen",
+    "headline3": "Resilience.",
+    "subheadline": "Integrated production, storage, and dispensing infrastructure designed for warehouse logistics and heavy transport.",
+    "primaryCtaLabel": "Technical Datasheet",
+    "secondaryCtaLabel": "Request Site Evaluation",
+    "stats": [
+      {
+        "label": "Daily Output",
+        "value": "225 kg / Pod"
+      },
+      {
+        "label": "Refuel Time",
+        "value": "3.5 Minutes"
+      },
+      {
+        "label": "Purity Grade",
+        "value": "99.999%"
+      },
+      {
+        "label": "Tax Incentives",
+        "value": "45V Optimized"
+      }
+    ]
+  },
+  "technology": {
+    "title": "Hydrogen Approach",
+    "eyebrow": "System Loop",
+    "sectionTitle": "Integrated Deployment",
+    "p1": "Traditional hydrogen logistics suffer from high transport costs and energy loss. Rockwell H2 eliminates these variables by housing the entire production loop within a site-integrated footprint.",
+    "p2": "Our PowerPods bridge the gap between intermittent renewable power and mission-critical work.",
+    "features": [
+      {
+        "icon": "settings",
+        "title": "Modularity",
+        "body": "Stackable units from 250kW to 10MW+ capacity."
+      },
+      {
+        "icon": "zap",
+        "title": "Efficiency",
+        "body": "Optimized for low-carbon intensity (CI) scores."
+      }
+    ]
+  },
+  "specs": {
+    "title": "Engineering Specs",
+    "rows": [
+      {
+        "parameter": "H2 Output",
+        "pp250": "90 - 225 kg/Day",
+        "pp1000": "450 - 1,000 kg/Day"
+      },
+      {
+        "parameter": "Max Pressure",
+        "pp250": "450 Bar",
+        "pp1000": "700 Bar"
+      },
+      {
+        "parameter": "Power Input",
+        "pp250": "250 kW AC",
+        "pp1000": "1 MW+ AC/DC"
+      }
+    ],
+    "buttonLabel": "Request Full Datasheet"
+  },
+  "generic": {
+    "solutionsTitle": "Integrated Solutions",
+    "solutionsBody": "Rockwell H2 provides turnkey solutions for Port Logistics, Warehousing, and Remote Microgrids. Each deployment includes our modular PowerPod hardware cluster managed by an integrated software monitoring layer.",
+    "companyTitle": "About Rockwell H2",
+    "companyBody": "Founded on the principle of industrial resilience, Rockwell H2 Systems engineers the hardware necessary to decarbonize the global supply chain. We focus on mid-stream infrastructure that bridges renewable generation with heavy-duty consumption.",
+    "contactTitle": "Inquiry Routing",
+    "contactBody": "Select your inquiry path to be connected with our regional engineering or investment teams. We maintain response times under 48 hours for institutional partners.",
+    "safetyTitle": "Safety Standards",
+    "safetyBody": "Safety is our fundamental engineering constraint. Rockwell H2 pods are NFPA 2 and ASME B31.12 compliant, featuring triple-redundant pressure relief and automated leak mitigation systems.",
+    "taxTitle": "Incentives (45V)",
+    "taxBody": "The Inflation Reduction Act (IRA) provides significant production tax credits for clean hydrogen. Rockwell H2 pods are engineered to qualify for the highest tiers ($3.00/kg) by utilizing site-integrated renewable assets."
+  }
+}

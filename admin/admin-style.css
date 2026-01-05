@@ -1,0 +1,141 @@
+/* admin-style.css
+   Global CSS overrides for Decap CMS (Netlify CMS) admin UI
+   Drop this file next to your /admin/index.html and link it with:
+   <link rel="stylesheet" href="admin-style.css" />
+*/
+
+/* Typography + Base */
+html, body {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif !important;
+  background-color: #f8fafc !important; /* Soft light gray background */
+  color: #0f172a !important; /* Slate-900 */
+}
+
+/* Improve default text rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 1. Header Styling */
+nav[class*="AppHeader"] {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+}
+
+/* Header title and controls */
+nav[class*="AppHeader"] * {
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+/* 2. Sidebar Customization */
+aside[class*="SidebarContainer"] {
+  background-color: #ffffff !important;
+  border-right: 1px solid #e2e8f0 !important;
+  padding-top: 20px !important;
+}
+
+/* Sidebar Links */
+a[class*="SidebarNavLink"] {
+  font-weight: 500 !important;
+  border-radius: 10px !important;
+  margin: 4px 12px !important;
+  padding: 10px 12px !important;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease !important;
+}
+
+a[class*="SidebarNavLink"]:hover {
+  background-color: #f1f5f9 !important; /* Slate-100 */
+  transform: translateY(-1px);
+}
+
+a[class*="SidebarNavLinkActive"] {
+  background-color: #eff6ff !important; /* Soft blue active state */
+  color: #2563eb !important; /* Blue-600 */
+}
+
+/* 3. Main content background and spacing */
+main[class*="AppMain"] {
+  background: #f8fafc !important;
+}
+
+/* 4. Card & List Styling */
+div[class*="Card"] {
+  border-radius: 14px !important;
+  border: 1px solid #e2e8f0 !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+div[class*="Card"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.10) !important;
+}
+
+/* List rows often render as cards in newer builds */
+div[class*="ListCard"],
+div[class*="CollectionCard"],
+div[class*="EntryCard"] {
+  border-radius: 14px !important;
+  border: 1px solid #e2e8f0 !important;
+  background-color: #ffffff !important;
+}
+
+/* 5. Buttons */
+button[class*="Button"],
+a[class*="Button"] {
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
+}
+
+/* Primary button refinement */
+button[class*="Button"][class*="Primary"],
+a[class*="Button"][class*="Primary"] {
+  background: #2563eb !important;
+  border-color: #2563eb !important;
+}
+
+button[class*="Button"][class*="Primary"]:hover,
+a[class*="Button"][class*="Primary"]:hover {
+  filter: brightness(0.97);
+}
+
+/* 6. Inputs */
+input, textarea, select,
+div[class*="Field"] input,
+div[class*="Field"] textarea,
+div[class*="Field"] select {
+  border-radius: 10px !important;
+  border: 1px solid #cbd5e1 !important; /* Slate-300 */
+  background-color: #ffffff !important;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none !important;
+  border-color: #60a5fa !important; /* Blue-400 */
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12) !important;
+}
+
+/* 7. Modals and panels */
+div[class*="Modal"],
+div[class*="Dialog"],
+div[class*="Overlay"] div[class*="Card"] {
+  border-radius: 16px !important;
+}
+
+/* 8. Subtle scrollbar for desktop */
+@media (min-width: 900px) {
+  ::-webkit-scrollbar { width: 12px; height: 12px; }
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 999px;
+    border: 3px solid #f8fafc;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+}

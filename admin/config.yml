@@ -1,0 +1,107 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Enable the 'Workflow' tab for a professional 'Draft/Review/Ready' UI
+publish_mode: editorial_workflow
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+# Branding the CMS
+display_url: https://your-site-url.com
+logo_url: https://your-site-url.com/logo-for-cms.png
+
+collections:
+  - name: "settings"
+    label: "⚙️ Site Settings"
+    delete: false
+    editor:
+      preview: false
+    files:
+      - name: "general"
+        label: "General Configuration"
+        file: "content/settings.json"
+        format: "json"
+        fields:
+          - { label: "Site Title", name: "siteTitle", widget: "string", hint: "The name that appears in browser tabs." }
+          - { label: "Logo Image", name: "logoImage", widget: "image", required: false, hint: "Upload a high-res PNG or SVG." }
+          - { label: "Logo Alt Text", name: "logoAlt", widget: "string", required: false }
+          - { label: "LinkedIn URL", name: "linkedinUrl", widget: "string", required: false }
+          - { label: "Instagram URL", name: "instagramUrl", widget: "string", required: false }
+          - { label: "Footer Description", name: "footerDescription", widget: "text", required: false }
+          - { label: "HQ Block", name: "hqBlock", widget: "text", required: false, hint: "Physical address or headquarter details." }
+
+  - name: "pages"
+    label: "📄 Page Content"
+    delete: false
+    files:
+      - name: "pages"
+        label: "Website Pages"
+        file: "content/pages.json"
+        format: "json"
+        fields:
+          # --- HOME PAGE ---
+          - label: "🏠 Home Page Hero"
+            name: "home"
+            widget: "object"
+            fields:
+              - { label: "Badge Text", name: "badgeText", widget: "string", hint: "Small text above the headline (e.g. 'NEW RELEASE')." }
+              - { label: "Headline Line 1", name: "headline1", widget: "string" }
+              - { label: "Headline Emphasis", name: "headlineEmphasis", widget: "string", hint: "The part of the headline that is highlighted or italicized." }
+              - { label: "Headline Line 3", name: "headline3", widget: "string" }
+              - { label: "Subheadline", name: "subheadline", widget: "text" }
+              - { label: "Primary CTA Label", name: "primaryCtaLabel", widget: "string" }
+              - { label: "Secondary CTA Label", name: "secondaryCtaLabel", widget: "string" }
+              - label: "Stat Cards"
+                name: "stats"
+                widget: "list"
+                # Summary makes the list view beautiful and scannable
+                summary: '{{fields.label}}: {{fields.value}}'
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Value", name: "value", widget: "string" }
+
+          # --- TECHNOLOGY PAGE ---
+          - label: "⚡ Technology Section"
+            name: "technology"
+            widget: "object"
+            fields:
+              - { label: "Page Title", name: "title", widget: "string" }
+              - { label: "Section Eyebrow", name: "eyebrow", widget: "string" }
+              - { label: "Section Title", name: "sectionTitle", widget: "string" }
+              - { label: "Paragraph 1", name: "p1", widget: "text" }
+              - { label: "Paragraph 2", name: "p2", widget: "text" }
+              - label: "Feature Cards"
+                name: "features"
+                widget: "list"
+                summary: '{{fields.title}}'
+                fields:
+                  - { label: "Icon Name", name: "icon", widget: "string", hint: "Use Lucide icon names (e.g., 'bolt', 'cpu')." }
+                  - { label: "Title", name: "title", widget: "string" }
+                  - { label: "Body Text", name: "body", widget: "string" }
+
+          # --- SPECS PAGE ---
+          - label: "📊 Product Specifications"
+            name: "specs"
+            widget: "object"
+            fields:
+              - { label: "Page Title", name: "title", widget: "string" }
+              - label: "Comparison Table Rows"
+                name: "rows"
+                widget: "list"
+                summary: '{{fields.parameter}}'
+                fields:
+                  - { label: "Parameter Name", name: "parameter", widget: "string", hint: "e.g. 'Battery Life' or 'Max Speed'" }
+                  - { label: "PowerPod 250 Value", name: "pp250", widget: "string" }
+                  - { label: "PowerPod 1000 Value", name: "pp1000", widget: "string" }
+              - { label: "Bottom Button Label", name: "buttonLabel", widget: "string" }
+
+          # --- GENERIC CONTENT ---
+          - label: "📝 Standard Page Copy"
+            name: "generic"
+            widget: "object"
+            fields:
+              - { label: "Solutions Body", name: "solutionsBody", widget: "markdown", hint: "Rich text editor for the Solutions page." }
+              - { label: "Company Body", name: "companyBody", widget: "markdown" }
+              - { label: "Contact Body", name: "contactBody", widget: "markdown" }
