@@ -323,7 +323,8 @@
         <div class="max-w-5xl mx-auto px-6 relative z-10">
             
             <div class="flex justify-between items-center mb-8">
-                <button onclick="window.history.back();" id="back-btn" class="flex items-center gap-2 text-xs uppercase tracking-widest text-slate-500 hover:text-white group focus:outline-none">
+                <!-- Changed onclick from window.history.back() to returnFromProfile() -->
+                <button onclick="returnFromProfile();" id="back-btn" class="flex items-center gap-2 text-xs uppercase tracking-widest text-slate-500 hover:text-white group focus:outline-none">
                     <i class="ph ph-arrow-left group-hover:-translate-x-1 transition-transform"></i>
                     Return
                 </button>
@@ -590,10 +591,18 @@
             }).join('');
         }
 
+        // --- NAVIGATION STATE ---
+        let lastView = 'home';
+
         // --- OPEN PROFILE (ADAPTIVE) ---
         function openProfile(key, type) {
             let data;
             
+            // Set return path based on source type
+            if (type === 'talent') lastView = 'talent';
+            else if (type === 'team') lastView = 'teams';
+            else if (type === 'project') lastView = 'projects';
+
             // Reset sections visibility
             document.getElementById('roster-section').classList.add('hidden');
             document.getElementById('risks-section').classList.add('hidden');
@@ -705,6 +714,10 @@
             setActiveView('profile');
         }
 
+        function returnFromProfile() {
+            navigateTo(lastView);
+        }
+
         // --- VIEW MANAGER ---
         const views = {
             home: document.getElementById('view-home'),
@@ -753,6 +766,7 @@
         }
 
         window.navigateTo = setActiveView;
+        window.returnFromProfile = returnFromProfile;
         // window.openProfile is defined above
 
         // Initialize
