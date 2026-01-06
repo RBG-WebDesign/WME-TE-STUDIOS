@@ -14,7 +14,7 @@
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-    <!-- Tailwind Config (MUST BE BEFORE TAILWIND SCRIPT) -->
+    <!-- Tailwind Config -->
     <script>
         tailwind = {
             config: {
@@ -50,33 +50,28 @@
             background-color: #030508;
             color: #94A3B8;
             overflow-x: hidden;
-            /* Prevent text selection cursor on interactions globally */
             user-select: none;
             -webkit-user-select: none;
-            cursor: default; /* Prevents I-beam cursor in empty space */
+            cursor: default;
         }
 
-        /* Allow text selection only where it matters */
         .select-text {
             user-select: text;
             -webkit-user-select: text;
             cursor: text;
         }
 
-        /* Explicitly prevent selection on interactables */
         button, nav, a, .cursor-pointer {
             user-select: none;
             -webkit-user-select: none;
         }
 
-        /* Input needs to allow selection/typing */
         input {
             user-select: text !important;
             -webkit-user-select: text !important;
             cursor: text;
         }
 
-        /* Architectural Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -91,7 +86,6 @@
             background: #2D3748;
         }
 
-        /* Grid Lines for "System" feel */
         .grid-bg {
             background-image: linear-gradient(#1E2530 1px, transparent 1px),
             linear-gradient(90deg, #1E2530 1px, transparent 1px);
@@ -114,10 +108,9 @@
             height: 100vh;
             z-index: 0;
             pointer-events: none;
-            transition: opacity 0.5s ease-in-out; /* Matched to view transition */
+            transition: opacity 0.5s ease-in-out;
         }
 
-        /* Image styling */
         .profile-img {
             filter: grayscale(100%) contrast(110%);
             transition: filter 0.5s ease;
@@ -126,7 +119,6 @@
             filter: grayscale(0%) contrast(100%);
         }
         
-        /* Checkbox styling hacks */
         input[type="checkbox"]:checked + div {
             background-color: #475569;
             border-color: #cbd5e1;
@@ -140,7 +132,8 @@
 
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center mix-blend-difference select-none">
-        <div class="text-white font-medium tracking-tight text-lg z-50 cursor-pointer" onclick="navigateTo('home')">
+        <!-- Increased Logo Size -->
+        <div class="text-white font-medium tracking-tight text-2xl z-50 cursor-pointer" onclick="navigateTo('home')">
             WME<span class="text-slate-500 font-light">+</span>
         </div>
         
@@ -157,13 +150,15 @@
         
         <!-- Hero Section -->
         <section class="h-screen flex items-center px-8 sm:px-16 lg:px-24">
-            <div class="max-w-xl">
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-light text-white leading-tight mb-6 select-none">
-                    A representation layer <br>
-                    <span class="text-slate-500">for those who build.</span>
+            <div class="max-w-3xl">
+                <!-- Updated Headline Size and Text -->
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-light text-white leading-tight mb-8 select-none">
+                    A representation layer<br>
+                    <span class="text-slate-500">for those who create.</span>
                 </h1>
-                <p class="text-sm md:text-base text-slate-400 font-light leading-relaxed max-w-md border-l border-slate-800 pl-4 select-text">
-                    Designers, technologists, fabricators, production teams, and operators represented through a managed execution system.
+                <!-- Updated Overview Text -->
+                <p class="text-lg md:text-xl text-slate-400 font-light leading-relaxed max-w-2xl border-l border-slate-800 pl-6 select-text">
+                    Designers, engineers, fabricators, and operators represented through a managed execution system built for real production.
                 </p>
                 
                 <div class="mt-12 flex gap-6 text-xs uppercase tracking-widest text-slate-500 select-none">
@@ -173,7 +168,7 @@
                     </div>
                     <div class="flex items-center gap-2">
                         <div class="w-1 h-1 bg-slate-600 rounded-full"></div>
-                        Global Nodes: 142
+                        Global Nodes: 247
                     </div>
                 </div>
             </div>
@@ -184,7 +179,6 @@
             <div class="max-w-7xl mx-auto px-6 sm:px-12 pt-32 space-y-16">
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Panel 1 -->
                     <div class="glass-panel p-8 min-h-[320px] flex flex-col justify-between group hover:border-slate-700 transition-colors duration-500 cursor-default">
                         <div class="text-xs font-mono text-slate-600 mb-4">01 // REPRESENTATION</div>
                         <div>
@@ -196,7 +190,6 @@
                         <div class="w-full h-px bg-slate-800 mt-8 group-hover:bg-slate-600 transition-colors"></div>
                     </div>
 
-                    <!-- Panel 2 -->
                     <div class="glass-panel p-8 min-h-[320px] flex flex-col justify-between group hover:border-slate-700 transition-colors duration-500 cursor-default">
                         <div class="text-xs font-mono text-slate-600 mb-4">02 // ASSEMBLY</div>
                         <div>
@@ -208,7 +201,6 @@
                         <div class="w-full h-px bg-slate-800 mt-8 group-hover:bg-slate-600 transition-colors"></div>
                     </div>
 
-                    <!-- Panel 3 -->
                     <div class="glass-panel p-8 min-h-[320px] flex flex-col justify-between group hover:border-slate-700 transition-colors duration-500 cursor-default">
                         <div class="text-xs font-mono text-slate-600 mb-4">03 // DELIVERY</div>
                         <div>
@@ -221,7 +213,6 @@
                     </div>
                 </div>
 
-                <!-- Domains Overview Panel -->
                 <div class="glass-panel p-8 border border-wme-border">
                     <div class="text-xs font-mono text-slate-600 mb-4">EXECUTION DOMAINS</div>
                     <div class="flex flex-wrap gap-2 text-xs font-mono text-slate-400 select-none">
@@ -253,88 +244,97 @@
     <!-- VIEW: TALENT -->
     <main id="view-talent" class="relative z-10 w-full min-h-screen bg-wme-base hidden opacity-0 transition-opacity duration-500 pt-24 pb-12">
         <div class="absolute inset-0 grid-bg pointer-events-none z-0"></div>
-        
         <div class="max-w-[1600px] mx-auto px-6 relative z-10 h-full flex flex-col md:flex-row gap-8">
-            
-            <!-- Filters Sidebar -->
             <aside class="w-full md:w-64 flex-shrink-0 pt-4">
                 <div class="sticky top-32 select-none">
-                    
                     <div>
-                        <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4 border-b border-slate-800 pb-2">
-                            Index
-                        </h4>
-
-                        <!-- Search -->
+                        <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4 border-b border-slate-800 pb-2">Index</h4>
                         <div class="mb-6">
                             <label class="text-[10px] font-mono text-slate-600 block mb-2">SEARCH</label>
                             <div class="flex items-center gap-2 border border-slate-800 bg-wme-panel px-3 py-2">
                                 <i class="ph ph-magnifying-glass text-slate-600 text-xs"></i>
-                                <input
-                                    id="talent-search"
-                                    type="text"
-                                    placeholder="Name, role, capability"
-                                    class="w-full bg-transparent outline-none text-sm text-slate-300 placeholder:text-slate-600 focus:outline-none"
-                                />
+                                <input id="talent-search" type="text" placeholder="Name, role, capability" class="w-full bg-transparent outline-none text-sm text-slate-300 placeholder:text-slate-600 focus:outline-none" />
                             </div>
                         </div>
-
-                        <!-- Execution Domains -->
                         <div>
                             <label class="text-[10px] font-mono text-slate-600 block mb-3">EXECUTION DOMAINS</label>
-                            <div id="domain-filters" class="space-y-2">
-                                <!-- injected by JS -->
-                            </div>
-
-                            <button
-                                id="clear-filters"
-                                class="mt-4 text-[10px] uppercase tracking-widest text-slate-500 hover:text-white transition-colors focus:outline-none"
-                                type="button"
-                            >
-                                Clear Filters
-                            </button>
+                            <div id="domain-filters" class="space-y-2"></div>
+                            <button id="clear-filters" class="mt-4 text-[10px] uppercase tracking-widest text-slate-500 hover:text-white transition-colors focus:outline-none" type="button">Clear Filters</button>
                         </div>
                     </div>
-
                     <div class="pt-8 mt-8 border-t border-slate-800">
-                        <div class="text-[10px] text-slate-600 font-mono">
-                            SYSTEM STATUS: ONLINE<br>
-                            LATENCY: 12ms
-                        </div>
+                        <div class="text-[10px] text-slate-600 font-mono">SYSTEM STATUS: ONLINE<br>LATENCY: 12ms</div>
                     </div>
                 </div>
             </aside>
-
-            <!-- Main Grid -->
             <div class="flex-1">
                 <div class="flex justify-between items-end mb-8 border-b border-slate-800 pb-4">
                     <h2 class="text-2xl font-light text-white">Talent Index</h2>
                     <span class="text-xs font-mono text-slate-500">SHOWING UNITS</span>
                 </div>
-
-                <!-- DYNAMIC GRID CONTAINER -->
-                <div id="talent-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- Cards will be injected here via renderTalentFromDB() -->
-                </div>
+                <div id="talent-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </div>
         </div>
     </main>
 
-    <!-- VIEW: PROFILE -->
+    <!-- VIEW: TEAMS -->
+    <main id="view-teams" class="relative z-10 w-full min-h-screen bg-wme-base hidden opacity-0 transition-opacity duration-500 pt-24 pb-12">
+        <div class="absolute inset-0 grid-bg pointer-events-none z-0"></div>
+        <div class="max-w-[1600px] mx-auto px-6 relative z-10 h-full flex flex-col md:flex-row gap-8">
+            <aside class="w-full md:w-64 flex-shrink-0 pt-4">
+                <div class="sticky top-32 space-y-8 select-none">
+                    <div>
+                        <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4 border-b border-slate-800 pb-2">Unit Type</h4>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-3 cursor-pointer group"><div class="w-3 h-3 border border-slate-600 bg-slate-600"></div><span class="text-sm text-white">Fabrication</span></label>
+                            <label class="flex items-center gap-3 cursor-pointer group"><div class="w-3 h-3 border border-slate-600 group-hover:border-white transition-colors"></div><span class="text-sm text-slate-400 group-hover:text-white transition-colors">VFX / Post</span></label>
+                            <label class="flex items-center gap-3 cursor-pointer group"><div class="w-3 h-3 border border-slate-600 group-hover:border-white transition-colors"></div><span class="text-sm text-slate-400 group-hover:text-white transition-colors">Systems</span></label>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <div class="flex-1">
+                <div class="flex justify-between items-end mb-8 border-b border-slate-800 pb-4">
+                    <h2 class="text-2xl font-light text-white">Operational Units</h2>
+                    <span class="text-xs font-mono text-slate-500">SHOWING 7 TEAMS</span>
+                </div>
+                <!-- Dynamic Teams Grid -->
+                <div id="team-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- VIEW: PROJECTS -->
+    <main id="view-projects" class="relative z-10 w-full min-h-screen bg-wme-base hidden opacity-0 transition-opacity duration-500 pt-24 pb-12">
+        <div class="absolute inset-0 grid-bg pointer-events-none z-0"></div>
+        <div class="max-w-[1600px] mx-auto px-6 relative z-10 h-full">
+            <div class="flex justify-between items-end mb-12 border-b border-slate-800 pb-4">
+                <h2 class="text-2xl font-light text-white">Active Scope</h2>
+                <span class="text-xs font-mono text-slate-500">Q1 2026 EXECUTION</span>
+            </div>
+            <!-- Dynamic Projects Grid -->
+            <div id="project-grid" class="grid grid-cols-1 gap-4"></div>
+        </div>
+    </main>
+
+    <!-- VIEW: PROFILE (Unified for Talent, Teams, Projects) -->
     <main id="view-profile" class="relative z-10 w-full min-h-screen bg-wme-base hidden opacity-0 transition-opacity duration-500 pt-24 pb-12">
         <div class="absolute inset-0 grid-bg pointer-events-none z-0"></div>
         <div class="max-w-5xl mx-auto px-6 relative z-10">
             
-            <button onclick="navigateTo('talent')" class="flex items-center gap-2 text-xs uppercase tracking-widest text-slate-500 hover:text-white mb-8 group focus:outline-none">
-                <i class="ph ph-arrow-left group-hover:-translate-x-1 transition-transform"></i>
-                Return to Index
-            </button>
+            <div class="flex justify-between items-center mb-8">
+                <button onclick="window.history.back();" id="back-btn" class="flex items-center gap-2 text-xs uppercase tracking-widest text-slate-500 hover:text-white group focus:outline-none">
+                    <i class="ph ph-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+                    Return
+                </button>
+            </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <!-- Profile Left -->
                 <div class="col-span-1">
-                    <div class="w-full aspect-square bg-slate-800 mb-6 overflow-hidden border border-wme-border">
-                        <img id="profile-img-lg" src="" class="w-full h-full object-cover filter grayscale contrast-125 select-none" alt="Profile">
+                    <div class="w-full aspect-square bg-slate-800 mb-6 overflow-hidden border border-wme-border relative">
+                        <img id="profile-img-lg" src="" class="w-full h-full object-cover filter grayscale contrast-125 select-none transition-all duration-700" alt="Profile">
+                        <div id="profile-img-overlay" class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                     </div>
                     
                     <div class="space-y-6">
@@ -346,11 +346,11 @@
                             <span class="text-[10px] font-mono text-slate-600 block mb-1">LOCATION</span>
                             <span id="profile-location" class="text-sm text-slate-300">Los Angeles, CA</span>
                         </div>
-                        <div>
+                        <div id="rate-block">
                             <span class="text-[10px] font-mono text-slate-600 block mb-1">RATE CARD</span>
                             <span id="profile-rate" class="text-sm text-slate-300">Tier 1 // Senior</span>
                         </div>
-                         <button class="w-full py-3 border border-slate-700 text-xs uppercase tracking-widest text-white hover:bg-white hover:text-black transition-colors focus:outline-none">
+                         <button id="action-btn" class="w-full py-3 border border-slate-700 text-xs uppercase tracking-widest text-white hover:bg-white hover:text-black transition-colors focus:outline-none">
                             Request Hold
                         </button>
                     </div>
@@ -368,119 +368,31 @@
 
                     <div class="space-y-12 select-text">
                         <section>
-                            <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-4">Professional Overview</h3>
-                            <p id="profile-bio" class="text-slate-400 font-light leading-relaxed">
-                                Bio goes here.
-                            </p>
+                            <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-4">Overview</h3>
+                            <p id="profile-bio" class="text-slate-400 font-light leading-relaxed">Bio goes here.</p>
                         </section>
 
-                        <section>
+                        <section id="capabilities-section">
                             <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-4">Capabilities</h3>
-                            <div id="profile-tags" class="flex flex-wrap gap-2">
-                                <!-- Tags injected via JS -->
-                            </div>
+                            <div id="profile-tags" class="flex flex-wrap gap-2"></div>
+                        </section>
+
+                        <!-- Team Roster Section (Hidden by default) -->
+                        <section id="roster-section" class="hidden">
+                            <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-4">Key Personnel</h3>
+                            <div id="profile-roster" class="flex gap-4"></div>
+                        </section>
+
+                        <!-- Project Risks Section (Hidden by default) -->
+                        <section id="risks-section" class="hidden">
+                            <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-4">Primary Risks</h3>
+                            <div id="profile-risks" class="grid grid-cols-2 gap-4"></div>
                         </section>
 
                         <section>
-                            <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-4">Selected Work</h3>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="bg-wme-panel border border-wme-border p-4 h-32 flex items-center justify-center text-xs text-slate-600 font-mono">
-                                    PROJECT ALPHA
-                                </div>
-                                <div class="bg-wme-panel border border-wme-border p-4 h-32 flex items-center justify-center text-xs text-slate-600 font-mono">
-                                    PROJECT BETA
-                                </div>
-                            </div>
+                            <h3 class="text-xs font-bold text-white uppercase tracking-widest mb-4" id="work-label">Selected Work</h3>
+                            <div id="profile-work" class="grid grid-cols-2 gap-4"></div>
                         </section>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- VIEW: TEAMS -->
-    <main id="view-teams" class="relative z-10 w-full min-h-screen bg-wme-base hidden opacity-0 transition-opacity duration-500 pt-24 pb-12">
-        <div class="absolute inset-0 grid-bg pointer-events-none z-0"></div>
-        
-        <div class="max-w-[1600px] mx-auto px-6 relative z-10 h-full flex flex-col md:flex-row gap-8">
-            <aside class="w-full md:w-64 flex-shrink-0 pt-4">
-                <div class="sticky top-32 space-y-8 select-none">
-                    <div>
-                        <h4 class="text-xs font-bold text-white uppercase tracking-widest mb-4 border-b border-slate-800 pb-2">Unit Type</h4>
-                        <div class="space-y-2">
-                            <label class="flex items-center gap-3 cursor-pointer group">
-                                <div class="w-3 h-3 border border-slate-600 bg-slate-600"></div>
-                                <span class="text-sm text-white">Fabrication</span>
-                            </label>
-                            <label class="flex items-center gap-3 cursor-pointer group">
-                                <div class="w-3 h-3 border border-slate-600 group-hover:border-white transition-colors"></div>
-                                <span class="text-sm text-slate-400 group-hover:text-white transition-colors">VFX / Post</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-
-            <div class="flex-1">
-                <div class="flex justify-between items-end mb-8 border-b border-slate-800 pb-4">
-                    <h2 class="text-2xl font-light text-white">Operational Units</h2>
-                    <span class="text-xs font-mono text-slate-500">SHOWING 2 TEAMS</span>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                     <!-- Team Card 1 -->
-                     <article class="bg-wme-panel border border-wme-border p-6 hover:border-slate-600 transition-all duration-300 group cursor-pointer">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex -space-x-2">
-                                <div class="w-8 h-8 rounded-full bg-slate-700 border border-wme-panel"></div>
-                                <div class="w-8 h-8 rounded-full bg-slate-600 border border-wme-panel"></div>
-                                <div class="w-8 h-8 rounded-full bg-slate-500 border border-wme-panel"></div>
-                            </div>
-                            <span class="text-[10px] uppercase tracking-wider text-green-900 bg-green-900/20 px-2 py-1 border border-green-900/30">Available</span>
-                        </div>
-                        <h3 class="text-white font-medium text-xl mb-1 group-hover:text-blue-200 transition-colors">Unit 7: Fabrication</h3>
-                        <p class="text-slate-500 text-xs uppercase tracking-wider mb-6">Scenic, Steel, Automation</p>
-                        <div class="pt-4 border-t border-slate-800 flex justify-between items-center">
-                            <span class="text-[10px] text-slate-600 font-mono">ID: TEAM-07</span>
-                            <span class="text-xs text-white border-b border-transparent group-hover:border-white transition-all">View Manifest</span>
-                        </div>
-                    </article>
-
-                    <!-- Team Card 2 -->
-                     <article class="bg-wme-panel border border-wme-border p-6 hover:border-slate-600 transition-all duration-300 group cursor-pointer">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex -space-x-2">
-                                <div class="w-8 h-8 rounded-full bg-slate-700 border border-wme-panel"></div>
-                                <div class="w-8 h-8 rounded-full bg-slate-600 border border-wme-panel"></div>
-                            </div>
-                            <span class="text-[10px] uppercase tracking-wider text-green-900 bg-green-900/20 px-2 py-1 border border-green-900/30">Available</span>
-                        </div>
-                        <h3 class="text-white font-medium text-xl mb-1 group-hover:text-blue-200 transition-colors">Echo Lab</h3>
-                        <p class="text-slate-500 text-xs uppercase tracking-wider mb-6">VFX & Real-Time</p>
-                        <div class="pt-4 border-t border-slate-800 flex justify-between items-center">
-                            <span class="text-[10px] text-slate-600 font-mono">ID: TEAM-91</span>
-                            <span class="text-xs text-white border-b border-transparent group-hover:border-white transition-all">View Manifest</span>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- VIEW: PROJECTS -->
-    <main id="view-projects" class="relative z-10 w-full min-h-screen bg-wme-base hidden opacity-0 transition-opacity duration-500 pt-24 pb-12">
-        <div class="absolute inset-0 grid-bg pointer-events-none z-0"></div>
-        <div class="max-w-[1600px] mx-auto px-6 relative z-10 h-full">
-            <div class="flex justify-between items-end mb-12 border-b border-slate-800 pb-4">
-                <h2 class="text-2xl font-light text-white">Active Scope</h2>
-                <span class="text-xs font-mono text-slate-500">Q1 2026 EXECUTION</span>
-            </div>
-            <div class="grid grid-cols-1 gap-4">
-                <div class="bg-wme-panel border border-wme-border p-6 flex flex-col md:flex-row items-center gap-6 hover:border-slate-600 transition-colors group cursor-pointer">
-                    <div class="w-full md:w-48 h-24 bg-slate-800 flex items-center justify-center text-slate-600 font-mono text-xs">CONFIDENTIAL</div>
-                    <div class="flex-1">
-                        <h3 class="text-white text-lg font-medium">Project: Meridian</h3>
-                        <p class="text-slate-400 text-sm max-w-2xl">Global stadium tour infrastructure.</p>
                     </div>
                 </div>
             </div>
@@ -488,813 +400,106 @@
     </main>
 
     <script>
-        // --- TALENT DATA (EXPANDED) ---
-        // Domains are aligned to your DOMAINS list and your cards' data-domains format.
-        // Images use Unsplash portrait URLs as professional stock headshots.
-
+        // --- TALENT DATA ---
         const talentDB = {
-            // -------------------------
-            // TECHNICAL DIRECTION (5)
-            // -------------------------
-            'alex': {
-              name: 'Alex Chen',
-              role: 'Technical Director',
-              id: '994-A',
-              location: 'Los Angeles, CA',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=900&auto=format&fit=crop',
-              domains: ['Technical Direction', 'Interactive', 'Media'],
-              bio: 'Technical direction for real time pipelines and interactive systems. Leads multi vendor deployments, translates creative intent into stable delivery, and integrates show control with content and media servers.',
-              tags: ['TouchDesigner', 'Unreal Engine 5', 'Notch', 'Python', 'Media Servers', 'Systems Integration'],
-              rate: 'Tier 1 // Senior',
-              selectedWork: ['Tour Content Pipeline', 'Immersive Retail Flagship', 'Projection Mapping Calibration', 'Real Time Control Layer']
-            },
-            'mina': {
-              name: 'Mina Park',
-              role: 'Technical Director',
-              id: '477-T',
-              location: 'San Francisco, CA',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=900&auto=format&fit=crop',
-              domains: ['Technical Direction', 'Systems'],
-              bio: 'Senior technical director focused on scalable deployment patterns for interactive exhibits. Strong documentation practice, repeatable build standards, and commissioning workflows for multi site rollouts.',
-              tags: ['Unreal Engine', 'Disguise', 'Git', 'C++', 'Network Design', 'Deployment Standards'],
-              rate: 'Tier 1 // Senior',
-              selectedWork: ['Museum Rollout Program', 'Multi Site Media Standard', 'Hardware Spec Package', 'Commissioning Playbook']
-            },
-            'diego': {
-              name: 'Diego Alvarez',
-              role: 'Realtime Pipeline Lead',
-              id: '318-D',
-              location: 'Austin, TX',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=900&auto=format&fit=crop',
-              domains: ['Technical Direction', 'Media'],
-              bio: 'Realtime pipeline lead with emphasis on low latency playback systems and redundancy. Designs failover strategies, stable ingest, and repeatable showfile structures for touring environments.',
-              tags: ['Disguise', 'Notch', 'NDI', 'SMPTE', 'Failover', 'Showfile Architecture'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Stadium Redundancy Stack', 'Low Latency Playback', 'Tour Showfile Standards', 'Signal Monitoring Layer']
-            },
-            'naomi': {
-              name: 'Naomi Kline',
-              role: 'Technical Producer',
-              id: '604-P',
-              location: 'Chicago, IL',
-              status: 'Limited Availability',
-              statusColor: 'text-yellow-500',
-              img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=900&auto=format&fit=crop',
-              domains: ['Technical Direction', 'Operations'],
-              bio: 'Technical producer bridging design intent and field execution. Coordinates vendors, scopes deliverables, and manages technical risk, change control, and commissioning schedules.',
-              tags: ['Scoping', 'Change Control', 'Technical Riders', 'Vendor Coordination', 'QA Checklists'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Venue Technical Packages', 'Change Control System', 'Commissioning Schedule', 'Risk Register']
-            },
-            'jun': {
-              name: 'Jun Watanabe',
-              role: 'Systems TD',
-              id: '155-S',
-              location: 'Tokyo, JP',
-              status: 'On Contract',
-              statusColor: 'text-slate-500',
-              img: 'https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=900&auto=format&fit=crop',
-              domains: ['Technical Direction', 'Systems', 'Installation'],
-              bio: 'Systems technical direction with emphasis on venue integration and complex signal paths. Experienced in control room builds, multi format routing, and long run stability for permanent installs.',
-              tags: ['Signal Flow', 'Routing', 'Commissioning', 'Documentation', 'Long Run Stability'],
-              rate: 'Tier 1 // Senior',
-              selectedWork: ['Control Room Integration', 'Permanent Install Routing', 'Signal Spec Package', 'Stability Audit']
-            },
-
-            // -------------------------
-            // INTERACTIVE (5)
-            // -------------------------
-            'kira': {
-              name: 'Kira Solano',
-              role: 'Interactive Creative Technologist',
-              id: '712-I',
-              location: 'Brooklyn, NY',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1550525811-e5869dd03032?q=80&w=900&auto=format&fit=crop',
-              domains: ['Interactive', 'Media'],
-              bio: 'Interactive systems designer building robust sensor driven experiences. Focus on maintainable architectures, calibration tooling, and clean failure states for public facing installations.',
-              tags: ['TouchDesigner', 'Computer Vision', 'Depth Sensors', 'OSC', 'UX Systems', 'Calibration Tools'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Public CV Install', 'Sensor Calibration Toolkit', 'Interactive Show Control Bridge', 'Experience Reliability Pass']
-            },
-            'oliver': {
-              name: 'Oliver Grant',
-              role: 'Interactive Engineer',
-              id: '588-I',
-              location: 'Vancouver, BC',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=900&auto=format&fit=crop',
-              domains: ['Interactive', 'Systems'],
-              bio: 'Interactive engineer specializing in hardware and software integration for exhibits. Known for clean device abstraction layers, diagnostics, and uptime focused deployments.',
-              tags: ['C#', 'Unity', 'Serial IO', 'Diagnostics', 'Hardware Integration', 'QA Harnesses'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Exhibit Diagnostics Suite', 'Device Abstraction Layer', 'Uptime Hardening', 'On Site Commissioning']
-            },
-            'priya': {
-              name: 'Priya Nair',
-              role: 'Experience Prototyper',
-              id: '903-X',
-              location: 'Seattle, WA',
-              status: 'Limited Availability',
-              statusColor: 'text-yellow-500',
-              img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=900&auto=format&fit=crop',
-              domains: ['Interactive', 'Installation'],
-              bio: 'Rapid prototyping for interactive exhibits, focusing on feasibility validation and clean handoff to production. Strong at reducing complexity while preserving the core experience.',
-              tags: ['Rapid Prototyping', 'Arduino', 'Node', 'Installation Planning', 'Handoff Docs'],
-              rate: 'Tier 3 // Senior',
-              selectedWork: ['Feasibility Sprint', 'Prototype to Production Handoff', 'Interaction Spec', 'Install Readiness Pack']
-            },
-            'hassan': {
-              name: 'Hassan Malik',
-              role: 'Realtime Interaction Designer',
-              id: '274-R',
-              location: 'Dubai, AE',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1520975682030-1c25d7c1b5b6?q=80&w=900&auto=format&fit=crop',
-              domains: ['Interactive', 'Media', 'Technical Direction'],
-              bio: 'Realtime interaction design with emphasis on frame budget, latency management, and reliable input pipelines. Builds systems that survive show schedules and public usage.',
-              tags: ['UE5', 'Blueprint', 'Latency', 'Input Pipelines', 'Optimization', 'Show Constraints'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Low Latency Interaction', 'Frame Budget Pass', 'Input Pipeline Spec', 'Show Mode Stability']
-            },
-            'mei': {
-              name: 'Mei Tan',
-              role: 'Creative Technologist',
-              id: '661-C',
-              location: 'Singapore, SG',
-              status: 'On Contract',
-              statusColor: 'text-slate-500',
-              img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=900&auto=format&fit=crop',
-              domains: ['Interactive', 'Specialized'],
-              bio: 'Creative technologist for novel interaction modalities, haptics, and spatial audio pairings. Strong at designing durable interactions with clear operator controls.',
-              tags: ['Haptics', 'Spatial Audio', 'Interaction Design', 'Operator UX', 'Prototyping'],
-              rate: 'Tier 3 // Senior',
-              selectedWork: ['Haptics Pilot', 'Operator Controls UI', 'Interactive Spec Pack', 'QA Interaction Tests']
-            },
-
-            // -------------------------
-            // MEDIA (5)
-            // -------------------------
-            'elena': {
-              name: 'Elena Rostova',
-              role: 'Audio Engineer',
-              id: '339-A',
-              location: 'Berlin, DE',
-              status: 'Limited Availability',
-              statusColor: 'text-yellow-500',
-              img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=900&auto=format&fit=crop',
-              domains: ['Media', 'Systems'],
-              bio: 'FOH and systems engineer for touring and festival environments. Specialist in RF coordination under congestion, documentation driven deployment, and predictable results under pressure.',
-              tags: ['L-Acoustics', 'DiGiCo', 'RF Coordination', 'Dante', 'System Tuning', 'Comms'],
-              rate: 'Tier 1 // Senior',
-              selectedWork: ['Festival Mainstage', 'Tour Package Build', 'RF Dense Broadcast', 'Multi Room Corporate Audio']
-            },
-            'grant': {
-              name: 'Grant Holloway',
-              role: 'Media Server Engineer',
-              id: '510-M',
-              location: 'Las Vegas, NV',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=900&auto=format&fit=crop',
-              domains: ['Media', 'Systems'],
-              bio: 'Media server engineering for high pixel density builds. Designs reliable playback stacks, redundancy, and handoff processes that operators can trust on day one.',
-              tags: ['Disguise', 'Resolume', 'Playback', 'Redundancy', 'Signal Monitoring'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Redundant Playback Stack', 'Operator Handoff', 'Signal Monitoring Layer', 'Tour Media Package']
-            },
-            'anya': {
-              name: 'Anya Petrov',
-              role: 'Video Systems Engineer',
-              id: '109-V',
-              location: 'Prague, CZ',
-              status: 'On Contract',
-              statusColor: 'text-slate-500',
-              img: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=900&auto=format&fit=crop',
-              domains: ['Media', 'Compliance'],
-              bio: 'Video systems engineering with emphasis on signal integrity, documentation, and safety compliance. Delivers clean patching standards and field test procedures.',
-              tags: ['SDI', 'Fiber', 'EDID', 'Signal Integrity', 'Test Procedures', 'Documentation'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Signal Integrity Audit', 'Patching Standards', 'Fiber Network Plan', 'Field Test Procedures']
-            },
-            'samira': {
-              name: 'Samira Idris',
-              role: 'Broadcast Audio A2',
-              id: '784-B',
-              location: 'Atlanta, GA',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?q=80&w=900&auto=format&fit=crop',
-              domains: ['Media', 'Operations'],
-              bio: 'Broadcast audio support for live events, high channel counts, and fast changeovers. Strong comms discipline, RF troubleshooting, and calm execution during show conditions.',
-              tags: ['Broadcast Audio', 'RF', 'Comms', 'Patch Discipline', 'Fast Changeovers'],
-              rate: 'Tier 3 // Senior',
-              selectedWork: ['Live Broadcast Support', 'RF Troubleshooting', 'Comms Deployment', 'Multi Talent Workflow']
-            },
-            'tariq': {
-              name: 'Tariq Mensah',
-              role: 'Content Operations Lead',
-              id: '402-O',
-              location: 'Toronto, ON',
-              status: 'Limited Availability',
-              statusColor: 'text-yellow-500',
-              img: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=900&auto=format&fit=crop',
-              domains: ['Media', 'Operations', 'Technical Direction'],
-              bio: 'Content operations leadership for complex run of show timelines. Builds predictable ingest, naming conventions, approvals, and last mile delivery to playback systems.',
-              tags: ['Content Ops', 'Versioning', 'Approvals', 'Ingest', 'Run of Show', 'Delivery'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Ingest and Versioning', 'Approval Pipeline', 'Run of Show Pack', 'Playback Delivery']
-            },
-
-            // -------------------------
-            // SYSTEMS (5)
-            // -------------------------
-            'jun-sys': {
-              name: 'Jun Watanabe',
-              role: 'Systems TD',
-              id: '155-S',
-              location: 'Tokyo, JP',
-              status: 'On Contract',
-              statusColor: 'text-slate-500',
-              img: 'https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=900&auto=format&fit=crop',
-              domains: ['Systems', 'Installation'],
-              bio: 'Systems integration for permanent installs and control rooms. Designs routing, monitoring, and stable operational patterns for long run reliability.',
-              tags: ['Routing', 'Monitoring', 'Signal Flow', 'Commissioning', 'Long Run Stability'],
-              rate: 'Tier 1 // Senior',
-              selectedWork: ['Control Room Integration', 'Routing Standards', 'Monitoring Dashboard', 'Stability Audit']
-            },
-            'luka': {
-              name: 'Luka Novak',
-              role: 'Network Engineer',
-              id: '230-N',
-              location: 'Amsterdam, NL',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=900&auto=format&fit=crop',
-              domains: ['Systems', 'Compliance'],
-              bio: 'Network design for show critical systems. Focus on VLAN segmentation, predictable addressing, and fault tolerant topologies for touring and permanent builds.',
-              tags: ['VLAN', 'QoS', 'Redundancy', 'Switching', 'Monitoring', 'Topology Design'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Show Network Topology', 'VLAN Plan', 'Monitoring and Alerts', 'Failover Testing']
-            },
-            'rachel': {
-              name: 'Rachel Im',
-              role: 'Controls Engineer',
-              id: '911-C',
-              location: 'Seoul, KR',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=900&auto=format&fit=crop',
-              domains: ['Systems', 'Specialized'],
-              bio: 'Controls engineering for automation and safety interlocks. Builds reliable state machines, operator interfaces, and verification routines for show control environments.',
-              tags: ['PLC', 'State Machines', 'Safety Interlocks', 'HMI', 'Verification'],
-              rate: 'Tier 1 // Senior',
-              selectedWork: ['Automation Control Layer', 'Operator HMI', 'Safety Interlocks', 'Verification Protocol']
-            },
-            'ben': {
-              name: 'Ben Caldwell',
-              role: 'Systems Engineer',
-              id: '645-E',
-              location: 'Denver, CO',
-              status: 'Limited Availability',
-              statusColor: 'text-yellow-500',
-              img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=900&auto=format&fit=crop',
-              domains: ['Systems', 'Technical Direction'],
-              bio: 'Systems engineer bridging media, networks, and control. Strong at building documentation that survives handoff, and at diagnosing complex failure paths on site.',
-              tags: ['Signal Flow', 'Diagnostics', 'Documentation', 'Redundancy', 'Commissioning'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Field Diagnostics', 'Handoff Documentation', 'Redundancy Plan', 'Commissioning Support']
-            },
-            'ines': {
-              name: 'Ines Duarte',
-              role: 'Show Control Engineer',
-              id: '502-SC',
-              location: 'Lisbon, PT',
-              status: 'On Contract',
-              statusColor: 'text-slate-500',
-              img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=900&auto=format&fit=crop',
-              domains: ['Systems', 'Interactive', 'Installation'],
-              bio: 'Show control engineering for permanent installs, attractions, and multi zone experiences. Emphasis on deterministic triggers, logging, and operator friendly tooling.',
-              tags: ['Show Control', 'Timecode', 'Logging', 'Operator Tools', 'Deterministic Triggers'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Multi Zone Show Control', 'Logging Layer', 'Operator Tooling', 'Deterministic Trigger Spec']
-            },
-
-            // -------------------------
-            // FABRICATION (5)
-            // -------------------------
-            'tess': {
-              name: 'Tess Morgan',
-              role: 'Fabrication Supervisor',
-              id: '701-F',
-              location: 'Los Angeles, CA',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=900&auto=format&fit=crop',
-              domains: ['Fabrication', 'Build'],
-              bio: 'Fabrication supervision across scenic, steel, and mechanism builds. Strong at schedule control, shop QA, and build packages that reduce field surprises.',
-              tags: ['Shop QA', 'Scenic', 'Steel', 'Mechanisms', 'Field Readiness'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Shop Build Package', 'Field Fit Verification', 'QA Checklist', 'Delivery Coordination']
-            },
-            'emil': {
-              name: 'Emil Sørensen',
-              role: 'Lead Welder / Steel',
-              id: '333-W',
-              location: 'Copenhagen, DK',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=900&auto=format&fit=crop',
-              domains: ['Fabrication', 'Compliance'],
-              bio: 'Steel fabrication and structural support for touring builds. Experienced with documentation, load calculations, and safe rigging interfaces.',
-              tags: ['Steel', 'Welding', 'Load Paths', 'Rigging Interfaces', 'Safety'],
-              rate: 'Tier 3 // Senior',
-              selectedWork: ['Structural Support Build', 'Rigging Interface Plates', 'Load Path Review', 'Shop Signoff']
-            },
-            'monique': {
-              name: 'Monique Laurent',
-              role: 'Scenic Fabricator',
-              id: '818-SF',
-              location: 'Montreal, QC',
-              status: 'Limited Availability',
-              statusColor: 'text-yellow-500',
-              img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=900&auto=format&fit=crop',
-              domains: ['Fabrication', 'Installation'],
-              bio: 'Scenic fabrication focused on premium finishes and repeatable assembly methods. Strong at designing packable scenic for touring, with clear assembly docs.',
-              tags: ['Scenic', 'Finishes', 'Tour Pack', 'Assembly Docs', 'Fit and Finish'],
-              rate: 'Tier 3 // Senior',
-              selectedWork: ['Tour Pack Scenic', 'Finish Standards', 'Assembly Documentation', 'Field Assembly Support']
-            },
-            'kenji': {
-              name: 'Kenji Sato',
-              role: 'Automation Fabrication Lead',
-              id: '590-AF',
-              location: 'Osaka, JP',
-              status: 'On Contract',
-              statusColor: 'text-slate-500',
-              img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=900&auto=format&fit=crop',
-              domains: ['Fabrication', 'Specialized', 'Systems'],
-              bio: 'Automation fabrication and integration for moving scenic, kinetic elements, and show mechanisms. Prioritizes safety, maintainability, and serviceability.',
-              tags: ['Kinetics', 'Mechanisms', 'Serviceability', 'Integration', 'Safety'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Kinetic Scenic Build', 'Serviceability Review', 'Integration Package', 'Safety Signoff']
-            },
-            'harper': {
-              name: 'Harper Reed',
-              role: 'Shop Manager',
-              id: '412-SM',
-              location: 'Nashville, TN',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=900&auto=format&fit=crop',
-              domains: ['Fabrication', 'Operations'],
-              bio: 'Shop operations manager focused on throughput, QA gates, and predictable scheduling. Keeps large builds on track while maintaining documentation quality.',
-              tags: ['Scheduling', 'QA Gates', 'Throughput', 'Vendor Coordination', 'Logistics'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['QA Gates System', 'Shop Schedule Control', 'Vendor Coordination', 'Logistics Planning']
-            },
-
-            // -------------------------
-            // BUILD (5)
-            // -------------------------
-            'omar': {
-              name: 'Omar Nasser',
-              role: 'Site Superintendent',
-              id: '207-BD',
-              location: 'Riyadh, SA',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=900&auto=format&fit=crop',
-              domains: ['Build', 'Operations', 'Compliance'],
-              bio: 'Site superintendent for large scale builds and fast turn installs. Strong at safety culture, schedule enforcement, and cross trade coordination.',
-              tags: ['Site Management', 'Safety', 'Schedule', 'Coordination', 'Install Logistics'],
-              rate: 'Tier 1 // Senior',
-              selectedWork: ['Stadium Install Lead', 'Multi Trade Coordination', 'Safety Enforcement', 'Schedule Recovery']
-            },
-            'valeria': {
-              name: 'Valeria Cruz',
-              role: 'Build Coordinator',
-              id: '665-BC',
-              location: 'Mexico City, MX',
-              status: 'Limited Availability',
-              statusColor: 'text-yellow-500',
-              img: 'https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=900&auto=format&fit=crop',
-              domains: ['Build', 'Operations'],
-              bio: 'Build coordination for experiential installs. Owns schedules, vendor check in, deliveries, and punch lists to keep installs predictable.',
-              tags: ['Schedules', 'Punch Lists', 'Vendor Check In', 'Deliveries', 'Field Coordination'],
-              rate: 'Tier 3 // Senior',
-              selectedWork: ['Install Punch List', 'Vendor Check In System', 'Delivery Plan', 'Field Coordination']
-            },
-            'shawn': {
-              name: 'Shawn Patel',
-              role: 'Rigging Lead',
-              id: '504-RG',
-              location: 'Las Vegas, NV',
-              status: 'On Contract',
-              statusColor: 'text-slate-500',
-              img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=900&auto=format&fit=crop',
-              domains: ['Build', 'Compliance', 'Installation'],
-              bio: 'Rigging lead for touring and broadcast installs. Strong at load documentation, safe execution, and communicating constraints to creative and technical teams.',
-              tags: ['Rigging', 'Loads', 'Safety', 'Documentation', 'Execution'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Rigging Plan', 'Load Documentation', 'Safety Briefings', 'Venue Coordination']
-            },
-            'sienna': {
-              name: 'Sienna Ward',
-              role: 'Construction Manager',
-              id: '118-CM',
-              location: 'Boston, MA',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=900&auto=format&fit=crop',
-              domains: ['Build', 'Compliance'],
-              bio: 'Construction manager for complex environments and long run builds. Manages permitting, inspections, and compliance while maintaining schedule discipline.',
-              tags: ['Permitting', 'Inspections', 'Compliance', 'Scheduling', 'Stakeholders'],
-              rate: 'Tier 1 // Senior',
-              selectedWork: ['Permitting Package', 'Inspection Coordination', 'Compliance Schedule', 'Stakeholder Reporting']
-            },
-            'mason': {
-              name: 'Mason Lee',
-              role: 'Field Engineer',
-              id: '392-FE',
-              location: 'Salt Lake City, UT',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=900&auto=format&fit=crop',
-              domains: ['Build', 'Systems'],
-              bio: 'Field engineering for integration heavy installs. Builds test plans, validates interfaces, and resolves on site issues across power, network, and signal paths.',
-              tags: ['Test Plans', 'Validation', 'Integration', 'On Site Troubleshooting', 'Documentation'],
-              rate: 'Tier 3 // Senior',
-              selectedWork: ['Interface Validation', 'Field Test Plan', 'Integration Troubleshooting', 'As Built Documentation']
-            },
-
-            // -------------------------
-            // INSTALLATION (5)
-            // -------------------------
-            'nina': {
-              name: 'Nina Volkov',
-              role: 'Installation Lead',
-              id: '742-IN',
-              location: 'Stockholm, SE',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?q=80&w=900&auto=format&fit=crop',
-              domains: ['Installation', 'Operations'],
-              bio: 'Installation lead for premium environments. Owns field sequencing, trade coordination, and install documentation for repeatable quality.',
-              tags: ['Field Sequencing', 'Trade Coordination', 'Documentation', 'Quality Control'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Premium Flagship Install', 'Field Sequencing Plan', 'Install QC', 'As Built Package']
-            },
-            'toby': {
-              name: 'Toby Kim',
-              role: 'Touring Install Foreman',
-              id: '616-TI',
-              location: 'Seoul, KR',
-              status: 'On Contract',
-              statusColor: 'text-slate-500',
-              img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=900&auto=format&fit=crop',
-              domains: ['Installation', 'Build'],
-              bio: 'Touring install foreman for fast changeovers and tight load in windows. Strong at crew management, packing standards, and show day readiness.',
-              tags: ['Touring', 'Load In', 'Changeovers', 'Crew Management', 'Packing Standards'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Tour Load In System', 'Crew Briefing Pack', 'Packing Standards', 'Show Day Readiness']
-            },
-            'camila': {
-              name: 'Camila Reyes',
-              role: 'Finishes Specialist',
-              id: '285-FN',
-              location: 'Miami, FL',
-              status: 'Limited Availability',
-              statusColor: 'text-yellow-500',
-              img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=900&auto=format&fit=crop',
-              domains: ['Installation', 'Fabrication'],
-              bio: 'Finishes and fit specialist for premium builds. Ensures final quality, continuity, and on site adjustments that match the design intent.',
-              tags: ['Finishes', 'Fit', 'Continuity', 'On Site Adjustments', 'Quality'],
-              rate: 'Tier 3 // Senior',
-              selectedWork: ['Premium Finish Pass', 'Continuity Review', 'On Site Adjustments', 'Quality Closeout']
-            },
-            'roman': {
-              name: 'Roman Ilyin',
-              role: 'Install QA Lead',
-              id: '901-QA',
-              location: 'Warsaw, PL',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=900&auto=format&fit=crop',
-              domains: ['Installation', 'Compliance'],
-              bio: 'Installation QA lead defining acceptance criteria, punch list workflows, and verification steps for complex builds and permanent installs.',
-              tags: ['Acceptance Criteria', 'Punch Lists', 'Verification', 'QA Workflow', 'Closeout'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Acceptance Criteria Pack', 'Punch List Workflow', 'Verification Steps', 'Closeout Report']
-            },
-            'aya': {
-              name: 'Aya Nakamura',
-              role: 'On Site Coordinator',
-              id: '330-OS',
-              location: 'Paris, FR',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=900&auto=format&fit=crop',
-              domains: ['Installation', 'Operations'],
-              bio: 'On site coordination for installations, vendor arrivals, and schedule adherence. Maintains the field rhythm and eliminates ambiguity during load in.',
-              tags: ['Coordination', 'Schedules', 'Vendor Arrivals', 'Field Rhythm', 'Issue Triage'],
-              rate: 'Tier 3 // Senior',
-              selectedWork: ['Vendor Arrival Plan', 'Field Schedule Control', 'Issue Triage', 'Install Daily Reports']
-            },
-
-            // -------------------------
-            // OPERATIONS (5)
-            // -------------------------
-            'sarah': {
-              name: 'Sarah O\'Connor',
-              role: 'Show Runner / EP',
-              id: '221-B',
-              location: 'New York, NY',
-              status: 'On Contract',
-              statusColor: 'text-slate-500',
-              img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=900&auto=format&fit=crop',
-              domains: ['Operations', 'Compliance'],
-              bio: 'Executive producer focused on high stakes live events and touring logistics. Manages budgets, labor, safety, and vendor delivery through disciplined scope control.',
-              tags: ['Budgeting', 'Union Logistics', 'Safety', 'Crisis Management', 'Vendor Alignment'],
-              rate: 'Tier 1 // Senior',
-              selectedWork: ['Global Tour Ops', 'Union Labor Plan', 'Safety Framework', 'Vendor Delivery Control']
-            },
-            'bruno': {
-              name: 'Bruno Silva',
-              role: 'Operations Director',
-              id: '842-OD',
-              location: 'São Paulo, BR',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=900&auto=format&fit=crop',
-              domains: ['Operations', 'Build'],
-              bio: 'Operations director for complex multi site projects. Sets schedules, staffing plans, and escalation paths to keep delivery predictable under pressure.',
-              tags: ['Staffing Plans', 'Escalations', 'Scheduling', 'Vendor Coordination', 'Field Ops'],
-              rate: 'Tier 1 // Senior',
-              selectedWork: ['Multi Site Ops Plan', 'Escalation Tree', 'Schedule Baseline', 'Field Ops Reporting']
-            },
-            'imani': {
-              name: 'Imani Brooks',
-              role: 'Tour Manager',
-              id: '114-TM',
-              location: 'Philadelphia, PA',
-              status: 'Limited Availability',
-              statusColor: 'text-yellow-500',
-              img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=900&auto=format&fit=crop',
-              domains: ['Operations', 'Media'],
-              bio: 'Tour management for high tempo productions. Strong at advancing, crew coordination, and ensuring technical departments are aligned to venue constraints.',
-              tags: ['Advancing', 'Crew Coordination', 'Venue Constraints', 'Run of Show', 'Logistics'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Advance Package', 'Crew Coordination Plan', 'Venue Constraint Map', 'Run of Show Control']
-            },
-            'noah': {
-              name: 'Noah Stein',
-              role: 'Logistics Lead',
-              id: '509-LL',
-              location: 'Rotterdam, NL',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=900&auto=format&fit=crop',
-              domains: ['Operations', 'Compliance'],
-              bio: 'Logistics lead for international deployments. Manages customs, freight routing, and packing standards to minimize downtime and reduce field risk.',
-              tags: ['Freight', 'Customs', 'Routing', 'Packing Standards', 'Downtime Reduction'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Customs Plan', 'Freight Routing', 'Packing Standard', 'International Deployment']
-            },
-            'zara': {
-              name: 'Zara Haddad',
-              role: 'Scheduling Coordinator',
-              id: '678-SC',
-              location: 'London, UK',
-              status: 'On Contract',
-              statusColor: 'text-slate-500',
-              img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=900&auto=format&fit=crop',
-              domains: ['Operations', 'Installation'],
-              bio: 'Scheduling coordinator specializing in install calendars, dependencies, and daily reporting. Keeps cross trade sequencing aligned to venue access windows.',
-              tags: ['Dependencies', 'Sequencing', 'Daily Reports', 'Install Calendars', 'Access Windows'],
-              rate: 'Tier 3 // Senior',
-              selectedWork: ['Install Calendar', 'Dependency Map', 'Daily Reporting', 'Access Window Plan']
-            },
-
-            // -------------------------
-            // COMPLIANCE (5)
-            // -------------------------
-            'ruth': {
-              name: 'Ruth Ellison',
-              role: 'Safety Officer',
-              id: '332-SO',
-              location: 'Dallas, TX',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?q=80&w=900&auto=format&fit=crop',
-              domains: ['Compliance', 'Build'],
-              bio: 'Safety officer for large installs and live events. Builds safety plans, conducts briefings, and ensures compliance without disrupting schedule.',
-              tags: ['Safety Plans', 'Briefings', 'Permits', 'Inspections', 'Risk Mitigation'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Safety Plan', 'Daily Briefings', 'Inspection Coordination', 'Risk Register']
-            },
-            'andrej': {
-              name: 'Andrej Kovac',
-              role: 'Structural Reviewer',
-              id: '920-SR',
-              location: 'Vienna, AT',
-              status: 'On Contract',
-              statusColor: 'text-slate-500',
-              img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=900&auto=format&fit=crop',
-              domains: ['Compliance', 'Fabrication'],
-              bio: 'Structural review for temporary and touring builds. Evaluates load paths, interfaces, and signoff packages to reduce field risk.',
-              tags: ['Loads', 'Interfaces', 'Documentation', 'Signoff Packages', 'Structural Review'],
-              rate: 'Tier 1 // Senior',
-              selectedWork: ['Load Path Review', 'Interface Signoff', 'Structural Pack', 'Field Risk Reduction']
-            },
-            'celeste': {
-              name: 'Celeste Nguyen',
-              role: 'Permitting Specialist',
-              id: '144-PS',
-              location: 'San Jose, CA',
-              status: 'Limited Availability',
-              statusColor: 'text-yellow-500',
-              img: 'https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=900&auto=format&fit=crop',
-              domains: ['Compliance', 'Installation'],
-              bio: 'Permitting specialist for complex venues. Manages submissions, inspections, and compliance timelines with minimal impact to production schedules.',
-              tags: ['Permitting', 'Submissions', 'Inspections', 'Venue Compliance', 'Timelines'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Permit Submission', 'Inspection Calendar', 'Venue Compliance Pack', 'Timeline Control']
-            },
-            'edgar': {
-              name: 'Edgar Hill',
-              role: 'Insurance and Risk Liaison',
-              id: '611-IR',
-              location: 'Newark, NJ',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=900&auto=format&fit=crop',
-              domains: ['Compliance', 'Operations'],
-              bio: 'Insurance and risk liaison for productions. Aligns COIs, coverage requirements, and vendor compliance to keep contracting friction low.',
-              tags: ['COIs', 'Coverage', 'Vendor Compliance', 'Contract Requirements', 'Risk Controls'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['COI Workflow', 'Coverage Alignment', 'Vendor Compliance Pack', 'Risk Controls']
-            },
-            'leila': {
-              name: 'Leila Farah',
-              role: 'Accessibility Advisor',
-              id: '508-AA',
-              location: 'Washington, DC',
-              status: 'On Contract',
-              statusColor: 'text-slate-500',
-              img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=900&auto=format&fit=crop',
-              domains: ['Compliance', 'Specialized'],
-              bio: 'Accessibility advisor for public facing installations. Reviews interaction design and physical layouts to meet requirements while preserving the experience.',
-              tags: ['ADA', 'Wayfinding', 'Interaction Review', 'Public Space Design', 'Compliance'],
-              rate: 'Tier 3 // Senior',
-              selectedWork: ['Accessibility Review', 'Wayfinding Plan', 'Interaction Compliance', 'Public Space Audit']
-            },
-
-            // -------------------------
-            // SPECIALIZED (5)
-            // -------------------------
-            'maya': {
-              name: 'Maya Okoye',
-              role: 'Kinetic Sculptor',
-              id: '270-KS',
-              location: 'Detroit, MI',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=900&auto=format&fit=crop',
-              domains: ['Specialized', 'Fabrication', 'Installation'],
-              bio: 'Kinetic sculpture and mechanism design for experiential environments. Focused on safety, serviceability, and clean integration with control systems.',
-              tags: ['Kinetics', 'Mechanism Design', 'Serviceability', 'Safety', 'Integration'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Kinetic Feature Build', 'Mechanism Design', 'Serviceability Review', 'Integration Signoff']
-            },
-            'evan': {
-              name: 'Evan Cho',
-              role: 'Robotics Integration Engineer',
-              id: '991-RI',
-              location: 'San Diego, CA',
-              status: 'Limited Availability',
-              statusColor: 'text-yellow-500',
-              img: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=900&auto=format&fit=crop',
-              domains: ['Specialized', 'Systems', 'Technical Direction'],
-              bio: 'Robotics integration for show environments. Builds safe motion envelopes, operator controls, and test plans for repeatable show performance.',
-              tags: ['Robotics', 'Motion Envelopes', 'Operator Controls', 'Test Plans', 'Safety'],
-              rate: 'Tier 1 // Senior',
-              selectedWork: ['Robotics Integration', 'Motion Envelope Spec', 'Operator Controls', 'Performance Test Plan']
-            },
-            'sofia': {
-              name: 'Sofia Marin',
-              role: 'Spatial Audio Designer',
-              id: '402-SA',
-              location: 'Barcelona, ES',
-              status: 'On Contract',
-              statusColor: 'text-slate-500',
-              img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=900&auto=format&fit=crop',
-              domains: ['Specialized', 'Media'],
-              bio: 'Spatial audio design for immersive installations. Builds repeatable tuning approaches, speaker mapping plans, and operator ready deliverables.',
-              tags: ['Spatial Audio', 'Speaker Mapping', 'Tuning', 'Operator Deliverables', 'Immersive'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Speaker Mapping Plan', 'Spatial Mix Design', 'Tuning Workflow', 'Operator Pack']
-            },
-            'hugo': {
-              name: 'Hugo Fontaine',
-              role: 'Materials Specialist',
-              id: '175-MS',
-              location: 'Lyon, FR',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=900&auto=format&fit=crop',
-              domains: ['Specialized', 'Fabrication', 'Compliance'],
-              bio: 'Materials specialist advising on durability, flame ratings, and environmental conditions for long run public installs and touring scenic.',
-              tags: ['Flame Ratings', 'Durability', 'Environmental', 'Material Specs', 'Compliance'],
-              rate: 'Tier 3 // Senior',
-              selectedWork: ['Material Spec Pack', 'Flame Rating Review', 'Durability Testing', 'Environmental Suitability']
-            },
-            'dalia': {
-              name: 'Dalia Rios',
-              role: 'Power and Safety Engineer',
-              id: '610-PS',
-              location: 'Phoenix, AZ',
-              status: 'Available',
-              statusColor: 'text-green-500',
-              img: 'https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=900&auto=format&fit=crop',
-              domains: ['Specialized', 'Compliance', 'Systems'],
-              bio: 'Power distribution planning and electrical safety for show environments. Ensures safe loads, clear diagrams, and clean handoff for operators and electricians.',
-              tags: ['Power Planning', 'Load Calculations', 'Single Line Diagrams', 'Electrical Safety', 'Handoff'],
-              rate: 'Tier 2 // Lead',
-              selectedWork: ['Power Distribution Plan', 'Load Calculations', 'Single Line Diagram', 'Electrical Safety Review']
-            }
+            'alex': { name: 'Alex Chen', role: 'Technical Director', id: '994-A', location: 'Los Angeles, CA', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=900&auto=format&fit=crop', domains: ['Technical Direction', 'Interactive', 'Media'], bio: 'Technical direction for real time pipelines and interactive systems.', tags: ['TouchDesigner', 'UE5', 'Notch', 'Python', 'Media Servers'], rate: 'Tier 1 // Senior', selectedWork: ['Tour Content Pipeline', 'Immersive Retail Flagship'] },
+            'mina': { name: 'Mina Park', role: 'Technical Director', id: '477-T', location: 'San Francisco, CA', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=900&auto=format&fit=crop', domains: ['Technical Direction', 'Systems'], bio: 'Senior TD focused on scalable deployment patterns for interactive exhibits.', tags: ['Unreal Engine', 'Disguise', 'C++', 'Network Design'], rate: 'Tier 1 // Senior', selectedWork: ['Museum Rollout Program', 'Multi Site Media Standard'] },
+            'diego': { name: 'Diego Alvarez', role: 'Realtime Pipeline Lead', id: '318-D', location: 'Austin, TX', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=900&auto=format&fit=crop', domains: ['Technical Direction', 'Media'], bio: 'Realtime pipeline lead with emphasis on low latency playback systems.', tags: ['Disguise', 'Notch', 'NDI', 'SMPTE', 'Failover'], rate: 'Tier 2 // Lead', selectedWork: ['Stadium Redundancy Stack', 'Low Latency Playback'] },
+            'naomi': { name: 'Naomi Kline', role: 'Technical Producer', id: '604-P', location: 'Chicago, IL', status: 'Limited Availability', statusColor: 'text-yellow-500', img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=900&auto=format&fit=crop', domains: ['Technical Direction', 'Operations'], bio: 'Technical producer bridging design intent and field execution.', tags: ['Scoping', 'Change Control', 'Technical Riders', 'Vendor Coordination'], rate: 'Tier 2 // Lead', selectedWork: ['Venue Technical Packages', 'Change Control System'] },
+            'jun': { name: 'Jun Watanabe', role: 'Systems TD', id: '155-S', location: 'Tokyo, JP', status: 'On Contract', statusColor: 'text-slate-500', img: 'https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=900&auto=format&fit=crop', domains: ['Technical Direction', 'Systems'], bio: 'Systems technical direction with emphasis on venue integration.', tags: ['Signal Flow', 'Routing', 'Commissioning', 'Documentation'], rate: 'Tier 1 // Senior', selectedWork: ['Control Room Integration', 'Permanent Install Routing'] },
+            'kira': { name: 'Kira Solano', role: 'Interactive Creative Technologist', id: '712-I', location: 'Brooklyn, NY', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1550525811-e5869dd03032?q=80&w=900&auto=format&fit=crop', domains: ['Interactive', 'Media'], bio: 'Interactive systems designer building robust sensor driven experiences.', tags: ['TouchDesigner', 'Computer Vision', 'Depth Sensors', 'OSC'], rate: 'Tier 2 // Lead', selectedWork: ['Public CV Install', 'Sensor Calibration Toolkit'] },
+            'oliver': { name: 'Oliver Grant', role: 'Interactive Engineer', id: '588-I', location: 'Vancouver, BC', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=900&auto=format&fit=crop', domains: ['Interactive', 'Systems'], bio: 'Interactive engineer specializing in hardware and software integration.', tags: ['C#', 'Unity', 'Serial IO', 'Diagnostics'], rate: 'Tier 2 // Lead', selectedWork: ['Exhibit Diagnostics Suite', 'Device Abstraction Layer'] },
+            'priya': { name: 'Priya Nair', role: 'Experience Prototyper', id: '903-X', location: 'Seattle, WA', status: 'Limited Availability', statusColor: 'text-yellow-500', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=900&auto=format&fit=crop', domains: ['Interactive', 'Installation'], bio: 'Rapid prototyping for interactive exhibits focusing on feasibility.', tags: ['Rapid Prototyping', 'Arduino', 'Node', 'Installation Planning'], rate: 'Tier 3 // Senior', selectedWork: ['Feasibility Sprint', 'Prototype to Production'] },
+            'hassan': { name: 'Hassan Malik', role: 'Realtime Interaction Designer', id: '274-R', location: 'Dubai, AE', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1520975682030-1c25d7c1b5b6?q=80&w=900&auto=format&fit=crop', domains: ['Interactive', 'Media'], bio: 'Realtime interaction design with emphasis on frame budget.', tags: ['UE5', 'Blueprint', 'Latency', 'Input Pipelines'], rate: 'Tier 2 // Lead', selectedWork: ['Low Latency Interaction', 'Frame Budget Pass'] },
+            'mei': { name: 'Mei Tan', role: 'Creative Technologist', id: '661-C', location: 'Singapore, SG', status: 'On Contract', statusColor: 'text-slate-500', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=900&auto=format&fit=crop', domains: ['Interactive', 'Specialized'], bio: 'Creative technologist for novel interaction modalities.', tags: ['Haptics', 'Spatial Audio', 'Interaction Design'], rate: 'Tier 3 // Senior', selectedWork: ['Haptics Pilot', 'Operator Controls UI'] },
+            'elena': { name: 'Elena Rostova', role: 'Audio Engineer', id: '339-A', location: 'Berlin, DE', status: 'Limited Availability', statusColor: 'text-yellow-500', img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=900&auto=format&fit=crop', domains: ['Media', 'Systems'], bio: 'FOH and systems engineer for touring and festival environments.', tags: ['L-Acoustics', 'DiGiCo', 'RF Coordination', 'Dante'], rate: 'Tier 1 // Senior', selectedWork: ['Festival Mainstage', 'Tour Package Build'] },
+            'grant': { name: 'Grant Holloway', role: 'Media Server Engineer', id: '510-M', location: 'Las Vegas, NV', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=900&auto=format&fit=crop', domains: ['Media', 'Systems'], bio: 'Media server engineering for high pixel density builds.', tags: ['Disguise', 'Resolume', 'Playback', 'Redundancy'], rate: 'Tier 2 // Lead', selectedWork: ['Redundant Playback Stack', 'Operator Handoff'] },
+            'anya': { name: 'Anya Petrov', role: 'Video Systems Engineer', id: '109-V', location: 'Prague, CZ', status: 'On Contract', statusColor: 'text-slate-500', img: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=900&auto=format&fit=crop', domains: ['Media', 'Compliance'], bio: 'Video systems engineering with emphasis on signal integrity.', tags: ['SDI', 'Fiber', 'EDID', 'Signal Integrity'], rate: 'Tier 2 // Lead', selectedWork: ['Signal Integrity Audit', 'Patching Standards'] },
+            'samira': { name: 'Samira Idris', role: 'Broadcast Audio A2', id: '784-B', location: 'Atlanta, GA', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?q=80&w=900&auto=format&fit=crop', domains: ['Media', 'Operations'], bio: 'Broadcast audio support for live events.', tags: ['Broadcast Audio', 'RF', 'Comms', 'Patch Discipline'], rate: 'Tier 3 // Senior', selectedWork: ['Live Broadcast Support', 'RF Troubleshooting'] },
+            'tariq': { name: 'Tariq Mensah', role: 'Content Operations Lead', id: '402-O', location: 'Toronto, ON', status: 'Limited Availability', statusColor: 'text-yellow-500', img: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=900&auto=format&fit=crop', domains: ['Media', 'Operations'], bio: 'Content operations leadership for complex run of show timelines.', tags: ['Content Ops', 'Versioning', 'Approvals', 'Ingest'], rate: 'Tier 2 // Lead', selectedWork: ['Ingest and Versioning', 'Approval Pipeline'] },
+            'jun-sys': { name: 'Jun Watanabe', role: 'Systems TD', id: '155-S', location: 'Tokyo, JP', status: 'On Contract', statusColor: 'text-slate-500', img: 'https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=900&auto=format&fit=crop', domains: ['Systems', 'Installation'], bio: 'Systems integration for permanent installs and control rooms.', tags: ['Routing', 'Monitoring', 'Signal Flow', 'Commissioning'], rate: 'Tier 1 // Senior', selectedWork: ['Control Room Integration', 'Routing Standards'] },
+            'luka': { name: 'Luka Novak', role: 'Network Engineer', id: '230-N', location: 'Amsterdam, NL', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=900&auto=format&fit=crop', domains: ['Systems', 'Compliance'], bio: 'Network design for show critical systems.', tags: ['VLAN', 'QoS', 'Redundancy', 'Switching'], rate: 'Tier 2 // Lead', selectedWork: ['Show Network Topology', 'VLAN Plan'] },
+            'rachel': { name: 'Rachel Im', role: 'Controls Engineer', id: '911-C', location: 'Seoul, KR', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=900&auto=format&fit=crop', domains: ['Systems', 'Specialized'], bio: 'Controls engineering for automation and safety interlocks.', tags: ['PLC', 'State Machines', 'Safety Interlocks', 'HMI'], rate: 'Tier 1 // Senior', selectedWork: ['Automation Control Layer', 'Operator HMI'] },
+            'ben': { name: 'Ben Caldwell', role: 'Systems Engineer', id: '645-E', location: 'Denver, CO', status: 'Limited Availability', statusColor: 'text-yellow-500', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=900&auto=format&fit=crop', domains: ['Systems', 'Technical Direction'], bio: 'Systems engineer bridging media, networks, and control.', tags: ['Signal Flow', 'Diagnostics', 'Documentation', 'Redundancy'], rate: 'Tier 2 // Lead', selectedWork: ['Field Diagnostics', 'Handoff Documentation'] },
+            'ines': { name: 'Ines Duarte', role: 'Show Control Engineer', id: '502-SC', location: 'Lisbon, PT', status: 'On Contract', statusColor: 'text-slate-500', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=900&auto=format&fit=crop', domains: ['Systems', 'Interactive'], bio: 'Show control engineering for permanent installs.', tags: ['Show Control', 'Timecode', 'Logging', 'Operator Tools'], rate: 'Tier 2 // Lead', selectedWork: ['Multi Zone Show Control', 'Logging Layer'] },
+            'tess': { name: 'Tess Morgan', role: 'Fabrication Supervisor', id: '701-F', location: 'Los Angeles, CA', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=900&auto=format&fit=crop', domains: ['Fabrication', 'Build'], bio: 'Fabrication supervision across scenic, steel, and mechanism builds.', tags: ['Shop QA', 'Scenic', 'Steel', 'Mechanisms'], rate: 'Tier 2 // Lead', selectedWork: ['Shop Build Package', 'Field Fit Verification'] },
+            'emil': { name: 'Emil Sørensen', role: 'Lead Welder / Steel', id: '333-W', location: 'Copenhagen, DK', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=900&auto=format&fit=crop', domains: ['Fabrication', 'Compliance'], bio: 'Steel fabrication and structural support for touring builds.', tags: ['Steel', 'Welding', 'Load Paths', 'Rigging Interfaces'], rate: 'Tier 3 // Senior', selectedWork: ['Structural Support Build', 'Rigging Interface Plates'] },
+            'monique': { name: 'Monique Laurent', role: 'Scenic Fabricator', id: '818-SF', location: 'Montreal, QC', status: 'Limited Availability', statusColor: 'text-yellow-500', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=900&auto=format&fit=crop', domains: ['Fabrication', 'Installation'], bio: 'Scenic fabrication focused on premium finishes and repeatable assembly.', tags: ['Scenic', 'Finishes', 'Tour Pack', 'Assembly Docs'], rate: 'Tier 3 // Senior', selectedWork: ['Tour Pack Scenic', 'Finish Standards'] },
+            'kenji': { name: 'Kenji Sato', role: 'Automation Fabrication Lead', id: '590-AF', location: 'Osaka, JP', status: 'On Contract', statusColor: 'text-slate-500', img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=900&auto=format&fit=crop', domains: ['Fabrication', 'Specialized'], bio: 'Automation fabrication and integration for moving scenic.', tags: ['Kinetics', 'Mechanisms', 'Serviceability', 'Integration'], rate: 'Tier 2 // Lead', selectedWork: ['Kinetic Scenic Build', 'Serviceability Review'] },
+            'harper': { name: 'Harper Reed', role: 'Shop Manager', id: '412-SM', location: 'Nashville, TN', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=900&auto=format&fit=crop', domains: ['Fabrication', 'Operations'], bio: 'Shop operations manager focused on throughput, QA gates.', tags: ['Scheduling', 'QA Gates', 'Throughput', 'Vendor Coordination'], rate: 'Tier 2 // Lead', selectedWork: ['QA Gates System', 'Shop Schedule Control'] },
+            'omar': { name: 'Omar Nasser', role: 'Site Superintendent', id: '207-BD', location: 'Riyadh, SA', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=900&auto=format&fit=crop', domains: ['Build', 'Operations'], bio: 'Site superintendent for large scale builds and fast turn installs.', tags: ['Site Management', 'Safety', 'Schedule', 'Coordination'], rate: 'Tier 1 // Senior', selectedWork: ['Stadium Install Lead', 'Multi Trade Coordination'] },
+            'valeria': { name: 'Valeria Cruz', role: 'Build Coordinator', id: '665-BC', location: 'Mexico City, MX', status: 'Limited Availability', statusColor: 'text-yellow-500', img: 'https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=900&auto=format&fit=crop', domains: ['Build', 'Operations'], bio: 'Build coordination for experiential installs.', tags: ['Schedules', 'Punch Lists', 'Vendor Check In', 'Deliveries'], rate: 'Tier 3 // Senior', selectedWork: ['Install Punch List', 'Vendor Check In System'] },
+            'shawn': { name: 'Shawn Patel', role: 'Rigging Lead', id: '504-RG', location: 'Las Vegas, NV', status: 'On Contract', statusColor: 'text-slate-500', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=900&auto=format&fit=crop', domains: ['Build', 'Compliance'], bio: 'Rigging lead for touring and broadcast installs.', tags: ['Rigging', 'Loads', 'Safety', 'Documentation'], rate: 'Tier 2 // Lead', selectedWork: ['Rigging Plan', 'Load Documentation'] },
+            'sienna': { name: 'Sienna Ward', role: 'Construction Manager', id: '118-CM', location: 'Boston, MA', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=900&auto=format&fit=crop', domains: ['Build', 'Compliance'], bio: 'Construction manager for complex environments.', tags: ['Permitting', 'Inspections', 'Compliance', 'Scheduling'], rate: 'Tier 1 // Senior', selectedWork: ['Permitting Package', 'Inspection Coordination'] },
+            'mason': { name: 'Mason Lee', role: 'Field Engineer', id: '392-FE', location: 'Salt Lake City, UT', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=900&auto=format&fit=crop', domains: ['Build', 'Systems'], bio: 'Field engineering for integration heavy installs.', tags: ['Test Plans', 'Validation', 'Integration', 'On Site Troubleshooting'], rate: 'Tier 3 // Senior', selectedWork: ['Interface Validation', 'Field Test Plan'] },
+            'nina': { name: 'Nina Volkov', role: 'Installation Lead', id: '742-IN', location: 'Stockholm, SE', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?q=80&w=900&auto=format&fit=crop', domains: ['Installation', 'Operations'], bio: 'Installation lead for premium environments.', tags: ['Field Sequencing', 'Trade Coordination', 'Documentation', 'Quality Control'], rate: 'Tier 2 // Lead', selectedWork: ['Premium Flagship Install', 'Field Sequencing Plan'] },
+            'toby': { name: 'Toby Kim', role: 'Touring Install Foreman', id: '616-TI', location: 'Seoul, KR', status: 'On Contract', statusColor: 'text-slate-500', img: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=900&auto=format&fit=crop', domains: ['Installation', 'Build'], bio: 'Touring install foreman for fast changeovers.', tags: ['Touring', 'Load In', 'Changeovers', 'Crew Management'], rate: 'Tier 2 // Lead', selectedWork: ['Tour Load In System', 'Crew Briefing Pack'] },
+            'camila': { name: 'Camila Reyes', role: 'Finishes Specialist', id: '285-FN', location: 'Miami, FL', status: 'Limited Availability', statusColor: 'text-yellow-500', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=900&auto=format&fit=crop', domains: ['Installation', 'Fabrication'], bio: 'Finishes and fit specialist for premium builds.', tags: ['Finishes', 'Fit', 'Continuity', 'On Site Adjustments'], rate: 'Tier 3 // Senior', selectedWork: ['Premium Finish Pass', 'Continuity Review'] },
+            'roman': { name: 'Roman Ilyin', role: 'Install QA Lead', id: '901-QA', location: 'Warsaw, PL', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=900&auto=format&fit=crop', domains: ['Installation', 'Compliance'], bio: 'Installation QA lead defining acceptance criteria.', tags: ['Acceptance Criteria', 'Punch Lists', 'Verification', 'QA Workflow'], rate: 'Tier 2 // Lead', selectedWork: ['Acceptance Criteria Pack', 'Punch List Workflow'] },
+            'aya': { name: 'Aya Nakamura', role: 'On Site Coordinator', id: '330-OS', location: 'Paris, FR', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=900&auto=format&fit=crop', domains: ['Installation', 'Operations'], bio: 'On site coordination for installations, vendor arrivals.', tags: ['Coordination', 'Schedules', 'Vendor Arrivals', 'Field Rhythm'], rate: 'Tier 3 // Senior', selectedWork: ['Vendor Arrival Plan', 'Field Schedule Control'] },
+            'sarah': { name: 'Sarah O\'Connor', role: 'Show Runner / EP', id: '221-B', location: 'New York, NY', status: 'On Contract', statusColor: 'text-slate-500', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=900&auto=format&fit=crop', domains: ['Operations', 'Compliance'], bio: 'Executive producer focused on high stakes live events.', tags: ['Budgeting', 'Union Logistics', 'Safety', 'Crisis Management'], rate: 'Tier 1 // Senior', selectedWork: ['Global Tour Ops', 'Union Labor Plan'] },
+            'bruno': { name: 'Bruno Silva', role: 'Operations Director', id: '842-OD', location: 'São Paulo, BR', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=900&auto=format&fit=crop', domains: ['Operations', 'Build'], bio: 'Operations director for complex multi site projects.', tags: ['Staffing Plans', 'Escalations', 'Scheduling', 'Vendor Coordination'], rate: 'Tier 1 // Senior', selectedWork: ['Multi Site Ops Plan', 'Escalation Tree'] },
+            'imani': { name: 'Imani Brooks', role: 'Tour Manager', id: '114-TM', location: 'Philadelphia, PA', status: 'Limited Availability', statusColor: 'text-yellow-500', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=900&auto=format&fit=crop', domains: ['Operations', 'Media'], bio: 'Tour management for high tempo productions.', tags: ['Advancing', 'Crew Coordination', 'Venue Constraints', 'Run of Show'], rate: 'Tier 2 // Lead', selectedWork: ['Advance Package', 'Crew Coordination Plan'] },
+            'noah': { name: 'Noah Stein', role: 'Logistics Lead', id: '509-LL', location: 'Rotterdam, NL', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=900&auto=format&fit=crop', domains: ['Operations', 'Compliance'], bio: 'Logistics lead for international deployments.', tags: ['Freight', 'Customs', 'Routing', 'Packing Standards'], rate: 'Tier 2 // Lead', selectedWork: ['Customs Plan', 'Freight Routing'] },
+            'zara': { name: 'Zara Haddad', role: 'Scheduling Coordinator', id: '678-SC', location: 'London, UK', status: 'On Contract', statusColor: 'text-slate-500', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=900&auto=format&fit=crop', domains: ['Operations', 'Installation'], bio: 'Scheduling coordinator specializing in install calendars.', tags: ['Dependencies', 'Sequencing', 'Daily Reports', 'Install Calendars'], rate: 'Tier 3 // Senior', selectedWork: ['Install Calendar', 'Dependency Map'] },
+            'ruth': { name: 'Ruth Ellison', role: 'Safety Officer', id: '332-SO', location: 'Dallas, TX', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?q=80&w=900&auto=format&fit=crop', domains: ['Compliance', 'Build'], bio: 'Safety officer for large installs and live events.', tags: ['Safety Plans', 'Briefings', 'Permits', 'Inspections'], rate: 'Tier 2 // Lead', selectedWork: ['Safety Plan', 'Daily Briefings'] },
+            'andrej': { name: 'Andrej Kovac', role: 'Structural Reviewer', id: '920-SR', location: 'Vienna, AT', status: 'On Contract', statusColor: 'text-slate-500', img: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=900&auto=format&fit=crop', domains: ['Compliance', 'Fabrication'], bio: 'Structural review for temporary and touring builds.', tags: ['Loads', 'Interfaces', 'Documentation', 'Signoff Packages'], rate: 'Tier 1 // Senior', selectedWork: ['Load Path Review', 'Interface Signoff'] },
+            'celeste': { name: 'Celeste Nguyen', role: 'Permitting Specialist', id: '144-PS', location: 'San Jose, CA', status: 'Limited Availability', statusColor: 'text-yellow-500', img: 'https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=900&auto=format&fit=crop', domains: ['Compliance', 'Installation'], bio: 'Permitting specialist for complex venues.', tags: ['Permitting', 'Submissions', 'Inspections', 'Venue Compliance'], rate: 'Tier 2 // Lead', selectedWork: ['Permit Submission', 'Inspection Calendar'] },
+            'edgar': { name: 'Edgar Hill', role: 'Insurance and Risk Liaison', id: '611-IR', location: 'Newark, NJ', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=900&auto=format&fit=crop', domains: ['Compliance', 'Operations'], bio: 'Insurance and risk liaison for productions.', tags: ['COIs', 'Coverage', 'Vendor Compliance', 'Contract Requirements'], rate: 'Tier 2 // Lead', selectedWork: ['COI Workflow', 'Coverage Alignment'] },
+            'leila': { name: 'Leila Farah', role: 'Accessibility Advisor', id: '508-AA', location: 'Washington, DC', status: 'On Contract', statusColor: 'text-slate-500', img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=900&auto=format&fit=crop', domains: ['Compliance', 'Specialized'], bio: 'Accessibility advisor for public facing installations.', tags: ['ADA', 'Wayfinding', 'Interaction Review', 'Public Space Design'], rate: 'Tier 3 // Senior', selectedWork: ['Accessibility Review', 'Wayfinding Plan'] },
+            'maya': { name: 'Maya Okoye', role: 'Kinetic Sculptor', id: '270-KS', location: 'Detroit, MI', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=900&auto=format&fit=crop', domains: ['Specialized', 'Fabrication'], bio: 'Kinetic sculpture and mechanism design for experiential environments.', tags: ['Kinetics', 'Mechanism Design', 'Serviceability', 'Safety'], rate: 'Tier 2 // Lead', selectedWork: ['Kinetic Feature Build', 'Mechanism Design'] },
+            'evan': { name: 'Evan Cho', role: 'Robotics Integration Engineer', id: '991-RI', location: 'San Diego, CA', status: 'Limited Availability', statusColor: 'text-yellow-500', img: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=900&auto=format&fit=crop', domains: ['Specialized', 'Systems'], bio: 'Robotics integration for show environments.', tags: ['Robotics', 'Motion Envelopes', 'Operator Controls', 'Test Plans'], rate: 'Tier 1 // Senior', selectedWork: ['Robotics Integration', 'Motion Envelope Spec'] },
+            'sofia': { name: 'Sofia Marin', role: 'Spatial Audio Designer', id: '402-SA', location: 'Barcelona, ES', status: 'On Contract', statusColor: 'text-slate-500', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=900&auto=format&fit=crop', domains: ['Specialized', 'Media'], bio: 'Spatial audio design for immersive installations.', tags: ['Spatial Audio', 'Speaker Mapping', 'Tuning', 'Operator Deliverables'], rate: 'Tier 2 // Lead', selectedWork: ['Speaker Mapping Plan', 'Spatial Mix Design'] },
+            'hugo': { name: 'Hugo Fontaine', role: 'Materials Specialist', id: '175-MS', location: 'Lyon, FR', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=900&auto=format&fit=crop', domains: ['Specialized', 'Fabrication'], bio: 'Materials specialist advising on durability, flame ratings.', tags: ['Flame Ratings', 'Durability', 'Environmental', 'Material Specs'], rate: 'Tier 3 // Senior', selectedWork: ['Material Spec Pack', 'Flame Rating Review'] },
+            'dalia': { name: 'Dalia Rios', role: 'Power and Safety Engineer', id: '610-PS', location: 'Phoenix, AZ', status: 'Available', statusColor: 'text-green-500', img: 'https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=900&auto=format&fit=crop', domains: ['Specialized', 'Compliance'], bio: 'Power distribution planning and electrical safety.', tags: ['Power Planning', 'Load Calculations', 'Single Line Diagrams'], rate: 'Tier 2 // Lead', selectedWork: ['Power Distribution Plan', 'Load Calculations'] }
         };
 
-        // --- DOMAIN FILTERING (Talent View) ---
-        const DOMAINS = [
-            "Build",
-            "Fabrication",
-            "Technical Direction",
-            "Systems",
-            "Media",
-            "Interactive",
-            "Installation",
-            "Operations",
-            "Compliance",
-            "Specialized"
-        ];
+        const teamDB = {
+            "team-07": { name: "Unit 7: Fabrication", id: "TEAM-07", status: "Available", statusColor: "text-green-500", homeBase: "Global / Mobile", deployment: "Rapid deployment scenic and steel unit with integrated automation support.", domains: ["Fabrication","Build","Installation"], tags: ["Scenic","Steel","Automation","Tour Pack","Field Assembly"], stack: ["Shop QA Gates","Weld and Finish","Rigging Interfaces","Pack Standards"], rosterPreview: ["https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=160&auto=format&fit=crop", "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=160&auto=format&fit=crop", "https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=160&auto=format&fit=crop"], overview: "Builds touring safe scenic systems, structural packages, and field assembly plans. Operates with standardized QA gates and as built documentation.", selectedWork: ["Stadium Tour Scenic Package","Kinetic Feature Build","Flagship Retail Buildout","Festival Mainstage Scenic"] },
+            "team-91": { name: "Echo Lab", id: "TEAM-91", status: "Available", statusColor: "text-green-500", homeBase: "Vancouver, BC", deployment: "Realtime and VFX unit for content pipelines and on site integration.", domains: ["Media","Technical Direction","Systems"], tags: ["UE5","Houdini","Disguise","Optimizations","Playback"], stack: ["Realtime Content","Pipeline Tools","On Site Commissioning","Operator Handoff"], rosterPreview: ["https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=160&auto=format&fit=crop", "https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=160&auto=format&fit=crop", "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=160&auto=format&fit=crop"], overview: "Delivers realtime and post assets, playback readiness, and on site tuning for low latency show conditions.", selectedWork: ["Realtime Tour Content","Broadcast Graphics Package","Interactive Exhibit Pipeline","Live Render Playback Stack"] },
+            "team-12": { name: "Atlas Control", id: "TEAM-12", status: "On Contract", statusColor: "text-slate-500", homeBase: "Chicago, IL", deployment: "Show control and systems integration team for multi zone installs.", domains: ["Systems","Interactive","Installation"], tags: ["Show Control","PLC","Logging","Operator Tools","Commissioning"], stack: ["Deterministic Triggers","Monitoring Dashboards","Redundancy Plans","As Built Docs"], rosterPreview: ["https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=160&auto=format&fit=crop", "https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?q=80&w=160&auto=format&fit=crop", "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=160&auto=format&fit=crop"], overview: "Integrates media, sensors, and automation into a single operator friendly control layer with logging and clear failure states.", selectedWork: ["Multi Zone Attraction Control","Museum Automation Layer","Flagship Retail Control Room","Permanent Install Monitoring"] },
+            "team-33": { name: "Northline Networks", id: "TEAM-33", status: "Available", statusColor: "text-green-500", homeBase: "Amsterdam, NL", deployment: "Network engineering unit for show critical media and control systems.", domains: ["Systems","Compliance"], tags: ["VLAN","QoS","Redundancy","Monitoring","Topology"], stack: ["Addressing Standards","Segmentation","Failover Testing","Alerts"], rosterPreview: ["https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=160&auto=format&fit=crop", "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=160&auto=format&fit=crop", "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=160&auto=format&fit=crop"], overview: "Designs stable networks for media, control, and comms, with monitoring and predictable addressing for touring and permanent builds.", selectedWork: ["Stadium Tour Network","Permanent Install VLAN Plan","Media Server Backbone","Monitoring and Alerts Rollout"] },
+            "team-44": { name: "Signal House", id: "TEAM-44", status: "Limited Availability", statusColor: "text-yellow-500", homeBase: "Prague, CZ", deployment: "Video systems and signal integrity team for complex routing and test procedures.", domains: ["Media","Systems","Compliance"], tags: ["SDI","Fiber","EDID","Testing","Documentation"], stack: ["Signal Integrity Audits","Patching Standards","Field Test Plans","As Built Schematics"], rosterPreview: ["https://images.unsplash.com/photo-1548142813-c348350df52b?q=80&w=160&auto=format&fit=crop", "https://images.unsplash.com/photo-1527980965255-d3b416303d12?q=80&w=160&auto=format&fit=crop", "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=160&auto=format&fit=crop"], overview: "Ensures clean signal paths and predictable routing across venues, with documentation that operators can execute.", selectedWork: ["Signal Audit for Arena Tour","Fiber Routing Plan","Field Test Procedure Pack","Broadcast Patch Standards"] },
+            "team-58": { name: "Cinder Scenic", id: "TEAM-58", status: "Available", statusColor: "text-green-500", homeBase: "Nashville, TN", deployment: "Scenic unit specialized in premium finishes and touring pack standards.", domains: ["Fabrication","Installation","Build"], tags: ["Scenic","Finishes","Tour Pack","Assembly Docs","QC"], stack: ["Finish Standards","Repeatable Assembly","Punch Lists","Field Adjustments"], rosterPreview: ["https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=160&auto=format&fit=crop", "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=160&auto=format&fit=crop", "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=160&auto=format&fit=crop"], overview: "Builds high finish scenic with touring ready packaging, clear assembly documentation, and quality control gates.", selectedWork: ["Premium Retail Buildout","Touring Scenic Package","Awards Show Scenic","Corporate Summit Scenic"] },
+            "team-73": { name: "Bluephase Audio", id: "TEAM-73", status: "On Contract", statusColor: "text-slate-500", homeBase: "Berlin, DE", deployment: "Touring audio and RF unit for multi stage and broadcast environments.", domains: ["Media","Operations","Compliance"], tags: ["RF","Dante","System Tuning","Comms","Broadcast Audio"], stack: ["RF Coordination","Comms Deployment","Patch Discipline","Show Day Support"], rosterPreview: ["https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=160&auto=format&fit=crop", "https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?q=80&w=160&auto=format&fit=crop", "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?q=80&w=160&auto=format&fit=crop"], overview: "Delivers reliable audio and RF in congested environments, with strong comms discipline and rapid troubleshooting.", selectedWork: ["Festival RF Coordination","Broadcast Audio Support","Arena Tour FOH Systems","Corporate Multi Room Audio"] }
+        };
 
+        const projectDB = {
+            "meridian": { name: "Project: Meridian", id: "PRJ-MRD", status: "In Production", statusColor: "text-yellow-500", region: "Global", window: "Q1 2026", summary: "Global stadium tour infrastructure with custom automation rig and high resolution content delivery pipeline.", domains: ["Build","Fabrication","Media","Systems","Operations","Compliance"], teams: ["team-07","team-33","team-73"], overview: "Touring system deployment combining scenic build, show control integration, media redundancy, and field logistics.", risks: ["Venue variance", "Freight timing", "RF congestion", "Load path approvals"], milestones: ["Design freeze", "Shop build complete", "Rehearsals", "First show", "Tour rollout"] },
+            "void": { name: "Exhibition: Void", id: "PRJ-VOID", status: "Scoping", statusColor: "text-blue-500", region: "London, UK", window: "Q2 2026", summary: "Permanent immersive installation requiring interaction design, projection mapping, and long run stability.", domains: ["Installation","Interactive","Media","Systems","Compliance"], teams: ["team-12","team-44"], overview: "Permanent environment with multi zone triggers, mapping alignment, operator tooling, and stable routing.", risks: ["Permitting timelines", "Long run maintenance", "Calibration drift", "Operator training"], milestones: ["Feasibility", "System design", "Prototype validation", "Install", "Commissioning"] },
+            "arcade": { name: "Project: Arcade", id: "PRJ-ARC", status: "In Production", statusColor: "text-yellow-500", region: "Los Angeles, CA", window: "Q1 2026", summary: "Brand flagship activation with sensor driven interactions and real time content playback.", domains: ["Interactive","Media","Technical Direction","Installation","Operations"], teams: ["team-91","team-12","team-58"], overview: "Interactive floor with computer vision inputs, realtime content engine, and touring ready scenic components.", risks: ["Foot traffic variance", "Sensor occlusion", "Latency targets", "Install window"], milestones: ["Prototype complete", "Content lock", "Fabrication", "Install", "Launch"] },
+            "horizon": { name: "Project: Horizon", id: "PRJ-HZN", status: "Planning", statusColor: "text-slate-400", region: "Dubai, AE", window: "Q3 2026", summary: "Large scale outdoor spectacle with synchronized lighting, video, and automated scenic movement.", domains: ["Build","Fabrication","Systems","Media","Compliance","Operations"], teams: ["team-07","team-33","team-44"], overview: "Outdoor system with redundancy, environmental protections, structural signoffs, and strict safety posture.", risks: ["Heat and weather", "Structural approvals", "Power distribution", "Permitting"], milestones: ["Engineering", "Procurement", "Shop build", "Site build", "Show commissioning"] },
+            "atlas": { name: "Program: Atlas Rollout", id: "PRJ-ATL", status: "In Production", statusColor: "text-yellow-500", region: "North America", window: "2026", summary: "Multi site rollout program standardizing media, network, and control packages across 12 locations.", domains: ["Systems","Operations","Compliance","Media","Installation"], teams: ["team-33","team-12","team-44"], overview: "Standard package with repeatable documentation, commissioning checklists, and operator training materials.", risks: ["Site variance", "Vendor consistency", "Timeline drift", "Training adoption"], milestones: ["Standard definition", "Pilot site", "Iteration", "Rollout waves", "Closeout"] },
+            "cipher": { name: "Project: Cipher", id: "PRJ-CYP", status: "Scoping", statusColor: "text-blue-500", region: "New York, NY", window: "Q2 2026", summary: "Broadcast event requiring RF dense planning, comms discipline, and rapid changeover workflows.", domains: ["Media","Operations","Compliance","Systems"], teams: ["team-73","team-33"], overview: "Broadcast stack with RF coordination, comms deployment, and monitoring for show day conditions.", risks: ["RF congestion", "Tight rehearsals", "Talent turnover", "Venue constraints"], milestones: ["Advance", "RF survey", "Rehearsals", "Live show", "Postmortem"] }
+        };
+
+        // --- DOMAIN FILTERING ---
+        const DOMAINS = ["Build", "Fabrication", "Technical Direction", "Systems", "Media", "Interactive", "Installation", "Operations", "Compliance", "Specialized"];
         let activeDomains = new Set();
 
         function renderDomainFilters() {
             const wrap = document.getElementById("domain-filters");
             if (!wrap) return;
-
             wrap.innerHTML = "";
-
             DOMAINS.forEach(domain => {
-                const id = `domain-${domain.toLowerCase().replace(/\s+/g, "-")}`;
-
                 const row = document.createElement("label");
                 row.className = "flex items-center gap-3 cursor-pointer group select-none";
-
-                // Custom Checkbox UI
                 const box = document.createElement("div");
                 box.className = "w-3 h-3 border border-slate-600 transition-colors " + (activeDomains.has(domain) ? "bg-slate-600" : "");
-                
                 const text = document.createElement("span");
-                text.className = activeDomains.has(domain)
-                    ? "text-sm text-white"
-                    : "text-sm text-slate-400 group-hover:text-white transition-colors";
+                text.className = activeDomains.has(domain) ? "text-sm text-white" : "text-sm text-slate-400 group-hover:text-white transition-colors";
                 text.textContent = domain;
-
                 const input = document.createElement("input");
                 input.type = "checkbox";
-                input.id = id;
                 input.checked = activeDomains.has(domain);
                 input.className = "hidden";
-                
                 const toggle = () => {
-                    if (activeDomains.has(domain)) {
-                        activeDomains.delete(domain);
-                    } else {
-                        activeDomains.add(domain);
-                    }
+                    activeDomains.has(domain) ? activeDomains.delete(domain) : activeDomains.add(domain);
                     renderDomainFilters();
                     applyTalentFilters();
                 };
-
-                // Using click on parent label instead of just input change
                 input.addEventListener("change", toggle);
-                row.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    toggle();
-                });
-
+                row.addEventListener("click", (e) => { e.preventDefault(); toggle(); });
                 row.appendChild(box);
                 row.appendChild(text);
                 row.appendChild(input);
@@ -1305,35 +510,17 @@
         function applyTalentFilters() {
             const searchEl = document.getElementById("talent-search");
             const q = (searchEl?.value || "").trim().toLowerCase();
-
             const cards = document.querySelectorAll("#view-talent article[data-domains]");
             let shown = 0;
-
             cards.forEach(card => {
-                const domains = (card.getAttribute("data-domains") || "")
-                    .split(",")
-                    .map(s => s.trim())
-                    .filter(Boolean);
-
-                const haystack = [
-                    card.getAttribute("data-name") || "",
-                    card.getAttribute("data-role") || "",
-                    card.getAttribute("data-tags") || "",
-                    domains.join(" ")
-                ].join(" ").toLowerCase();
-
+                const domains = (card.getAttribute("data-domains") || "").split(",").map(s => s.trim()).filter(Boolean);
+                const haystack = [card.getAttribute("data-name") || "", card.getAttribute("data-role") || "", card.getAttribute("data-tags") || "", domains.join(" ")].join(" ").toLowerCase();
                 const matchesSearch = !q || haystack.includes(q);
-
-                const matchesDomains =
-                    activeDomains.size === 0 ||
-                    domains.some(d => activeDomains.has(d));
-
+                const matchesDomains = activeDomains.size === 0 || domains.some(d => activeDomains.has(d));
                 const visible = matchesSearch && matchesDomains;
                 card.style.display = visible ? "" : "none";
                 if (visible) shown += 1;
             });
-
-            // Update the "SHOWING X UNITS" label
             const counter = document.querySelector("#view-talent .font-mono.text-slate-500");
             if (counter) counter.textContent = `SHOWING ${shown} UNITS`;
         }
@@ -1341,23 +528,181 @@
         function initTalentFilters() {
             const searchEl = document.getElementById("talent-search");
             const clearBtn = document.getElementById("clear-filters");
-
             renderDomainFilters();
-
-            if (searchEl) {
-                searchEl.addEventListener("input", () => applyTalentFilters());
-            }
-
-            if (clearBtn) {
-                clearBtn.addEventListener("click", () => {
-                    activeDomains = new Set();
-                    if (searchEl) searchEl.value = "";
-                    renderDomainFilters();
-                    applyTalentFilters();
-                });
-            }
-
+            if (searchEl) searchEl.addEventListener("input", () => applyTalentFilters());
+            if (clearBtn) clearBtn.addEventListener("click", () => { activeDomains = new Set(); if(searchEl) searchEl.value=""; renderDomainFilters(); applyTalentFilters(); });
             applyTalentFilters();
+        }
+
+        // --- RENDER HELPERS ---
+        function statusBadge(status) {
+            if ((status || '').toLowerCase().includes('available') || (status || '').toLowerCase().includes('production')) return `<span class="text-[10px] uppercase tracking-wider text-green-900 bg-green-900/20 px-2 py-1 border border-green-900/30">${status}</span>`;
+            if ((status || '').toLowerCase().includes('contract') || (status || '').toLowerCase().includes('planning')) return `<span class="text-[10px] uppercase tracking-wider text-slate-600 border border-slate-800 px-2 py-1">${status}</span>`;
+            if ((status || '').toLowerCase().includes('scoping')) return `<span class="text-[10px] uppercase tracking-wider text-blue-900 bg-blue-900/20 px-2 py-1 border border-blue-900/30">${status}</span>`;
+            return `<span class="text-[10px] uppercase tracking-wider text-yellow-900 bg-yellow-900/20 px-2 py-1 border border-yellow-900/30">${status}</span>`;
+        }
+
+        function renderTalentFromDB() {
+            const grid = document.getElementById('talent-grid');
+            if (!grid) return;
+            const entries = Object.entries(talentDB);
+            grid.innerHTML = entries.map(([key, t]) => {
+                const domains = (t.domains || []).join(',');
+                const tags = (t.tags || []).join(' ');
+                return `<article onclick="openProfile('${key}', 'talent')" data-name="${(t.name||'').replace(/"/g,'&quot;')}" data-role="${(t.role||'').replace(/"/g,'&quot;')}" data-tags="${tags.replace(/"/g,'&quot;')}" data-domains="${domains.replace(/"/g,'&quot;')}" class="bg-wme-panel border border-wme-border p-5 hover:border-slate-600 transition-all duration-300 group cursor-pointer overflow-hidden">
+                    <div class="flex justify-between items-start mb-4"><div class="w-16 h-16 bg-slate-800 overflow-hidden border border-wme-border"><img src="${t.img}" class="w-full h-full object-cover profile-img" alt="${t.name}"></div>${statusBadge(t.status)}</div>
+                    <h3 class="text-white font-medium text-lg mb-1 group-hover:text-blue-200 transition-colors">${t.name}</h3><p class="text-slate-500 text-xs uppercase tracking-wider mb-4">${t.role}</p>
+                    <div class="space-y-3 mb-6"><div class="flex items-start gap-2"><i class="ph ph-wrench text-slate-600 mt-0.5 text-xs"></i><p class="text-sm text-slate-400 leading-tight">${(t.tags||[]).slice(0,2).join(', ')}</p></div><div class="flex items-start gap-2"><i class="ph ph-buildings text-slate-600 mt-0.5 text-xs"></i><p class="text-sm text-slate-400 leading-tight">${(t.domains||[]).slice(0,2).join(', ')}</p></div></div>
+                    <div class="pt-4 border-t border-slate-800 flex justify-between items-center"><span class="text-[10px] text-slate-600 font-mono">ID: ${t.id}</span><i class="ph ph-caret-right text-slate-600 group-hover:text-white transition-colors"></i></div></article>`;
+            }).join('');
+        }
+
+        function renderTeams() {
+            const grid = document.getElementById('team-grid');
+            if (!grid) return;
+            const entries = Object.entries(teamDB);
+            grid.innerHTML = entries.map(([key, t]) => {
+                // Team avatar: use first roster preview image
+                const avatar = t.rosterPreview && t.rosterPreview.length ? t.rosterPreview[0] : '';
+                // Roster bubbles
+                let rosterHtml = '';
+                if(t.rosterPreview){
+                    rosterHtml = '<div class="flex -space-x-2">' + t.rosterPreview.slice(0,3).map(src => `<div class="w-8 h-8 rounded-full bg-slate-800 border border-wme-panel overflow-hidden"><img src="${src}" class="w-full h-full object-cover"></div>`).join('') + '</div>';
+                }
+                
+                return `<article onclick="openProfile('${key}', 'team')" class="bg-wme-panel border border-wme-border p-6 hover:border-slate-600 transition-all duration-300 group cursor-pointer">
+                    <div class="flex justify-between items-start mb-4">${rosterHtml}${statusBadge(t.status)}</div>
+                    <h3 class="text-white font-medium text-xl mb-1 group-hover:text-blue-200 transition-colors">${t.name}</h3><p class="text-slate-500 text-xs uppercase tracking-wider mb-6">${t.deployment}</p>
+                    <div class="grid grid-cols-2 gap-4 mb-6"><div class="bg-wme-base p-3 border border-wme-border"><span class="block text-[10px] text-slate-600 font-mono mb-1">BASE</span><span class="text-sm text-slate-300">${t.homeBase.split('/')[0]}</span></div><div class="bg-wme-base p-3 border border-wme-border"><span class="block text-[10px] text-slate-600 font-mono mb-1">FOCUS</span><span class="text-sm text-slate-300">${t.domains[0]}</span></div></div>
+                    <div class="pt-4 border-t border-slate-800 flex justify-between items-center"><span class="text-[10px] text-slate-600 font-mono">ID: ${t.id}</span><span class="text-xs text-white border-b border-transparent group-hover:border-white transition-all">View Manifest</span></div></article>`;
+            }).join('');
+        }
+
+        function renderProjects() {
+            const grid = document.getElementById('project-grid');
+            if (!grid) return;
+            const entries = Object.entries(projectDB);
+            grid.innerHTML = entries.map(([key, p]) => {
+                return `<div onclick="openProfile('${key}', 'project')" class="bg-wme-panel border border-wme-border p-6 flex flex-col md:flex-row items-center gap-6 hover:border-slate-600 transition-colors group cursor-pointer">
+                    <div class="w-full md:w-48 h-24 bg-slate-800 flex items-center justify-center text-slate-600 font-mono text-xs border border-wme-border">CONFIDENTIAL</div>
+                    <div class="flex-1"><div class="flex items-center gap-3 mb-2"><h3 class="text-white text-lg font-medium group-hover:text-blue-200 transition-colors">${p.name}</h3>${statusBadge(p.status)}</div><p class="text-slate-400 text-sm max-w-2xl">${p.summary}</p></div>
+                    <div class="text-right hidden md:block"><div class="text-[10px] text-slate-500 font-mono mb-1">EXECUTION WINDOW</div><div class="text-white text-sm">${p.window}</div></div><i class="ph ph-caret-right text-slate-600 group-hover:text-white transition-colors ml-4"></i></div>`;
+            }).join('');
+        }
+
+        // --- OPEN PROFILE (ADAPTIVE) ---
+        function openProfile(key, type) {
+            let data;
+            
+            // Reset sections visibility
+            document.getElementById('roster-section').classList.add('hidden');
+            document.getElementById('risks-section').classList.add('hidden');
+            document.getElementById('work-label').innerText = 'Selected Work';
+            document.getElementById('rate-block').classList.remove('hidden');
+            document.getElementById('action-btn').innerText = 'Request Hold';
+
+            // 1. Fetch Data based on Type
+            if (type === 'talent') {
+                data = talentDB[key];
+            } else if (type === 'team') {
+                data = teamDB[key];
+                // Map team fields to generic fields
+                data.location = data.homeBase;
+                data.bio = data.overview;
+                // Use first roster image as main
+                data.img = data.rosterPreview && data.rosterPreview.length ? data.rosterPreview[0] : ''; 
+                // Hide Rate, Show Stack as Tags
+                document.getElementById('rate-block').classList.add('hidden');
+                document.getElementById('action-btn').innerText = 'Request Unit';
+                // Show Roster
+                const rosterContainer = document.getElementById('profile-roster');
+                rosterContainer.innerHTML = (data.rosterPreview || []).map(src => `<div class="w-12 h-12 bg-slate-800 rounded-full border border-wme-border overflow-hidden"><img src="${src}" class="w-full h-full object-cover"></div>`).join('');
+                document.getElementById('roster-section').classList.remove('hidden');
+            } else if (type === 'project') {
+                data = projectDB[key];
+                // Map project fields
+                data.location = `${data.region} // ${data.window}`;
+                data.role = 'Active Scope';
+                data.bio = data.summary + ' ' + data.overview;
+                data.img = ''; // No image for project, handle placeholder
+                data.tags = data.domains;
+                data.selectedWork = data.milestones; // Reuse work section for Milestones
+                
+                document.getElementById('work-label').innerText = 'Key Milestones';
+                document.getElementById('rate-block').classList.add('hidden');
+                document.getElementById('action-btn').innerText = 'View Brief';
+
+                // Show Risks
+                const risksContainer = document.getElementById('profile-risks');
+                risksContainer.innerHTML = (data.risks || []).map(risk => `<div class="bg-wme-base border border-red-900/30 p-3"><span class="text-[10px] text-red-400 font-mono block mb-1">RISK FACTOR</span><span class="text-sm text-slate-300">${risk}</span></div>`).join('');
+                document.getElementById('risks-section').classList.remove('hidden');
+            }
+
+            if (!data) return;
+
+            // 2. Populate DOM
+            document.getElementById('profile-name').innerText = data.name;
+            document.getElementById('profile-role').innerText = data.role || (type === 'team' ? 'Operational Unit' : 'Talent');
+            document.getElementById('profile-id').innerText = `ID: ${data.id}`;
+            document.getElementById('profile-location').innerText = data.location;
+            
+            const statusEl = document.getElementById('profile-status');
+            statusEl.innerHTML = statusBadge(data.status); // Use badge HTML directly
+
+            document.getElementById('profile-bio').innerText = data.bio;
+            
+            // Image handling
+            const imgEl = document.getElementById('profile-img-lg');
+            const overlay = document.getElementById('profile-img-overlay');
+            if (data.img) {
+                imgEl.src = data.img;
+                imgEl.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+            } else {
+                // Placeholder for projects
+                imgEl.src = ''; 
+                imgEl.classList.add('hidden');
+                overlay.classList.add('hidden');
+                // Could add a fallback div color here if desired
+            }
+
+            // Rate (Only for talent)
+            if (type === 'talent') {
+                const rateSlot = document.getElementById('profile-rate');
+                if (rateSlot) rateSlot.innerText = data.rate;
+            }
+
+            // Tags / Stack / Domains
+            const tagsContainer = document.getElementById('profile-tags');
+            tagsContainer.innerHTML = '';
+            // For teams, combine stack + tags? Or just tags. Let's use tags + domains.
+            // For Projects, use domains.
+            let displayTags = data.tags || data.domains || [];
+            if (type === 'team' && data.stack) displayTags = [...displayTags, ...data.stack];
+            
+            // Dedup
+            displayTags = [...new Set(displayTags)];
+
+            displayTags.forEach(tag => {
+                const span = document.createElement('span');
+                span.className = 'px-3 py-1 bg-wme-panel border border-wme-border text-xs text-slate-400 font-mono';
+                span.innerText = tag;
+                tagsContainer.appendChild(span);
+            });
+            
+            // Work / Milestones
+            const workContainer = document.getElementById('profile-work');
+            workContainer.innerHTML = '';
+            const items = data.selectedWork || [];
+            items.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'bg-wme-panel border border-wme-border p-4 h-24 flex items-center justify-center text-center text-xs text-slate-400 font-mono uppercase leading-relaxed';
+                div.innerText = item;
+                workContainer.appendChild(div);
+            });
+
+            // 3. Switch View
+            setActiveView('profile');
         }
 
         // --- VIEW MANAGER ---
@@ -1374,303 +719,89 @@
         let isTransitioning = false;
 
         function setActiveView(viewName) {
-            // Prevent spam clicking while transition is active
             if (isTransitioning) return;
-
             const target = views[viewName];
             if (!target || !target.classList.contains('hidden')) return;
 
             isTransitioning = true;
             window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
 
-            // 1. Find currently active view
             const current = Object.values(views).find(v => !v.classList.contains('hidden'));
 
-            // Helper to show the target view
             const showTarget = () => {
                 target.classList.remove('hidden');
-                
-                // Wait a frame for display:block to apply
                 requestAnimationFrame(() => {
                     target.classList.remove('opacity-0');
-                    
-                    // Earth Visibility Logic (Matched with view transition)
                     if (viewName === 'home') {
                         canvasContainer.style.opacity = '1';
                     } else {
                         canvasContainer.style.opacity = '0';
                     }
-
-                    // Release lock after fade in
-                    setTimeout(() => {
-                        isTransitioning = false;
-                    }, TRANSITION_MS);
+                    setTimeout(() => { isTransitioning = false; }, TRANSITION_MS);
                 });
             };
 
-            // 2. Sequential Transition
             if (current) {
-                // Fade out current
                 current.classList.add('opacity-0');
-                
-                // Wait for fade out to complete
                 setTimeout(() => {
                     current.classList.add('hidden');
-                    // Show new one
                     showTarget();
-                }, 350); // Slightly faster than the full 500ms to feel responsive but sequenced
+                }, 350);
             } else {
                 showTarget();
             }
         }
 
-        // --- DYNAMIC RENDERING HELPERS ---
-
-        function statusBadge(status) {
-            if ((status || '').toLowerCase().includes('available')) {
-                return `<span class="text-[10px] uppercase tracking-wider text-green-900 bg-green-900/20 px-2 py-1 border border-green-900/30">Available</span>`;
-            }
-            if ((status || '').toLowerCase().includes('contract')) {
-                return `<span class="text-[10px] uppercase tracking-wider text-slate-600 border border-slate-800 px-2 py-1">On Contract</span>`;
-            }
-            return `<span class="text-[10px] uppercase tracking-wider text-slate-600 border border-slate-800 px-2 py-1">Limited</span>`;
-        }
-
-        function cardSummaryLine(tags) {
-            // Tags is a string of space separated tags in the object, wait, let's check
-            // In renderTalentFromDB, tags is passed as `t.tags` which is an array.
-            // But in renderTalentFromDB below, I'm calling cardSummaryLine(t.tags) where t.tags is Array.
-            // My implementation below expects array.
-            return (tags || []).slice(0, 2).join(', ') || 'Capabilities available';
-        }
-
-        function renderTalentFromDB() {
-            const grid = document.getElementById('talent-grid');
-            if (!grid) return;
-
-            const entries = Object.entries(talentDB);
-
-            grid.innerHTML = entries.map(([key, t]) => {
-                const domains = (t.domains || []).join(',');
-                const tags = (t.tags || []).join(' '); // For data attribute
-                return `
-                    <article
-                        onclick="openProfile('${key}')"
-                        data-name="${(t.name || '').replace(/"/g, '&quot;')}"
-                        data-role="${(t.role || '').replace(/"/g, '&quot;')}"
-                        data-tags="${tags.replace(/"/g, '&quot;')}"
-                        data-domains="${domains.replace(/"/g, '&quot;')}"
-                        class="bg-wme-panel border border-wme-border p-5 hover:border-slate-600 transition-all duration-300 group cursor-pointer overflow-hidden"
-                    >
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="w-16 h-16 bg-slate-800 overflow-hidden border border-wme-border">
-                                <img src="${t.img}" class="w-full h-full object-cover profile-img" alt="${(t.name || '').replace(/"/g, '&quot;')}">
-                            </div>
-                            ${statusBadge(t.status)}
-                        </div>
-
-                        <h3 class="text-white font-medium text-lg mb-1 group-hover:text-blue-200 transition-colors">${t.name}</h3>
-                        <p class="text-slate-500 text-xs uppercase tracking-wider mb-4">${t.role}</p>
-
-                        <div class="space-y-3 mb-6">
-                            <div class="flex items-start gap-2">
-                                <i class="ph ph-wrench text-slate-600 mt-0.5 text-xs"></i>
-                                <p class="text-sm text-slate-400 leading-tight">${cardSummaryLine(t.tags)}</p>
-                            </div>
-                            <div class="flex items-start gap-2">
-                                <i class="ph ph-buildings text-slate-600 mt-0.5 text-xs"></i>
-                                <p class="text-sm text-slate-400 leading-tight">${(t.domains || []).slice(0, 2).join(', ')}</p>
-                            </div>
-                        </div>
-
-                        <div class="pt-4 border-t border-slate-800 flex justify-between items-center">
-                            <span class="text-[10px] text-slate-600 font-mono">ID: ${t.id}</span>
-                            <i class="ph ph-caret-right text-slate-600 group-hover:text-white transition-colors"></i>
-                        </div>
-                    </article>
-                `;
-            }).join('');
-        }
-
-        // Profile Opener (Updated)
-        function openProfile(key) {
-            const data = talentDB[key];
-            if (!data) return;
-
-            document.getElementById('profile-name').innerText = data.name;
-            document.getElementById('profile-role').innerText = data.role;
-            document.getElementById('profile-id').innerText = `ID: ${data.id}`;
-            document.getElementById('profile-location').innerText = data.location;
-            
-            const statusEl = document.getElementById('profile-status');
-            statusEl.innerText = data.status;
-            statusEl.className = `text-xs uppercase tracking-wider ${data.statusColor}`;
-
-            document.getElementById('profile-bio').innerText = data.bio;
-            document.getElementById('profile-img-lg').src = data.img;
-
-            // Rate card
-            const rateSlot = document.getElementById('profile-rate');
-            if (rateSlot && data.rate) rateSlot.innerText = data.rate;
-
-            const tagsContainer = document.getElementById('profile-tags');
-            tagsContainer.innerHTML = '';
-            (data.tags || []).forEach(tag => {
-                const span = document.createElement('span');
-                span.className = 'px-3 py-1 bg-wme-panel border border-wme-border text-xs text-slate-400 font-mono';
-                span.innerText = tag;
-                tagsContainer.appendChild(span);
-            });
-            
-            // Selected work
-            const workBoxes = document.querySelectorAll('#view-profile .grid.grid-cols-2.gap-4 > div');
-            const work = data.selectedWork || [];
-            if (workBoxes && workBoxes.length) {
-                workBoxes.forEach((box, i) => {
-                    box.innerText = (work[i] || `PROJECT ${String.fromCharCode(65 + i)}`).toUpperCase();
-                });
-            }
-
-            // Switch view
-            setActiveView('profile');
-        }
-
-        // Expose to window
         window.navigateTo = setActiveView;
-        window.openProfile = openProfile;
+        // window.openProfile is defined above
 
         // Initialize
         window.addEventListener('load', () => {
             initThreeJS();
-            renderTalentFromDB(); // Generate the grid first
+            renderTalentFromDB();
+            renderTeams();
+            renderProjects();
             setActiveView('home');
-            initTalentFilters(); // Initialize filters
+            initTalentFilters();
         });
 
-        // --- THREE.JS IMPLEMENTATION (UPDATED SHADER) ---
+        // --- THREE.JS ---
         const initThreeJS = () => {
             const container = document.getElementById('canvas-container');
             if (!container) return;
-
             const scene = new THREE.Scene();
             scene.fog = new THREE.FogExp2(0x030508, 0.002);
-
             const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
             camera.position.z = 20;
-
             const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(window.devicePixelRatio);
             container.appendChild(renderer.domElement);
-
-            // GEOMETRY
-            // Use high segment count for smooth shader effects
-            const geometry = new THREE.SphereGeometry(10, 128, 128);
             
-            // SHADER MATERIAL: WIREFRAME EFFECT
-            const vertexShader = `
-                varying vec2 vUv;
-                varying vec3 vNormal;
-                varying vec3 vViewPosition;
-                void main() {
-                    vUv = uv;
-                    vNormal = normalize(normalMatrix * normal);
-                    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-                    vViewPosition = -mvPosition.xyz;
-                    gl_Position = projectionMatrix * mvPosition;
-                }
-            `;
-
-            const fragmentShader = `
-                varying vec2 vUv;
-                varying vec3 vNormal;
-                varying vec3 vViewPosition;
-
-                void main() {
-                    // Grid Logic
-                    // We generate a grid based on UV coordinates
-                    float gridDensity = 40.0;
-                    
-                    // Standard GLSL grid trick using fract and fwidth (standard webgl 1.0 compatible approximation)
-                    // Note: fwidth gives us the derivative, perfect for anti-aliased procedural lines
-                    vec2 grid = abs(fract(vUv * gridDensity - 0.5) - 0.5) / fwidth(vUv * gridDensity);
-                    float line = min(grid.x, grid.y);
-                    
-                    // Invert and clamp to get the line intensity
-                    float lineAlpha = 1.0 - min(line, 1.0);
-                    
-                    // Lighting / Fresnel Logic
-                    vec3 normal = normalize(vNormal);
-                    vec3 viewDir = normalize(vViewPosition);
-                    
-                    // High power fresnel = rim light effect
-                    float fresnel = pow(1.0 - dot(normal, viewDir), 2.5);
-
-                    // Colors
-                    vec3 baseColor = vec3(0.01, 0.02, 0.05); // Very dark void center
-                    vec3 lineColor = vec3(0.1, 0.25, 0.45); // Subtle tech blue lines
-                    vec3 glowColor = vec3(0.05, 0.1, 0.2); // Atmospheric glow
-                    
-                    // Composition
-                    // Start with base
-                    vec3 finalColor = baseColor;
-                    
-                    // Add grid lines (faded by distance to center to look more "spherical")
-                    finalColor = mix(finalColor, lineColor, lineAlpha * 0.4);
-                    
-                    // Add fresnel glow (rim)
-                    finalColor += glowColor * fresnel;
-                    
-                    // Enhance grid on the rim
-                    finalColor += lineColor * lineAlpha * fresnel * 0.5;
-
-                    gl_FragColor = vec4(finalColor, 0.9);
-                }
-            `;
-
-            const material = new THREE.ShaderMaterial({
-                vertexShader: vertexShader,
-                fragmentShader: fragmentShader,
-                transparent: true,
-                extensions: {
-                    derivatives: true // Required for fwidth
-                }
-            });
-
+            const geometry = new THREE.SphereGeometry(10, 128, 128);
+            const vertexShader = `varying vec2 vUv; varying vec3 vNormal; varying vec3 vViewPosition; void main() { vUv = uv; vNormal = normalize(normalMatrix * normal); vec4 mvPosition = modelViewMatrix * vec4(position, 1.0); vViewPosition = -mvPosition.xyz; gl_Position = projectionMatrix * mvPosition; }`;
+            const fragmentShader = `varying vec2 vUv; varying vec3 vNormal; varying vec3 vViewPosition; void main() { float gridDensity = 40.0; vec2 grid = abs(fract(vUv * gridDensity - 0.5) - 0.5) / fwidth(vUv * gridDensity); float line = min(grid.x, grid.y); float lineAlpha = 1.0 - min(line, 1.0); vec3 normal = normalize(vNormal); vec3 viewDir = normalize(vViewPosition); float fresnel = pow(1.0 - dot(normal, viewDir), 2.5); vec3 baseColor = vec3(0.01, 0.02, 0.05); vec3 lineColor = vec3(0.1, 0.25, 0.45); vec3 glowColor = vec3(0.05, 0.1, 0.2); vec3 finalColor = baseColor; finalColor = mix(finalColor, lineColor, lineAlpha * 0.4); finalColor += glowColor * fresnel; finalColor += lineColor * lineAlpha * fresnel * 0.5; gl_FragColor = vec4(finalColor, 0.9); }`;
+            
+            const material = new THREE.ShaderMaterial({ vertexShader, fragmentShader, transparent: true, extensions: { derivatives: true } });
             const earth = new THREE.Mesh(geometry, material);
             scene.add(earth);
 
-            // OUTER NETWORK (Keep this for extra depth)
             const wireGeo = new THREE.SphereGeometry(10.1, 64, 64);
-            const wireMat = new THREE.MeshBasicMaterial({
-                color: 0x3b82f6, // Brighter blue
-                wireframe: true,
-                transparent: true,
-                opacity: 0.03
-            });
+            const wireMat = new THREE.MeshBasicMaterial({ color: 0x3b82f6, wireframe: true, transparent: true, opacity: 0.03 });
             const network = new THREE.Mesh(wireGeo, wireMat);
             scene.add(network);
 
             const updatePosition = () => {
-                if (window.innerWidth > 1024) {
-                    earth.position.set(4, -6, 0);
-                    earth.scale.set(1.4, 1.4, 1.4);
-                } else {
-                    earth.position.set(0, -6, 0);
-                    earth.scale.set(1.2, 1.2, 1.2);
-                }
-                network.position.copy(earth.position);
-                network.scale.copy(earth.scale);
+                if (window.innerWidth > 1024) { earth.position.set(4, -6, 0); earth.scale.set(1.4, 1.4, 1.4); } 
+                else { earth.position.set(0, -6, 0); earth.scale.set(1.2, 1.2, 1.2); }
+                network.position.copy(earth.position); network.scale.copy(earth.scale);
             };
             updatePosition();
 
-            // Stars Background
             const starGeo = new THREE.BufferGeometry();
             const starCount = 600;
             const starPos = new Float32Array(starCount * 3);
-            for(let i=0; i<starCount*3; i++) {
-                starPos[i] = (Math.random() - 0.5) * 120;
-            }
+            for(let i=0; i<starCount*3; i++) starPos[i] = (Math.random() - 0.5) * 120;
             starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
             const starMat = new THREE.PointsMaterial({color: 0x475569, size: 0.05, transparent: true, opacity: 0.4});
             const stars = new THREE.Points(starGeo, starMat);
@@ -1678,9 +809,7 @@
 
             const animate = () => {
                 requestAnimationFrame(animate);
-                earth.rotation.y += 0.0005;
-                network.rotation.y += 0.0006; // Slight parallax
-                stars.rotation.y -= 0.0001;
+                earth.rotation.y += 0.0005; network.rotation.y += 0.0006; stars.rotation.y -= 0.0001;
                 renderer.render(scene, camera);
             };
             animate();
